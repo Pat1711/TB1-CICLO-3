@@ -87,7 +87,7 @@ public:
             case 2: mostrarVuelosPorMes(); break;
             case 3: mostrarVuelosPorPaises(); break;
             case 4: mostrarVuelosEnFecha(); break;
-            case 5: mostrarVuelosCombinado(); break;
+            case 5: mostrarVuelosEspecificos(); break;
             case 6: break;
             default: cout << "Opción no válida\n"; system("pause"); break;
             }
@@ -189,7 +189,7 @@ public:
         system("pause");
     }
 
-    void mostrarVuelosCombinado() {
+    void mostrarVuelosEspecificos() {
         int auxOrigen, auxDestino, auxDiaIda, auxMesIda;
         do {
             system("cls"); tituloVuelo();
