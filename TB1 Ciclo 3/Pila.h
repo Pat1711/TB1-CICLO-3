@@ -11,6 +11,7 @@ public:
 	void push(T v);
 	T pop();
 	bool estaVacia();
+	T mostrarDato();
 };
 
 template<class T>
@@ -30,6 +31,17 @@ T Pila<T>::pop() {
 	else {
 		T elemento = (T)(tope->dato);
 		tope = (Nodo<T>*) tope->siguiente;
+		return elemento;
+	}
+}
+
+template<class T>
+T Pila<T>::mostrarDato() {
+	if (estaVacia()) {
+		throw "Error, pila vaca";
+	}
+	else {
+		T elemento = (T)(tope->dato);
 		return elemento;
 	}
 }

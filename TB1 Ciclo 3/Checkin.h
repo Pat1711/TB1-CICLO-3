@@ -12,6 +12,15 @@ public:
 	CheckIn(){}
 	~CheckIn(){}
 
+	// --- Función algo demás --- //
+
+	void mostrarTarjeta(Reserva* reserva) {
+		if (reserva == nullptr) return;
+		cout << "|=============== TARJETA DE EMBARQUE ===============|\n";
+		reserva->mostrarDatosCompletos();
+		cout << "|===================================================|\n";
+	}
+
 	// --- Valida datos y procesa un Checkin y lo usamos en el GestorCheckIn --- //
 
 	Reserva* procesarCheckIn(GestorReserva& gestorReserva) {
@@ -23,8 +32,7 @@ public:
 
 		cout << "Ingrese Codigo del vuelo: ";
 		cin >> codigoVuelo;
-
-		bool reservaEncontrada = false;
+		
 		Pila<Reserva> reservasAux = gestorReserva.getReservas(); //no referencia sino copia
 
 		while (!reservasAux.estaVacia()) {
@@ -32,26 +40,15 @@ public:
 
 			if (reserva.getPasajero()->getDni() == dni && reserva.getVuelo()->getCodigoVuelo() == codigoVuelo) {
 				// Mostrar la tarjeta de embarque
+				this->reserva = new Reserva(reserva);
 				cout << "\nCheck-in exitoso!\n\n";
-				mostrarTarjeta();
-				reservaEncontrada = true;
-				return new Reserva(reserva);
+				mostrarTarjeta(this->reserva);
+				return this->reserva;
 			}
 		}
 
-		if (!reservaEncontrada) {
-			cout << "No se encontro una reserva con el DNI y el codigo de vuelo proporcionados." << endl;
-			return nullptr;
-		}
-	}
-
-	// --- Función algo demás --- //
-
-	void mostrarTarjeta() {
-		cout << "|=============== TARJETA DE EMBARQUE ===============|\n";
-		//PUEDE QUE HAYA UN ERROR ACA ....
-		reserva->mostrarDatosVuelo();
-		cout << "|===================================================|\n";
+		cout << "No se encontro una reserva con el DNI y el codigo de vuelo proporcionados\n";
+		return nullptr;
 	}
 };
 

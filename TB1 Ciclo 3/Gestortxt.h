@@ -42,7 +42,7 @@ public:
         return lines;
     }
 
-    int size() {
+    size_t size() {
         return lines.size();
     }
 
@@ -55,7 +55,7 @@ public:
     T getLine(int i) {
         if(i >= 0 && i < lines.size())
         return lines[i];
-        return nullptr; //habia un error aca
+        return T(); //habia un error aca
     }
 
     void editarLinea(int i, T elem) {

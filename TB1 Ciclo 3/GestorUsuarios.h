@@ -58,6 +58,8 @@ public:
         }
 
         Pasajero* nuevoPasajero = new Pasajero(nombres, apellidos, correo, dniStr);
+        //el error esta aca (segun el guru) lo de abajo es una prueba para ver si lo soluciona pero no :v
+        getLista().insertarFinal(nuevoPasajero);
 
         archivo.agregar(nombres);
         archivo.agregar(apellidos);

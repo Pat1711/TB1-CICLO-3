@@ -7,6 +7,7 @@
 class GestorCheckin {
 private:
     Cola<Reserva> checkinsExitosos;
+    GestorUsuarios gUsuarios;
 
 public:
     GestorCheckin() {}
@@ -38,21 +39,40 @@ public:
             aux.enqueue(reserva);
         }
 
-        // restauramos la cola original
         while (!aux.esVacia()) {
             checkinsExitosos.enqueue(aux.dequeue());
         }
     }
 
     // --- Muestra todos los CheckIns de un Pasajero --- //
-
+    //ayuda
     void mostrarCheckinsPorUsuario() {
-        string dni;
-        cout << "Ingrese el DNI del usuario a consultar: ";
-        cin >> dni;
+        cout << "[DEBUG] Verificando si lista está vacía...\n";
+        if (gUsuarios.getLista().esVacio()) {
+            cout << "Lista vacía. No hay usuarios.\n";
+            cin.get();
+            return;
+        }
 
         if (checkinsExitosos.esVacia()) {
             cout << "\nNo hay check-ins registrados.\n";
+            return;
+        }
+
+        if (gUsuarios.getLista().esVacio()) {
+            cout << "No hay usuarios registrados.\n";
+            return;
+        }
+
+        cout << "\nSeleccione un usuario (DNI):\n";
+        gUsuarios.getLista().mostrarPasajero();
+
+        string dni;
+        cout << "Ingrese el DNI del pasajero: ";
+        cin >> dni;
+
+        if (!gUsuarios.getLista().validarDNI(dni)) {
+            cout << "No se encontró un pasajero con ese DNI.\n";
             return;
         }
 
@@ -68,10 +88,9 @@ public:
                 hayCoincidencias = true;
             }
 
-            aux.enqueue(reserva); // restaurar luego
+            aux.enqueue(reserva); 
         }
 
-        // restauramos la cola original
         while (!aux.esVacia()) {
             checkinsExitosos.enqueue(aux.dequeue());
         }

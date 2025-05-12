@@ -24,6 +24,7 @@ public:
 	T getDato(int index);
 
 	bool test(string nombres, string apellidos, string correo, string dni);
+	bool validarDNI(string dni);
 };
 
 // ---
@@ -97,6 +98,23 @@ void Lista<T>::mostrarPasajero() {
 
 // ---
 template<class T>
+bool Lista<T>::validarDNI(string dni) {
+	Nodo<T>* nodo = inicio;
+
+	while (nodo != nullptr) {
+		Pasajero* psj = static_cast<Pasajero*>(nodo->dato);
+
+		if (psj->getDni() == dni) {
+			return true;
+		}
+
+		nodo = nodo->siguiente;
+	}
+	return false;
+}
+
+// ---
+template<class T>
 bool Lista<T>::test(string nombres, string apellidos, string correo, string dni) {
 	Nodo<T>* nodo = inicio;
 
@@ -118,8 +136,6 @@ bool Lista<T>::test(string nombres, string apellidos, string correo, string dni)
 		nodo = nodo->siguiente;
 	}
 	return false;
-
-	
 }
 
 template<class T>

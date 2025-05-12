@@ -17,6 +17,7 @@ public:
 	T dequeue();
 	bool esVacia();
 
+	/*void test2();*/
 };
 
 template<class T>
@@ -54,5 +55,25 @@ T Cola<T>::dequeue() {
 
 	return dato;
 }
+
+//template<class T>
+//void Cola<T>::test2() {
+//	if (esVacia()) {
+//		cout << "\nNo hay tarjetas de embarque por mostrar.\n";
+//		return;
+//	}
+//
+//	Cola<T> aux;
+//
+//	while (!esVacia()) {
+//		T reserva = dequeue();
+//		reserva.mostrarTarjeta();  
+//		aux.enqueue(reserva);
+//	}
+//
+//	while (!aux.esVacia()) {
+//		enqueue(aux.dequeue());
+//	}
+//}
 
 #endif

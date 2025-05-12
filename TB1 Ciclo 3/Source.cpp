@@ -1,8 +1,8 @@
 #include"GestorSistema.h"
 
 int main() {
-    srand(time(NULL));
-    portada(); getch();
+    srand(static_cast<unsigned int>(time(nullptr)));
+    portada(); cin.get();
 
     GestorSistema sistema; 
     sistema.ejecutar(); 
