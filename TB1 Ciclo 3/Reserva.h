@@ -40,7 +40,7 @@ public:
 	void mostrarDatosCompletos() {
 		cout << "Pasajero: " << user->getNombres() << ", " << user->getApellidos() << "\n";
 		cout << "DNI: " << user->getDni() << "\n";
-    cout << "Vuelo: \n";
+		cout << endl;
 		vuelo->mostrarVuelo();
 		cout << "Asientos: \n";
 		for (int i = 0; i < asiento.size(); i++)

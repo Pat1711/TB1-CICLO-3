@@ -26,7 +26,7 @@ void Pila<T>::push(T v) {
 template<class T>
 T Pila<T>::pop() {
 	if (estaVacia()) {
-		throw "Error, pila vaca";
+		throw "Error, pila vacia";
 	}
 	else {
 		T elemento = (T)(tope->dato);
@@ -38,7 +38,7 @@ T Pila<T>::pop() {
 template<class T>
 T Pila<T>::mostrarDato() {
 	if (estaVacia()) {
-		throw "Error, pila vaca";
+		throw "Error, pila vacia";
 	}
 	else {
 		T elemento = (T)(tope->dato);

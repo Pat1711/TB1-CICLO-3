@@ -9,6 +9,15 @@
 #include "GestorVuelo.h"
 #include <conio.h>
 using namespace std;
+
+auto confirmar = [](char c) -> bool {
+	return c == 'y' || c == 'Y';
+	};
+auto asientoValido = [](Asiento* a) -> bool {
+	return a != nullptr && a->getEstado() == 0;
+	};
+
+
 class GestorReserva
 {
 private:
@@ -23,11 +32,10 @@ public:
 	~GestorReserva(){}
 
 	void reservar() {
-		//EL leerUsuarios(); BORRABA TODOS LOS DATOS
 		int aux; int numAsientos; int aux2 = 0; int auxExcesoPorVip = 0; int cont = 0;
 		char opc;
 		cout << "Desea reservar un vuelo y/n: "; cin >> opc;
-		if (opc != 'y') return;
+		if (!confirmar(opc)) return;
 		
 		cout << "\n === Reservar Vuelo ===\n";
 		cout << "Seleccione usuario: \n";
@@ -43,6 +51,7 @@ public:
 		cin >> aux2;
 
 		Pasajero* pAux = gUsuarios.getLista().getDato(aux2 - 1); 
+		if (pAux == nullptr) return; //REGRESA SI NO HAY USUARIO
 
 
 		cout << "Ingrese id del vuelo: "; cin >> aux; cout << "\n"; 
@@ -73,8 +82,9 @@ public:
 				cin >> aux2;
 				aAux = vAux->getAsiento(aux2);  cout << endl; system("pause>0");
 				if (aAux == nullptr) return;
+				if (!asientoValido(aAux)) cout << "Asiento ocupado\n";
 
-			} while (aAux->getEstado() != 0);
+			} while (!asientoValido(aAux));
 			aAux->setEstado(1);
 
 			//Calculo del extra a pagar por elegir VIP
@@ -82,9 +92,7 @@ public:
 				cont++; 
 				auxExcesoPorVip += 50;
 			}
-			else
-				auxExcesoPorVip += 0;
-			
+
 			asientos.push_back(aAux);
 		}
 
@@ -96,6 +104,8 @@ public:
 
 		cout << "\nEscogio " << cont << " VIP y " << numAsientos - cont << " Economico\n"; 
 		cout << "Monto a pagar: " << calcularPrecioFinal() << endl << endl;
+
+		cout << "Confirmar la reserva: y/n: "; cin >> opc; if (!confirmar(opc)) return;
 			
 		Reserva a(vAux, asientos, pAux, calcularPrecioFinal());
 

@@ -9,9 +9,28 @@ using namespace std;
 
 //Funciones auxiliares
 
-//Lambda para validar los valores que se ingresan en dia y mes
+//Lambdas para validar lo valores
 auto validarDiaMes = [](int dia, int mes) {
     return dia >= 1 && dia <= 31 && mes >= 1 && mes <= 12;
+    };
+auto validarDestino = [](int origen, int destino) {
+    return origen >= 1 && origen <= 10 && destino >= 1 && destino <= 10;
+    }; 
+auto menu = [](void menu(), int&opcion) {
+    system("cls");
+    menu();
+    cin >> opcion;
+    cin.ignore();
+    };
+auto mensajeError = []() {
+    cout << "Opcion no valida\n"; system("pause");
+    };
+auto mostrarSeccion = [](void titulo()) {
+    system("cls");
+    titulo();
+    };
+auto enRango = [](int valor, int min, int max) {
+    return valor >= min && valor <= max;
     };
 
 class GestorSistema {
@@ -34,50 +53,40 @@ public:
         string destino, origen;
 
         do {
-            system("cls");
-            menuPrincipal();
-            cin >> opcion;
-            cin.ignore();
+            menu(menuPrincipal, opcion);
 
             switch (opcion) {
             case 1:
-                menuGestionUsuarios();
-                break;
+                menuGestionUsuarios();break;
             case 2:
-                menuGestionVuelos();
-                break;
+                menuGestionVuelos();break;
             case 3:
-                menuGestionCheckin();
-                break;
+                menuGestionCheckin(); break;
             case 4:
                 cout << "Gracias por usar el sistema\n"; system("pause"); break;
             default:
-                cout << "Opci?n inv?lida\n"; system("pause"); break;
+                mensajeError(); break;
             }
         } while (opcion != 4);
     }
 
     void menuGestionUsuarios() {
-        int auxUser;
+        int auxUser = 0;
         do {
-            system("cls");
-            menuUsuario();
-            cin >> auxUser;
-            cin.ignore();
+            menu(menuUsuario, auxUser);
+            mostrarSeccion(tituloUsuario);
 
             switch (auxUser) {
             case 1:
-                system("cls"); tituloUsuario();
                 gUsuario.agregarUsuario();
-                cout << "Operaci?n concluida correctamente\n";
+                cout << "Operación concluida correctamente\n";
                 system("pause"); break;
             case 2:
-                system("cls"); tituloUsuario();
                 gUsuario.mostrar();
                 system("pause"); break;
             case 3: break;
             default:
-                cout << "Opcion no valida\n"; system("pause"); break;
+                mensajeError(); break;
             }
         } while (auxUser != 3);
     }
@@ -85,10 +94,7 @@ public:
     void menuGestionVuelos() {
         int auxVuelo;
         do {
-            system("cls");
-            menuVuelos();
-            cin >> auxVuelo;
-            cin.ignore();
+            menu(menuVuelos, auxVuelo);
 
             switch (auxVuelo) {
             case 1: submenuMostrarVuelos(); break;
@@ -97,7 +103,7 @@ public:
             case 4: mostrarVuelosEnFecha(); break;
             case 5: mostrarVuelosEspecificos(); break;
             case 6: break;
-            default: cout << "Opci?n no v?lida\n"; system("pause"); break;
+            default: mensajeError(); break;
             }
         } while (auxVuelo != 6);
     }
@@ -105,10 +111,7 @@ public:
     void submenuMostrarVuelos() {
         int auxSubMenu;
         do {
-            system("cls");
-            subMenuTodosLosVuelos();
-            cin >> auxSubMenu;
-            cin.ignore();
+            menu(subMenuTodosLosVuelos, auxSubMenu);
 
             switch (auxSubMenu) {
             case 1:
@@ -127,7 +130,7 @@ public:
                 gReservas.reservar();
                 system("pause"); break;
             case 4: break;
-            default: cout << "Opcion no valida\n"; system("pause"); break;
+            default: mensajeError(); break;
             }
         } while (auxSubMenu != 4);
     }
@@ -135,17 +138,15 @@ public:
     void mostrarVuelosPorMes() {
         int auxValor;
         do {
-            system("cls"); tituloVuelo();
+            mostrarSeccion(tituloVuelo);
             selecionMesVuelo();
             cout << "Ingrese el mes: ";
             cin >> auxValor;
             cin.ignore();
-            if (auxValor < 0 || auxValor > 12) {
-                cout << "Opcion no valida\n"; system("pause");
-            }
-        } while (auxValor < 0 || auxValor > 12);
+            if (!enRango(auxValor, 1, 12)) mensajeError();
+        } while (!enRango(auxValor, 1, 12));
 
-        system("cls"); tituloVuelo();
+        mostrarSeccion(tituloVuelo);
         gVuelos.mostrarVuelosPorMes(auxValor);
         if (gVuelos.isVuelosEncontrados()) {
             cout << "\n";
@@ -157,14 +158,14 @@ public:
     void mostrarVuelosPorPaises() {
         int auxOrigen, auxDestino;
         do {
-            system("cls"); tituloVuelo();
+            mostrarSeccion(tituloVuelo);
             seleccionPais();
             cout << "Origen: "; cin >> auxOrigen;
             cout << "Destino: "; cin >> auxDestino;
-            if ((auxOrigen < 1 || auxOrigen > 10) || (auxDestino < 1 || auxDestino > 10)) {
-                cout << "Opcion no valida\n"; system("pause");
+            if (!validarDestino(auxOrigen, auxDestino)) {
+                mensajeError(); break;
             }
-        } while ((auxOrigen < 1 || auxOrigen > 10) || (auxDestino < 1 || auxDestino > 10));
+        } while (!validarDestino(auxOrigen, auxDestino));
 
         string origen = paises[auxOrigen - 1];
         string destino = paises[auxDestino - 1];
@@ -185,9 +186,9 @@ public:
             selecionMesVuelo();
             cout << "\nMes de Ida: "; cin >> auxMes;
             if (!validarDiaMes(auxDia, auxMes)) {
-                cout << "Opcion no valida\n"; system("pause");
+                mensajeError(); break;
             }
-        } while ((auxDia < 1 || auxDia > 31) || (auxMes < 1 || auxMes > 12));
+        } while (!validarDiaMes(auxDia, auxMes));
 
         gVuelos.mostrarVuelosEnFecha(auxMes, auxDia);
         if (gVuelos.isVuelosEncontrados()) {
@@ -200,14 +201,14 @@ public:
     void mostrarVuelosEspecificos() {
         int auxOrigen, auxDestino, auxDiaIda, auxMesIda;
         do {
-            system("cls"); tituloVuelo();
+            mostrarSeccion(tituloVuelo);
             seleccionPais();
             cout << "Origen: "; cin >> auxOrigen;
             cout << "Destino: "; cin >> auxDestino;
-            if ((auxOrigen < 1 || auxOrigen > 10) || (auxDestino < 1 || auxDestino > 10)) {
-                cout << "Opcion no valida\n"; system("pause");
+            if (!validarDestino(auxOrigen, auxDestino)) {
+                mensajeError(); break;
             }
-        } while ((auxOrigen < 1 || auxOrigen > 10) || (auxDestino < 1 || auxDestino > 10));
+        } while (!validarDestino(auxOrigen, auxDestino));
 
         string origen = paises[auxOrigen - 1];
         string destino = paises[auxDestino - 1];
@@ -217,9 +218,9 @@ public:
             selecionMesVuelo();
             cout << "\nMes de Ida: "; cin >> auxMesIda;
             if (!validarDiaMes(auxDiaIda, auxMesIda)) { 
-                cout << "Opcion no valida\n"; system("pause");
+                mensajeError(); break;
             }
-        } while ((auxDiaIda < 1 || auxDiaIda > 31) || (auxMesIda < 1 || auxMesIda > 12));
+        } while (!validarDiaMes(auxDiaIda, auxMesIda));
 
         gVuelos.mostrarVuelosDatosIda(origen, destino, auxMesIda, auxDiaIda);
         if (gVuelos.isVuelosEncontrados()) {
@@ -233,7 +234,7 @@ public:
         int opc;
         do
         {
-            system("cls"); menuCheckin(); cin >> opc;
+            menu(menuCheckin, opc);
             switch (opc)
             {
             case 1: //tarjetas embarque
@@ -248,7 +249,7 @@ public:
             case 4:
                 break;
             default:
-                cout << "Opción no válida\n"; system("pause"); break;
+                mensajeError(); break;
             }
         } while (opc != 4);
     }

@@ -66,21 +66,9 @@ public:
 
     void eliminarLinea(int i) {
         if (i >= 0 && i < lines.size())
-            lineas.erase(lineas.begin() + i);
+            lines.erase(lines.begin() + i);
         guardar();
     }
-
-    //vector<T> buscar(T elem) {
-    //    vector<T> coincidencias;
-    //    for (int i = 0; i < lines.size(); i++)
-    //    {
-    //        if (to_string(lines[i]).find(to_string(elem)) != string::npos) { // Si encuentra una subcadena | string::npos -> no se encuentra
-    //            coincidencias.push_back(lines[i]);
-    //        }
-    //    }
-    //    return coincidencias;
-    //}
-    //Otro dia x'd
 
     void recargar() {
         cargar();
