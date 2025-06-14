@@ -26,6 +26,7 @@ public:
     GestorSistema() : gReservas(gVuelos, gUsuario), gCheckIn(gUsuario) {
         gUsuario.leerUsuarios();
         gVuelos.generarVuelosAutomaticos();
+        
     }
 
     void ejecutar() {

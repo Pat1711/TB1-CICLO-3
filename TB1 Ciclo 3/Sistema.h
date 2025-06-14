@@ -2,13 +2,46 @@
 #define __SISTEMA__
 
 #include <iostream>
+#include <stdlib.h>
+#include <stdio.h>
+#include "Color.h"
 
+#define ANCHO 120
+#define ALTO 30
 using namespace std;
+using namespace System;
+
+bool sesionIniciada = false;
+bool debug = true; //idea para mostrar/ocultar opciones -> mas fidelidad a como se veria si fueras usuario
 
 // --- Menu Principal --- ///
-
+void ajustarConsola() {
+	Console::SetWindowSize(ANCHO, ALTO);
+}
+void ubicar(int x, int y) {
+	Console::SetCursorPosition(x, y);
+}
+void pintar(int x, int y, int ancho, int alto) {
+	ubicar(x, y);
+	for (int i = 0; i < alto; i++)
+	{
+		for (int j = 0; j < ancho; j++)
+		{
+			cout << " ";
+		}
+		y++;
+		ubicar(x, y);
+	}
+	ubicar(0, 0);
+}
 void portada() {
-	cout << "\n\n\n\n\n";
+	cout << BG_JTAZUL;
+	pintar(0,1, ANCHO, ALTO-2);
+	cout << BG_WHITE; pintar(0, 14, ANCHO, 8);
+	cout << WHITE << BG_JTAZUL;
+	
+
+	ubicar(1, 5);
 	cout << " \t ____  _                           _     _                      _      _    _____                      _ " << endl;
 	cout << " \t|  _ \\(_)                         (_)   | |                    | |    | |  / ____|                    | | " << endl;
 	cout << " \t| |_) |_  ___ _ ____   _____ _ __  _  __| | ___     __ _       | | ___| |_| (___  _ __ ___   __ _ _ __| |_ " << endl;
@@ -16,7 +49,9 @@ void portada() {
 	cout << " \t| |_) | |  __/ | | \\ V /  __/ | | | | (_| | (_) | | (_| | | |__| |  __/ |_ ____) | | | | | | (_| | |  | |_ " << endl;
 	cout << " \t|____/|_|\\___|_| |_|\\_/ \\___|_| |_|_|\\__,_|\\___/   \\__,_|  \\____/ \\___|\\__|_____/|_| |_| |_|\\__,_|_|   \\__|" << endl;
 
-	cout << "\n\n\n\n\n";
+	
+	ubicar(1, 15);
+	cout << JTROJO << BG_WHITE;
 
 	cout << "\t\t\t\t   -.                 `|." << endl;
 	cout << "\t\t\t\t   |:\\-,              .| \\." << endl;
@@ -24,14 +59,29 @@ void portada() {
 	cout << "\t\t\t\t   / /   o o o o o o o o o o o o o.-.o o   (_`. " << endl;
 	cout << "\t\t\t\t  /_ \\_              .     .=     |'|         `) " << endl;
 	cout << "\t\t\t\t       ``-----------//----/------------------'' " << endl;
+
+	cout << RESET;
 }
 
+
 void menuPrincipal() {
-	cout << "=====| JetSmart |=====\n";
-	cout << "1. Menu de Usuario\n";
-	cout << "2. Menu de Vuelos\n";
-	cout << "3. Check-In\n";
-	cout << "4. Salir\n";
+	cout << BG_WHITE; pintar(0, 1, ANCHO, ALTO - 2);
+	cout << BG_GRISCLARO; pintar(0, 4, 30, ALTO - 5);
+	cout << BG_JTAZUL; pintar(0, 1, ANCHO, 3);
+
+	ubicar(4, 2); cout << "JetSMART";
+	ubicar(80, 2);
+	if (sesionIniciada) {/*Nombre de usuario*/ }
+	else { cout << "Iniciar Sesión"; }
+
+	int x = 4, y = 5;
+	cout << BG_GRISCLARO << JTAZUL; ubicar(x, y);
+	cout << "1. Menu de Usuario"; ubicar(x, y+=2);
+	cout << "2. Reservar Vuelos"; ubicar(x, y += 2);
+	cout << "3. Check-In"; ubicar(x, y += 2);
+	cout << "4. Salir"; ubicar(x, y += 2);
+
+	cout << RESET;
 }
 
 // --- Menu Usuario --- ///
@@ -39,7 +89,7 @@ void menuPrincipal() {
 void menuUsuario() {
 	cout << "=====| Menu de Usuario |=====\n";
 	cout << "1. Registrar nuevo usuario\n";
-	cout << "2. Registro de usuarios\n";
+	if (debug) cout << "2. Registro de usuarios\n";
 	cout << "3. Salir\n";
 }
 
