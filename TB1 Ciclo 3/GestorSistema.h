@@ -139,6 +139,7 @@ public:
 
     void mostrarVuelosPorMes() {
         int auxValor;
+        menuSpawn("Buscar por Mes");
         do {
             mostrarSeccion(tituloVuelo);
             selecionMesVuelo();
@@ -149,6 +150,7 @@ public:
         } while (!enRango(auxValor, 1, 12));
 
         mostrarSeccion(tituloVuelo);
+        barraSpawn("Vuelos de " + meses[auxValor - 1]); 
         gVuelos.mostrarVuelosPorMes(auxValor);
         if (gVuelos.isVuelosEncontrados()) {
             cout << "\n";
