@@ -121,11 +121,11 @@ void menuPrincipal() {
 	default();
 
 	ubicar(4, 2); cout << BG_JTAZUL << "JetSMART";
-	ubicar(80, 2);cout << "Iniciar Sesión";
 
 	cout << RESET;
 }
 
+//Dejo esto porsiaca
 // --- Menu Usuario --- ///
 
 void menuUsuario() {

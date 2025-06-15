@@ -118,25 +118,25 @@ public:
             seleccionarOpc(auxSubMenu, opcOrdenar, 4);
 
             switch (auxSubMenu) {
-            case 1:
+            case 0:
                 system("cls"); cout << "=== Ordenamiento por Precio ===\n";
                 gVuelos.ordenarTodosLosVuelosPorPrecio();
                 gReservas.reservar();
                 system("pause"); break;
-            case 2:
+            case 1:
                 system("cls"); cout << "=== Ordenamiento por Pais de Origen ===\n";
                 gVuelos.ordenarTodosLosVuelosPorPais();
                 gReservas.reservar();
                 system("pause"); break;
-            case 3:
+            case 2:
                 system("cls"); cout << "=== Ordenamiento por Id Vuelo ===\n";
                 gVuelos.ordenarTodosLosVuelosPorId();
                 gReservas.reservar();
                 system("pause"); break;
-            case 4: break;
+            case 3: break;
             default: mensajeError(); break;
             }
-        } while (auxSubMenu != 4);
+        } while (auxSubMenu != 3);
     }
 
     void mostrarVuelosPorMes() {
