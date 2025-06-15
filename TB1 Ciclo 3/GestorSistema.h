@@ -51,67 +51,71 @@ public:
     void ejecutar() {
         int opcion = 0;
         string destino, origen;
+        int tecla;
 
         do {
-            menu(menuPrincipal, opcion);
+            menuSpawn("JetSMART");
+            seleccionarOpc(opcion, opcPrincipal,4);
 
             switch (opcion) {
-            case 1:
+            case 0:
                 menuGestionUsuarios();break;
-            case 2:
+            case 1:
                 menuGestionVuelos();break;
-            case 3:
+            case 2:
                 menuGestionCheckin(); break;
-            case 4:
+            case 3:
                 cout << "Gracias por usar el sistema\n"; system("pause"); break;
             default:
                 mensajeError(); break;
             }
-        } while (opcion != 4);
+        } while (opcion != 3);
     }
 
     void menuGestionUsuarios() {
         int auxUser = 0;
         do {
-            menu(menuUsuario, auxUser);
-            mostrarSeccion(tituloUsuario);
+            menuSpawn("Menu Usuarios");
+            seleccionarOpc(auxUser, opcUsuario, 3);
 
             switch (auxUser) {
-            case 1:
+            case 0:
                 gUsuario.agregarUsuario();
                 cout << "Operación concluida correctamente\n";
                 system("pause"); break;
-            case 2:
+            case 1:
                 gUsuario.mostrar();
                 system("pause"); break;
-            case 3: break;
+            case 2: break;
             default:
                 mensajeError(); break;
             }
-        } while (auxUser != 3);
+        } while (auxUser != 2);
     }
 
     void menuGestionVuelos() {
-        int auxVuelo;
+        int auxVuelo = 0;
         do {
-            menu(menuVuelos, auxVuelo);
+            menuSpawn("Buscar Vuelos");
+            seleccionarOpc(auxVuelo, opcVuelos, 6);
 
             switch (auxVuelo) {
-            case 1: submenuMostrarVuelos(); break;
-            case 2: mostrarVuelosPorMes(); break;
-            case 3: mostrarVuelosPorPaises(); break;
-            case 4: mostrarVuelosEnFecha(); break;
-            case 5: mostrarVuelosEspecificos(); break;
-            case 6: break;
+            case 0: submenuMostrarVuelos(); break;
+            case 1: mostrarVuelosPorMes(); break;
+            case 2: mostrarVuelosPorPaises(); break;
+            case 3: mostrarVuelosEnFecha(); break;
+            case 4: mostrarVuelosEspecificos(); break;
+            case 5: break;
             default: mensajeError(); break;
             }
-        } while (auxVuelo != 6);
+        } while (auxVuelo != 5);
     }
 
     void submenuMostrarVuelos() {
-        int auxSubMenu;
+        int auxSubMenu = 0;
         do {
-            menu(subMenuTodosLosVuelos, auxSubMenu);
+            menuSpawn("Ordenar resultados");
+            seleccionarOpc(auxSubMenu, opcOrdenar, 4);
 
             switch (auxSubMenu) {
             case 1:
@@ -231,22 +235,24 @@ public:
     }
 
     void menuGestionCheckin() {
-        int opc;
+        int opc = 0;
         do
         {
-            menu(menuCheckin, opc);
+            menuSpawn("Check in");
+            seleccionarOpc(opc, opcCheckin, 4);
+
             switch (opc)
             {
-            case 1: //tarjetas embarque
+            case 0: //tarjetas embarque
                 gCheckIn.mostrarCheckinsPorUsuario();
                 system("pause"); break;
-            case 2: //reservas
+            case 1: //reservas
                 gReservas.mostrarReservas();
                 system("pause"); break;
-            case 3: //chekcin
+            case 2: //chekcin
                 gCheckIn.realizarCheckIn(gReservas);
                 system("pause"); break;
-            case 4:
+            case 3:
                 break;
             default:
                 mensajeError(); break;

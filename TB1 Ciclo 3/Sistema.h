@@ -4,6 +4,8 @@
 #include <iostream>
 #include <stdlib.h>
 #include <stdio.h>
+#include <conio.h>
+#include <Windows.h>
 #include "Color.h"
 
 #define ANCHO 120
@@ -11,7 +13,6 @@
 using namespace std;
 using namespace System;
 
-bool sesionIniciada = false;
 bool debug = true; //idea para mostrar/ocultar opciones -> mas fidelidad a como se veria si fueras usuario
 
 // --- Menu Principal --- ///
@@ -63,23 +64,64 @@ void portada() {
 	cout << RESET;
 }
 
-
-void menuPrincipal() {
+void default() {
 	cout << BG_WHITE; pintar(0, 1, ANCHO, ALTO - 2);
 	cout << BG_GRISCLARO; pintar(0, 4, 30, ALTO - 5);
 	cout << BG_JTAZUL; pintar(0, 1, ANCHO, 3);
+	cout << RESET;
+}
 
-	ubicar(4, 2); cout << "JetSMART";
-	ubicar(80, 2);
-	if (sesionIniciada) {/*Nombre de usuario*/ }
-	else { cout << "Iniciar Sesión"; }
+//TODAS LAS OPCIONES BRO
+string opcPrincipal[4] = { "Menu de Usuario", "Reservar Vuelos", "Check-In", "Salir" };
+string opcUsuario[3] = { "Registrar Usuario", "Registro de Usuarios", "Salir" };
+string opcVuelos[6] = {"Ver todos", "Buscar por mes", "Buscar por pais", "Buscar por fecha", "Buscar especifico", "Salir"};
+string opcCheckin[4] = { "Tarjetas de embarque", "Reservas", "Check in", "Salir"};
+string opcOrdenar[4] = {"Por precio", "Por país de origen", "Por código", "Salir"};
 
+
+void seleccionarOpc(int&opcion, string opciones[], int n) {
+	char tecla;
 	int x = 4, y = 5;
-	cout << BG_GRISCLARO << JTAZUL; ubicar(x, y);
-	cout << "1. Menu de Usuario"; ubicar(x, y+=2);
-	cout << "2. Reservar Vuelos"; ubicar(x, y += 2);
-	cout << "3. Check-In"; ubicar(x, y += 2);
-	cout << "4. Salir"; ubicar(x, y += 2);
+	
+	do {
+		for (int i = 0; i < n; i++) {
+			if (i == opcion) {
+				cout << BG_GRISCLARO << JTAZUL;
+				ubicar(x, y + 2*i); cout << " --> " << opciones[i];
+			}
+			else {
+				cout << BG_GRISCLARO << BLACK;
+				ubicar(x, y + 2 * i); cout << opciones[i] << "      ";
+			}
+			
+		}
+
+		tecla = _getch();
+
+		if (tecla == 72) { // Flecha arriba
+			opcion--;
+			if (opcion < 0) opcion = 0;
+		}
+		else if (tecla == 80) { // Flecha abajo
+			opcion++;
+			if (opcion > n-1) opcion = n-1;
+		}
+
+	} while (tecla != 13); //tecla enter
+
+	cout << RESET;
+}
+
+void menuSpawn(string titulo) {
+	default();
+	ubicar(4, 2); cout << BG_JTAZUL << titulo;
+	cout << RESET;
+}
+void menuPrincipal() {
+	default();
+
+	ubicar(4, 2); cout << BG_JTAZUL << "JetSMART";
+	ubicar(80, 2);cout << "Iniciar Sesión";
 
 	cout << RESET;
 }
