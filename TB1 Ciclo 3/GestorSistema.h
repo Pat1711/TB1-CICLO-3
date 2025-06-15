@@ -102,7 +102,7 @@ public:
 
             switch (auxVuelo) {
             case 0: submenuMostrarVuelos(); break;
-            case 1: mostrarVuelosPorMes(); break;
+            case 1: mostrarVuelosPorMes(); break; 
             case 2: mostrarVuelosPorPaises(); break;
             case 3: mostrarVuelosEnFecha(); break;
             case 4: mostrarVuelosEspecificos(); break;
@@ -122,14 +122,26 @@ public:
             case 0:
                 barraSpawn("Ordenamiento por precio");
                 gVuelos.ordenarTodosLosVuelosPorPrecio();
+                if (gVuelos.isQuiereReservar()) 
+                {
+                    gReservas.reservar(); gVuelos.setQuiereReservar(0); return;
+                }
                 seleccionarOpc(auxSubMenu, opcOrdenar, 4);break;
             case 1:
                 barraSpawn("Ordenamiento por origen");
                 gVuelos.ordenarTodosLosVuelosPorPais();
+                if (gVuelos.isQuiereReservar())
+                {
+                    gReservas.reservar(); gVuelos.setQuiereReservar(0); return;
+                }
                 seleccionarOpc(auxSubMenu, opcOrdenar, 4); break;
             case 2:
                 barraSpawn("Ordenamiento por id");
                 gVuelos.ordenarTodosLosVuelosPorId();
+                if (gVuelos.isQuiereReservar())
+                {
+                    gReservas.reservar(); gVuelos.setQuiereReservar(0); return;
+                }
                 seleccionarOpc(auxSubMenu, opcOrdenar, 4); break;
             case 3: break;
             default: mensajeError(); break;
@@ -138,18 +150,19 @@ public:
     }
 
     void mostrarVuelosPorMes() {
+        int auxSubMenu = 1;
         int auxValor;
-        menuSpawn("Buscar por Mes");
+        barraSpawn("Buscar por Mes"); 
+        //seleccionarOpc(auxSubMenu, opcOrdenar, 4);
+
         do {
-            mostrarSeccion(tituloVuelo);
             selecionMesVuelo();
-            cout << "Ingrese el mes: ";
-            cin >> auxValor;
+            ubicar(49, 9); ingresarDatos(auxValor); 
             cin.ignore();
             if (!enRango(auxValor, 1, 12)) mensajeError();
         } while (!enRango(auxValor, 1, 12));
 
-        mostrarSeccion(tituloVuelo);
+        limpiarDerecha(); 
         barraSpawn("Vuelos de " + meses[auxValor - 1]); 
         gVuelos.mostrarVuelosPorMes(auxValor);
         if (gVuelos.isVuelosEncontrados()) {

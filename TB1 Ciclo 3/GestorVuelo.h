@@ -20,6 +20,7 @@ private:
     //clave: int | valor: [clave: int, valor: vector de vuelos]
     map<int, map<int, vector<Vuelo*>>> vuelosPorMes;
     bool vuelosEncontrados;  
+    bool quiereReservar; 
 public:
     void agregarVuelo(Vuelo* vuelo) {
         int mesIda = vuelo->getMesIda();
@@ -326,7 +327,7 @@ public:
         cout << BG_JTAZUL << WHITE << "Pagina " << (pagina + 1) << " / " << ((vuelos.size() + 9) / 10);
         if (pagina < 10) cout << " ";
         ubicar(30, 2);
-        cout << "Usa Flechas izq y der para cambiar de pagina. ESC para salir.";
+        cout << "Usa Flechas izq y der para cambiar de pagina. ESC para salir. ENTER: reservar";
     }
 
 
@@ -335,6 +336,7 @@ public:
         int totalPaginas = (vuelos.size() + 9) / 10;
         int paginaActual = 0;
         int tecla;
+        quiereReservar = false; 
 
         do {
             mostrarPagina(vuelos, paginaActual);
@@ -349,10 +351,20 @@ public:
                     paginaActual--;
                 }
             }
+            else if (tecla == 13) {
+                quiereReservar = true; tecla = 27; 
+            }
 
         } while (tecla != 27); // 27 = ESC
     }
 
+    bool isQuiereReservar() {
+        return quiereReservar; 
+    }
+
+    void setQuiereReservar(bool quiereReservar) {
+        this->quiereReservar = quiereReservar;
+    }
 };
 
 #endif // !__GESTOR_VUELOS__

@@ -128,6 +128,10 @@ void barraSpawn(string titulo) {
 	ubicar(4, 2); cout << BG_JTAZUL << titulo;
 	cout << RESET;
 }
+void limpiarDerecha() {
+	cout << BG_WHITE; pintar(30, 5, ANCHO - 30, ALTO - 6);
+	cout << RESET;
+}
 void menuPrincipal() {
 	default();
 
@@ -175,11 +179,13 @@ void tituloVuelo() {
 }
 
 void selecionMesVuelo() {
-	cout << "Listado de Meses\n";
-	cout << "1. Enero\t 2. Febrero\t 3. Marzo\n";
-	cout << "4. Abril\t 5. Mayo\t 6. Junio\n";
-	cout << "7. Julio\t 8. Agosto\t 9. Septiembre\n";
-	cout << "10. Octubre\t 11. Noviembre\t 12. Diciembre\n";
+	int x = 32; int y = 4; 
+	ubicar(x, y); cout << BG_WHITE << BLACK << "Listado de Meses"; 
+	ubicar(x, y += 1); cout << "1. Enero\t 2. Febrero\t 3. Marzo";
+	ubicar(x, y += 1); cout << "4. Abril\t 5. Mayo\t 6. Junio";
+	ubicar(x, y += 1); cout << "7. Julio\t 8. Agosto\t 9. Septiembre"; 
+	ubicar(x, y += 1); cout << "10. Octubre\t 11. Noviembre\t 12. Diciembre"; 
+	ubicar(x, y += 1); cout << "Ingrese el mes: "; 	
 }
 
 void seleccionPais() {
