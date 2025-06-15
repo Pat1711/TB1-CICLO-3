@@ -51,7 +51,6 @@ public:
     void ejecutar() {
         int opcion = 0;
         string destino, origen;
-        int tecla;
 
         do {
             menuSpawn("JetSMART");
