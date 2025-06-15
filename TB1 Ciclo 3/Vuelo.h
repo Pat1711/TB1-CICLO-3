@@ -53,8 +53,9 @@ public:
     void mostrarVuelo2(int x, int y) {
         cout << BG_WHITE << BLACK;
         ubicar(x, y); cout << "Vuelo nro: " << codigoVuelo << " |  " << origen << " - " << destino;
-        ubicar(x, y += 1); cout << "Ida: " << diaIda << "/" << mesIda; ubicar(x, y += 1); cout << "Vuelta: " << diaVuelta << " / " << mesVuelta; ubicar(x, y +=1); cout <<
-            "Precio en USD:" << precio;
+        ubicar(x, y += 1); cout << "Ida: " << diaIda << "/" << mesIda; 
+        ubicar(x, y += 1); cout << "Vuelta: " << diaVuelta << " / " << mesVuelta; 
+        ubicar(x, y +=1); cout << "Precio en USD:" << precio;
     }
 
     string getOrigen() { return origen; }

@@ -75,28 +75,36 @@ public:
     }
 
     void mostrarVuelosEnFecha(int mes, int dia) {
+        //Para poder mostrar
+        vector<Vuelo*> vuelosAux;
+        vuelosAux.clear();
+
         vuelosEncontrados = false;
         if (vuelosPorMes.count(mes) && vuelosPorMes[mes].count(dia)) {
             cout << "\n--- Vuelos para el " << dia << "/" << mes << " ---\n";
             for (Vuelo* v : vuelosPorMes[mes][dia]) {
-                v->mostrarVuelo();
+                vuelosAux.push_back(v);
                 vuelosEncontrados = true;
             }
         }
         else {
             cout << "No existen vuelos disponibles en esa fecha\n";
         }
+
+        iterarPaginas(vuelosAux);
     }
 
     void mostrarVuelosPorMes(int mes) {
+        //Para poder mostrar
+        vector<Vuelo*> vuelosAux; 
+        vuelosAux.clear(); 
+
         vuelosEncontrados = false;
         if (vuelosPorMes.count(mes)) {
-            cout << "\n=== Vuelos registrados para el mes " << meses[mes - 1] << " ===\n";
             for (int dia = 1; dia <= 30; dia++) {
                 if (vuelosPorMes[mes].count(dia)) {
-                    cout << "\n--- Vuelos del Dia " << dia << " ---\n";
                     for (Vuelo* v : vuelosPorMes[mes][dia]) {
-                        v->mostrarVuelo();
+                        vuelosAux.push_back(v); 
                         vuelosEncontrados = true;
                     }
                 }
@@ -105,9 +113,15 @@ public:
         else {
             cout << "No existen vuelos disponibles en esa fecha\n";
         }
+
+        iterarPaginas(vuelosAux); 
     }
 
     void mostrarVuelosPorPaises(string origen, string destino) {
+        //Para poder mostrar
+        vector<Vuelo*> vuelosAux; 
+        vuelosAux.clear();
+
         cout << "\n=== Vuelos de " << origen << " a " << destino << " ==== \n";
         vuelosEncontrados = false;
 
@@ -121,13 +135,14 @@ public:
 
                 for (Vuelo* vuelo : listaVuelos) {
                     if (vuelo->getOrigen() == origen && vuelo->getDestino() == destino) {
-                        cout << "\n--- Vuelos del " << dia << " de " << meses[mes - 1] << " ---\n";
-                        vuelo->mostrarVuelo();
+                        vuelosAux.push_back(vuelo); 
                         vuelosEncontrados = true;
                     }
                 }
             }
         }
+
+        iterarPaginas(vuelosAux);
 
         if (!vuelosEncontrados) {
             cout << "No se encontraron vuelos de " << origen << " a " << destino << endl;
@@ -135,6 +150,10 @@ public:
     }
 
     void mostrarVuelosDatosIda(string origen, string destino, int mesIda, int diaIda) {
+        //Para poder mostrar
+        vector<Vuelo*> vuelosAux;
+        vuelosAux.clear();
+
         cout << "\n=== Vuelos segun Origen - Destino - Fecha de Ida ===\n";
         vuelosEncontrados = false;
 
@@ -142,13 +161,15 @@ public:
             vector<Vuelo*>& listaVuelos = vuelosPorMes[mesIda][diaIda];
 
             for (Vuelo* vuelo : listaVuelos) {
-                if (vuelo->getOrigen() == origen && vuelo->getDestino() == destino) {
-                    cout << "\n--- Vuelo del " << diaIda << " de " << meses[mesIda - 1] << " ---\n";
-                    vuelo->mostrarVuelo();
+                if (vuelo->getOrigen() == origen && vuelo->getDestino() == destino) {          
+                    vuelosAux.push_back(vuelo);
                     vuelosEncontrados = true;
                 }
             }
         }
+
+        iterarPaginas(vuelosAux);
+
 
         if (!vuelosEncontrados) {
             cout << "No se encontraron vuelos de " << origen << " a " << destino
@@ -300,7 +321,7 @@ public:
             vuelos[i]->mostrarVuelo2(x, y);
         }
 
-        // Mostrar número de página - falta reubicar en una mejor posicion y pintar el fg y bg color 
+        // Mostrar número de página
         ubicar(30, 1);
         cout << BG_JTAZUL << WHITE << "Pagina " << (pagina + 1) << " / " << ((vuelos.size() + 9) / 10);
         if (pagina < 10) cout << " ";
