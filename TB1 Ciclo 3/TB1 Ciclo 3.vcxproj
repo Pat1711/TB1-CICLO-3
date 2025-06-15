@@ -117,6 +117,7 @@
     <ClInclude Include="Asiento.h" />
     <ClInclude Include="Checkin.h" />
     <ClInclude Include="Cola.h" />
+    <ClInclude Include="Color.h" />
     <ClInclude Include="GestorCheckin.h" />
     <ClInclude Include="GestorReserva.h" />
     <ClInclude Include="Gestortxt.h" />

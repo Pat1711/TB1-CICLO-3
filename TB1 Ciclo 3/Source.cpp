@@ -1,8 +1,11 @@
 #include"GestorSistema.h"
 
 int main() {
+    ajustarConsola();
     srand(time(nullptr)); 
-    setlocale(LC_ALL, "");
+    Console::CursorVisible = false;
+    setlocale(LC_ALL,(""));
+
     portada(); cin.get();
     
     GestorSistema sistema;

@@ -199,7 +199,7 @@ public:
         vector<Vuelo*> todos = obtenerTodosLosVuelos();
         size_t n = todos.size();
 
-        //Ordenamiento de selecci�n
+        //Ordenamiento de selección
         for (int i = 0; i < n - 1; i++) {
             int menor = i;
             for (int j = i + 1; j < n; j++) {
@@ -215,19 +215,16 @@ public:
             }
         }
 
-        //Mostrar ya ordenados
-        for (Vuelo* v : todos) {
-            v->mostrarVuelo();
-        }
+        iterarPaginas(todos);
     }
 
     void ordenarTodosLosVuelosPorId() {
         vector<Vuelo*> todos = obtenerTodosLosVuelos();
         size_t n = todos.size();
-        bool ordenado; 
+        bool ordenado;
 
         //Ordenamiento de Bubble Sort
-        for (int i = 0; i < n - 1; i++) { 
+        for (int i = 0; i < n - 1; i++) {
             ordenado = true;
             for (int j = 0; j < n - i - 1; j++) {
                 if (todos[j]->getCodigoVuelo() > todos[j + 1]->getCodigoVuelo()) {
@@ -237,35 +234,31 @@ public:
                     ordenado = false;
                 }
             }
-            if (ordenado) break; 
+            if (ordenado) break;
         }
 
-        //Mostrar ya ordenados
-        for (Vuelo* v : todos) {
-            v->mostrarVuelo();
-        }
+        iterarPaginas(todos);
+
     }
 
     void ordenarTodosLosVuelosPorPais() {
         vector<Vuelo*> todos = obtenerTodosLosVuelos();
         size_t n = todos.size();
-        int k; 
+        int k;
 
         //Ordenamiento de Insercion
         for (int i = 1; i < n; i++) {
             Vuelo* aux = todos[i];
             k = i - 1;
-            while (k >= 0 && aux->getIndicePaisOrigen() < todos[k]->getIndicePaisOrigen()) { 
-                todos[k + 1] = todos[k]; 
-                k--; 
+            while (k >= 0 && aux->getIndicePaisOrigen() < todos[k]->getIndicePaisOrigen()) {
+                todos[k + 1] = todos[k];
+                k--;
             }
-            todos[k + 1] = aux; 
+            todos[k + 1] = aux;
         }
 
-        //Mostrar ya ordenados
-        for (Vuelo* v : todos) {
-            v->mostrarVuelo();
-        }
+        iterarPaginas(todos);
+
     }
 
     Vuelo* getVueloPorCodigo(int codeVuelo) {
@@ -279,18 +272,64 @@ public:
 
                 for (Vuelo* vuelo : listaVuelos) {
                     if (vuelo->getCodigoVuelo() == codeVuelo) {
-                        vuelo->mostrarVuelo();
                         return vuelo;
                     }
                 }
             }
         }
-        cout << "\nNo se encontro el vuelo con el codigo: " << codeVuelo;
         return nullptr;
     }
 
     bool isVuelosEncontrados() {
         return vuelosEncontrados;
+    }
+    void mostrarPagina(vector<Vuelo*>& vuelos, int pagina) {
+
+        int vuelosPorPagina = 10;
+        int inicio = pagina * vuelosPorPagina;
+        int fin = min(inicio + vuelosPorPagina, (int)vuelos.size());
+
+        int x1 = 32, x2 = 78;
+        int yInicio = 4;
+        int espacioVertical = 5;
+
+        for (int i = inicio; i < fin; ++i) {
+            int localIndex = i - inicio; // 0 a 9
+            int x = (localIndex < 5) ? x1 : x2;
+            int y = yInicio + (localIndex % 5) * espacioVertical;
+            vuelos[i]->mostrarVuelo2(x, y);
+        }
+
+        // Mostrar número de página - falta reubicar en una mejor posicion y pintar el fg y bg color 
+        ubicar(30, 1);
+        cout << BG_JTAZUL << WHITE << "Pagina " << (pagina + 1) << " / " << ((vuelos.size() + 9) / 10);
+        if (pagina < 10) cout << " ";
+        ubicar(30, 2);
+        cout << "Usa Flechas izq y der para cambiar de pagina. ESC para salir.";
+    }
+
+
+
+    void iterarPaginas(vector<Vuelo*>& vuelos) {
+        int totalPaginas = (vuelos.size() + 9) / 10;
+        int paginaActual = 0;
+        int tecla;
+
+        do {
+            mostrarPagina(vuelos, paginaActual);
+            tecla = _getch();
+
+            if (tecla == 224) {
+                int flecha = _getch();
+                if (flecha == 77 && paginaActual < totalPaginas - 1) { //  flecha derecha
+                    paginaActual++;
+                }
+                else if (flecha == 75 && paginaActual > 0) { //  flecha izquierda
+                    paginaActual--;
+                }
+            }
+
+        } while (tecla != 27); // 27 = ESC
     }
 
 };

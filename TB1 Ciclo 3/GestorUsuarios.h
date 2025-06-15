@@ -70,8 +70,8 @@ public:
         return nuevoPasajero;
     }
 
-    void mostrar(){
-        pLista.mostrarPasajero();
+    void mostrar(int x, int y){
+        pLista.mostrarPasajero(x, y);
     }
 
     Lista<Pasajero*>& getLista() {

@@ -59,7 +59,7 @@ public:
         }
 
         cout << "\nSeleccione un usuario (DNI):\n";
-        gUsuarios.getLista().mostrarPasajero();
+        gUsuarios.getLista().mostrarPasajero(0,0);
 
         string dni;
         cout << "Ingrese el DNI del pasajero: ";
