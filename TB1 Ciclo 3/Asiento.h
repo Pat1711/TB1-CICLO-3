@@ -20,6 +20,12 @@ public:
 		cout << idAsiento << " - " << clasificacion << " [" << estado << "]\n";
 	}
 
+	void mostrarColor(int x, int y) {
+		ubicar(x, y);
+		if (estado == 0)cout << BG_GREEN; else cout << BG_RED;
+		cout << idAsiento << "-" << clasificacion;
+	}
+
 	void setEstado(bool a) {
 		estado = a;
 	}
