@@ -20,7 +20,8 @@ void ajustarConsola() {
 	Console::SetWindowSize(ANCHO, ALTO);
 }
 void ubicar(int x, int y) {
-	Console::SetCursorPosition(x, y);
+	COORD coord = { (SHORT)x, (SHORT)y };
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }
 void pintar(int x, int y, int ancho, int alto) {
 	ubicar(x, y);
@@ -72,7 +73,7 @@ void default() {
 }
 
 //TODAS LAS OPCIONES BRO
-string opcPrincipal[4] = { "Menu de Usuario", "Reservar Vuelos", "Check-In", "Salir" };
+string opcPrincipal[5] = {  "Buscar vuelos", "Menu de Usuario","Reservar un vuelo","Check-In", "Salir" };
 string opcUsuario[3] = { "Registrar Usuario", "Registro de Usuarios", "Salir" };
 string opcVuelos[6] = {"Ver todos", "Buscar por mes", "Buscar por pais", "Buscar por fecha", "Buscar especifico", "Salir"};
 string opcCheckin[4] = { "Tarjetas de embarque", "Reservas", "Check in", "Salir"};
@@ -112,8 +113,18 @@ void seleccionarOpc(int&opcion, string opciones[], int n) {
 	cout << RESET;
 }
 
+void ingresarDatos(int&a) {
+	Console::CursorVisible = true;
+	cin >> a;
+	Console::CursorVisible = false;
+}
+
 void menuSpawn(string titulo) {
 	default();
+	ubicar(4, 2); cout << BG_JTAZUL << titulo;
+	cout << RESET;
+}
+void barraSpawn(string titulo) {
 	ubicar(4, 2); cout << BG_JTAZUL << titulo;
 	cout << RESET;
 }

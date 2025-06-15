@@ -36,11 +36,11 @@ public:
         return (ss.str());
     }
 
-    void mostrar() {
-        cout << "Nombres: " << nombres << endl;
-        cout << "Apellidos: " << apellidos << endl;
-        cout << "Correo: " << correo << endl;
-        cout << "DNI: " << dni << endl;
+    void mostrar(int x, int y) {
+        ubicar(x, y++); cout << "Nombres: " << nombres;
+        ubicar(x, y++); cout << "Apellidos: " << apellidos;
+        ubicar(x, y++); cout << "Correo: " << correo;
+        ubicar(x, y++); cout << "DNI: " << dni;
     }
 };
 

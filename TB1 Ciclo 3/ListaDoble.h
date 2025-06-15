@@ -20,7 +20,7 @@ public:
 	void insertarInicio(T v);
 	void insertarFinal(T v);
 	bool esVacio();
-	void mostrarPasajero();
+	void mostrarPasajero(int x, int y);
 	T getDato(int index);
 
 	bool test(string nombres, string apellidos, string correo, string dni);
@@ -79,21 +79,22 @@ bool Lista<T>::esVacio() {
 
 // ---
 template<class T>
-void Lista<T>::mostrarPasajero() {
+void Lista<T>::mostrarPasajero(int x, int y) {
 	Nodo<T>* nodo = inicio; //Nodo<tipo T> apunta (*) hacua 'nodo'
-	cout << "Lista de Pasajeros:\n";
+	ubicar(x, y++); cout << "Lista de Pasajeros:";
 
 	int i = 1;
+	
 	while (nodo != nullptr) {
 		/*Pasajero* psj = (Pasajero*)(nodo->dato);*/ //Pasajero apunta a psj con valor Pasajero que apunta al dato del nodo
 		Pasajero* psj = static_cast<Pasajero*>(nodo->dato); 
-		cout << "# " << i++ << ". ---\n"; 
-		cout << psj->toString();
-		cout << "->\n";
+		ubicar(x, y++); cout << "# " << i++ << ". ---";
+		psj->mostrar(x, y++);
+		ubicar(x, y+=3); cout << "->";
 
 		nodo = nodo->siguiente;
 	}
-	cout << endl;
+	ubicar(x, y++);
 }
 
 // ---

@@ -54,16 +54,18 @@ public:
 
         do {
             menuSpawn("JetSMART");
-            seleccionarOpc(opcion, opcPrincipal,4);
+            seleccionarOpc(opcion, opcPrincipal,5);
 
             switch (opcion) {
             case 0:
-                menuGestionUsuarios();break;
+                menuGestionVuelos(); break;
             case 1:
-                menuGestionVuelos();break;
+                menuGestionUsuarios(); break;
             case 2:
-                menuGestionCheckin(); break;
+                gReservas.reservar(); break;
             case 3:
+                menuGestionCheckin(); break;
+            case 4:
                 cout << "Gracias por usar el sistema\n"; system("pause"); break;
             default:
                 mensajeError(); break;
@@ -83,7 +85,7 @@ public:
                 cout << "Operación concluida correctamente\n";
                 system("pause"); break;
             case 1:
-                gUsuario.mostrar();
+                gUsuario.mostrar(0,0);
                 system("pause"); break;
             case 2: break;
             default:
@@ -112,26 +114,23 @@ public:
 
     void submenuMostrarVuelos() {
         int auxSubMenu = 0;
+        menuSpawn("Ordenar resultados");
+        seleccionarOpc(auxSubMenu, opcOrdenar, 4);
         do {
-            menuSpawn("Ordenar resultados");
-            seleccionarOpc(auxSubMenu, opcOrdenar, 4);
 
             switch (auxSubMenu) {
             case 0:
-                system("cls"); cout << "=== Ordenamiento por Precio ===\n";
+                barraSpawn("Ordenamiento por precio");
                 gVuelos.ordenarTodosLosVuelosPorPrecio();
-                gReservas.reservar();
-                system("pause"); break;
+                seleccionarOpc(auxSubMenu, opcOrdenar, 4);break;
             case 1:
-                system("cls"); cout << "=== Ordenamiento por Pais de Origen ===\n";
+                barraSpawn("Ordenamiento por origen");
                 gVuelos.ordenarTodosLosVuelosPorPais();
-                gReservas.reservar();
-                system("pause"); break;
+                seleccionarOpc(auxSubMenu, opcOrdenar, 4); break;
             case 2:
-                system("cls"); cout << "=== Ordenamiento por Id Vuelo ===\n";
+                barraSpawn("Ordenamiento por id");
                 gVuelos.ordenarTodosLosVuelosPorId();
-                gReservas.reservar();
-                system("pause"); break;
+                seleccionarOpc(auxSubMenu, opcOrdenar, 4); break;
             case 3: break;
             default: mensajeError(); break;
             }
@@ -256,7 +255,7 @@ public:
             default:
                 mensajeError(); break;
             }
-        } while (opc != 4);
+        } while (opc != 3);
     }
 };
 

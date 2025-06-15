@@ -11,7 +11,7 @@ using namespace std;
 
 // --- Variables Universales ---
 
-string paises[10] = { "Peru", "Chile", "Argentina", "Brasil", "Colombia", "Ecuador", "Mexico", "EE.UU", "Espania", "Italia" };
+string paises[10] = { "Perú     ", "Chile    ", "Argentina", "Brasil   ", "Colombia ", "Ecuador  ", "México   ", "EE.UU    ", "España   ", "Italia   " };
 
 // --- Clase Vuelo --- 
 
@@ -49,6 +49,14 @@ public:
             "\nPrecio en USD:" << precio << endl << endl;
     }
 
+    //CON COORDENADAS
+    void mostrarVuelo2(int x, int y) {
+        cout << BG_WHITE << BLACK;
+        ubicar(x, y); cout << "Vuelo nro: " << codigoVuelo << " |  " << origen << " - " << destino;
+        ubicar(x, y += 1); cout << "Ida: " << diaIda << "/" << mesIda; ubicar(x, y += 1); cout << "Vuelta: " << diaVuelta << " / " << mesVuelta; ubicar(x, y +=1); cout <<
+            "Precio en USD:" << precio;
+    }
+
     string getOrigen() { return origen; }
     string getDestino() { return destino; }
     int getDiaIda() { return diaIda; }
@@ -76,7 +84,6 @@ public:
                 return asientos[i];
             }
         }
-        cout << "\nAsiento no valido\n";
         return nullptr;
     }
 
@@ -85,6 +92,20 @@ public:
         {
             asientos[i]->mostrarAsiento();
 
+        }
+    }
+
+    void mostrarMAsientos(int x, int y) {
+        for (int i = 0; i < 20; i+=4)
+        {
+            
+            asientos[i]->mostrarColor(x,y);
+            asientos[i+1]->mostrarColor(x+=6, y);
+            asientos[i + 2]->mostrarColor(x += 8, y);
+            asientos[i + 3]->mostrarColor(x += 6, y);
+                
+            x -= 20;
+            y += 1;
         }
     }
 
