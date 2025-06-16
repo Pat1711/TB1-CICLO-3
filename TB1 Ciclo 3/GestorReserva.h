@@ -47,7 +47,7 @@ public:
 
 		x = 35; y = 5;
 
-		ubicar(x, y); cout << BG_WHITE << "Desea reservar un vuelo? : y/n ";  cin >> opc; cin.ignore();
+		ubicar(x, y); cout << BG_WHITE << "Desea reservar un vuelo? y/n: ";  ingresarChar(opc); cin.ignore();
 
 		if (!confirmar(opc)) return;
 		

@@ -75,7 +75,7 @@ void default() {
 //TODAS LAS OPCIONES BRO
 string opcPrincipal[5] = {  "Buscar vuelos", "Menu de Usuario","Reservar un vuelo","Check-In", "Salir" };
 string opcUsuario[3] = { "Registrar Usuario", "Registro de Usuarios", "Salir" };
-string opcVuelos[6] = {"Ver todos", "Buscar por mes", "Buscar por pais", "Buscar por fecha", "Buscar especifico", "Salir"};
+string opcVuelos[6] = {"Ver todos    ", "Buscar por mes", "Buscar por pais", "Buscar por fecha", "Buscar especifico", "Salir"};
 string opcCheckin[4] = { "Tarjetas de embarque", "Reservas", "Check in", "Salir"};
 string opcOrdenar[4] = {"Por precio", "Por país de origen", "Por código", "Salir"};
 
@@ -119,6 +119,12 @@ void ingresarDatos(int&a) {
 	Console::CursorVisible = false;
 }
 
+void ingresarChar(char& a) {
+	Console::CursorVisible = true;
+	cin >> a;
+	Console::CursorVisible = false;
+}
+
 void menuSpawn(string titulo) {
 	default();
 	ubicar(4, 2); cout << BG_JTAZUL << titulo;
@@ -129,7 +135,13 @@ void barraSpawn(string titulo) {
 	cout << RESET;
 }
 void limpiarDerecha() {
-	cout << BG_WHITE; pintar(30, 5, ANCHO - 30, ALTO - 6);
+	cout << BG_WHITE; pintar(30, 4, ANCHO - 30, ALTO - 6);
+	cout << RESET;
+}
+void limpiarDerecha2() {
+	cout << BG_WHITE; pintar(30, 4, ANCHO - 30, ALTO - 6);
+	cout << RESET;
+	cout << BG_JTAZUL; pintar(30, 1, ANCHO - 30, 4);
 	cout << RESET;
 }
 void menuPrincipal() {
@@ -178,8 +190,7 @@ void tituloVuelo() {
 	cout << "=====|  Menu de Vuelos  |=====\n";
 }
 
-void selecionMesVuelo() {
-	int x = 32; int y = 4; 
+void selecionMesVuelo(int x = 32, int y = 4) {
 	ubicar(x, y); cout << BG_WHITE << BLACK << "Listado de Meses"; 
 	ubicar(x, y += 1); cout << "1. Enero\t 2. Febrero\t 3. Marzo";
 	ubicar(x, y += 1); cout << "4. Abril\t 5. Mayo\t 6. Junio";
@@ -188,12 +199,12 @@ void selecionMesVuelo() {
 	ubicar(x, y += 1); cout << "Ingrese el mes: "; 	
 }
 
-void seleccionPais() {
-	cout << "Listado de paises\n";
-	cout << "1. Peru\t\t 2. Chile\t 3. Argentina\n";
-	cout << "4. Brasil\t 5. Colombia\t 6. Ecuador\n";
-	cout << "7. Mexico\t 8. EE.UU\t 9. Espania\n";
-	cout << "10. Italia\n";
+void seleccionPais(int x = 32, int y = 4) {
+	ubicar(x, y); cout << BG_WHITE << BLACK << "Listado de Paises";
+	ubicar(x, y += 1); cout << "1. Peru\t\t 2. Chile\t 3. Argentina";
+	ubicar(x, y += 1); cout << "4. Brasil\t 5. Colombia\t 6. Ecuador";
+	ubicar(x, y += 1); cout << "7. Mexico\t 8. EE.UU\t 9. Espania";
+	ubicar(x, y += 1); cout << "10. Italia";
 }
 
 // --- Menu Checkin --- ///

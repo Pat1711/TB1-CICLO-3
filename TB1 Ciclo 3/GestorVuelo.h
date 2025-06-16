@@ -82,14 +82,15 @@ public:
 
         vuelosEncontrados = false;
         if (vuelosPorMes.count(mes) && vuelosPorMes[mes].count(dia)) {
-            cout << "\n--- Vuelos para el " << dia << "/" << mes << " ---\n";
             for (Vuelo* v : vuelosPorMes[mes][dia]) {
                 vuelosAux.push_back(v);
                 vuelosEncontrados = true;
             }
         }
-        else {
-            cout << "No existen vuelos disponibles en esa fecha\n";
+
+        if (!vuelosEncontrados) {
+            ubicar(32, 6);
+            cout << BG_WHITE << BLACK << "No se encontraron vuelos disponibles";
         }
 
         iterarPaginas(vuelosAux);
@@ -111,8 +112,10 @@ public:
                 }
             }
         }
-        else {
-            cout << "No existen vuelos disponibles en esa fecha\n";
+
+        if (!vuelosEncontrados) {
+            ubicar(32, 6);
+            cout << BG_WHITE << BLACK << "No se encontraron vuelos disponibles";
         }
 
         iterarPaginas(vuelosAux); 
@@ -123,7 +126,6 @@ public:
         vector<Vuelo*> vuelosAux; 
         vuelosAux.clear();
 
-        cout << "\n=== Vuelos de " << origen << " a " << destino << " ==== \n";
         vuelosEncontrados = false;
 
         for (auto itMes = vuelosPorMes.begin(); itMes != vuelosPorMes.end(); ++itMes) {
@@ -143,11 +145,13 @@ public:
             }
         }
 
-        iterarPaginas(vuelosAux);
 
         if (!vuelosEncontrados) {
-            cout << "No se encontraron vuelos de " << origen << " a " << destino << endl;
+            ubicar(32, 6);
+            cout << BG_WHITE << BLACK << "No se encontraron vuelos disponibles"; 
         }
+
+        iterarPaginas(vuelosAux);
     }
 
     void mostrarVuelosDatosIda(string origen, string destino, int mesIda, int diaIda) {
@@ -155,7 +159,6 @@ public:
         vector<Vuelo*> vuelosAux;
         vuelosAux.clear();
 
-        cout << "\n=== Vuelos segun Origen - Destino - Fecha de Ida ===\n";
         vuelosEncontrados = false;
 
         if (vuelosPorMes.count(mesIda) && vuelosPorMes[mesIda].count(diaIda)) {
@@ -169,13 +172,13 @@ public:
             }
         }
 
+        if (!vuelosEncontrados) {
+            ubicar(32, 6);
+            cout << BG_WHITE << BLACK << "No se encontraron vuelos disponibles";
+        }
+
         iterarPaginas(vuelosAux);
 
-
-        if (!vuelosEncontrados) {
-            cout << "No se encontraron vuelos de " << origen << " a " << destino
-                << " para el " << diaIda << " de " << meses[mesIda - 1] << ".\n";
-        }
     }
 
     //Recursivas
