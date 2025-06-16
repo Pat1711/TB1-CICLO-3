@@ -36,7 +36,7 @@ public:
         cout << "\n=== HISTORIAL DE CHECK-INS ===\n";
         while (!checkinsExitosos.esVacia()) {
             Reserva reserva = checkinsExitosos.dequeue();
-            reserva.mostrarDatosCompletos();
+            reserva.mostrarDatosCompletos(0, 0);
             aux.enqueue(reserva);
         }
 
@@ -48,37 +48,40 @@ public:
     // --- Muestra todos los CheckIns de un Pasajero --- //
 
     void mostrarCheckinsPorUsuario() {
+        cout << BG_WHITE << BLACK;
         if (checkinsExitosos.esVacia()) {
-            cout << "\nNo hay check-ins registrados.\n";
+            ubicar(31, 4); cout << "No hay check-ins registrados";
             return;
         }
 
         if (gUsuarios.getLista().esVacio()) {
-            cout << "No hay usuarios registrados.\n";
+            ubicar(31, 4); cout << "No hay usuarios registrados";
             return;
         }
 
-        cout << "\nSeleccione un usuario (DNI):\n";
-        gUsuarios.getLista().mostrarPasajero(0,0);
+        ubicar(31, 4); cout << "Seleccione un usuario (DNI):";
+        gUsuarios.getLista().mostrarPasajero(31,5);
 
         string dni;
-        cout << "Ingrese el DNI del pasajero: ";
-        cin >> dni;
+        ubicar(31, 10); cout << "Ingrese el DNI del pasajero: "; cin >> dni;
 
         if (!gUsuarios.getLista().validarDNI(dni)) {
-            cout << "No se encontró un pasajero con ese DNI.\n";
+            ubicar(31, 11); cout << "No se encontró un pasajero con ese DNI";
             return;
         }
 
         Cola<Reserva> aux;
         bool hayCoincidencias = false;
 
-        cout << "\n=== CHECK-INS DEL USUARIO CON DNI: " << dni << " ===\n";
+        defaultPanelDerecho();
+
+        cout << BG_WHITE << BLACK;
+        ubicar(31, 4); cout << "=== CHECK-INS DEL USUARIO CON DNI: " << dni << " ===";
         while (!checkinsExitosos.esVacia()) {
             Reserva reserva = checkinsExitosos.dequeue();
 
             if (reserva.getPasajero()->getDni() == dni) {
-                reserva.mostrarDatosCompletos();
+                reserva.mostrarDatosCompletos(31, 5);
                 hayCoincidencias = true;
             }
           
@@ -90,7 +93,7 @@ public:
         }
 
         if (!hayCoincidencias) {
-            cout << "No se encontraron check-ins para el DNI proporcionado.\n";
+            ubicar(31, 21); cout << "No se encontraron check-ins para el DNI proporcionado.";
         }
     }
 };

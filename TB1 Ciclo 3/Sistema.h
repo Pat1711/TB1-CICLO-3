@@ -37,12 +37,11 @@ void pintar(int x, int y, int ancho, int alto) {
 	ubicar(0, 0);
 }
 void portada() {
-	cout << BG_JTAZUL;
-	pintar(0,1, ANCHO, ALTO-2);
+	cout << BG_JTAZUL;pintar(0,1, ANCHO, ALTO-2);
 	cout << BG_WHITE; pintar(0, 14, ANCHO, 8);
+
 	cout << WHITE << BG_JTAZUL;
 	
-
 	ubicar(1, 5);
 	cout << " \t ____  _                           _     _                      _      _    _____                      _ " << endl;
 	cout << " \t|  _ \\(_)                         (_)   | |                    | |    | |  / ____|                    | | " << endl;
@@ -69,6 +68,19 @@ void default() {
 	cout << BG_WHITE; pintar(0, 1, ANCHO, ALTO - 2);
 	cout << BG_GRISCLARO; pintar(0, 4, 30, ALTO - 5);
 	cout << BG_JTAZUL; pintar(0, 1, ANCHO, 3);
+	cout << RESET;
+}
+
+void defaultPanelDerecho() {
+	cout << BG_WHITE; pintar(30, 4, 89, 25);
+}
+
+void imprimirDibujo(string dibujo[], size_t filas, int x, int y) {
+	cout << JTROJO << BG_WHITE;
+	for (int i = 0; i < filas; i++) {
+		ubicar(x, y + i);
+		cout << dibujo[i];
+	}
 	cout << RESET;
 }
 

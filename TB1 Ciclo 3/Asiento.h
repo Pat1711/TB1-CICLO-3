@@ -17,7 +17,7 @@ public:
 	~Asiento() {};
 
 	void mostrarAsiento() {
-		cout << idAsiento << " - " << clasificacion << " [" << estado << "]\n";
+		cout << idAsiento << " - " << clasificacion << " [" << estado << "]";
 	}
 
 	void mostrarColor(int x, int y) {
