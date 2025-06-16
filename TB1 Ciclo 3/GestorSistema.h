@@ -70,23 +70,23 @@ public:
             default:
                 mensajeError(); break;
             }
-        } while (opcion != 3);
+        } while (opcion != 4);
     }
 
     void menuGestionUsuarios() {
         int auxUser = 0;
+        menuSpawn("Menu Usuarios");
         do {
-            menuSpawn("Menu Usuarios");
             seleccionarOpc(auxUser, opcUsuario, 3);
+            limpiarDerecha();
 
             switch (auxUser) {
             case 0:
                 gUsuario.agregarUsuario();
-                cout << "Operación concluida correctamente\n";
-                system("pause"); break;
+                system("pause>0"); break;
             case 1:
-                gUsuario.mostrar(0,0);
-                system("pause"); break;
+                gUsuario.mostrar(35,5);
+                system("pause>0"); break;
             case 2: break;
             default:
                 mensajeError(); break;
@@ -96,8 +96,9 @@ public:
 
     void menuGestionVuelos() {
         int auxVuelo = 0;
+        menuSpawn("Buscar Vuelos");
         do {
-            menuSpawn("Buscar Vuelos");
+            limpiarDerecha();
             seleccionarOpc(auxVuelo, opcVuelos, 6);
 
             switch (auxVuelo) {
@@ -128,7 +129,7 @@ public:
                 gVuelos.ordenarTodosLosVuelosPorPais();
                 seleccionarOpc(auxSubMenu, opcOrdenar, 4); break;
             case 2:
-                barraSpawn("Ordenamiento por id");
+                barraSpawn("Ordenamiento por id   ");
                 gVuelos.ordenarTodosLosVuelosPorId();
                 seleccionarOpc(auxSubMenu, opcOrdenar, 4); break;
             case 3: break;

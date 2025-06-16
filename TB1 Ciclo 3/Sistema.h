@@ -72,6 +72,11 @@ void default() {
 	cout << RESET;
 }
 
+void limpiarDerecha() {
+	cout << BG_WHITE; pintar(30, 4, ANCHO - 30, ALTO - 6);
+	cout << RESET;
+}
+
 //TODAS LAS OPCIONES BRO
 string opcPrincipal[5] = {  "Buscar vuelos", "Menu de Usuario","Reservar un vuelo","Check-In", "Salir" };
 string opcUsuario[3] = { "Registrar Usuario", "Registro de Usuarios", "Salir" };
