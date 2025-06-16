@@ -65,8 +65,6 @@ public:
         archivo.agregar(correo);
         archivo.agregar(dniStr);
 
-        //EL leerUsuarios(); BORRABA TODOS LOS DATOS
-
         return nuevoPasajero;
     }
 

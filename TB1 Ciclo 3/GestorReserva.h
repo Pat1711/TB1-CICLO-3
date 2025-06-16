@@ -34,7 +34,6 @@ public:
 	~GestorReserva(){}
 
 	void reservar() {
-		default();
 		menuSpawn("REALIZAR UNA RESERVA");
 		int x = 4, y = 5;
 		ubicar(x, y); cout << BG_GRISCLARO << BLACK << "1. Seleccionar Usuario";
@@ -132,7 +131,7 @@ public:
 		ubicar(x, y += 2); cout << "Escogio " << cont << " VIP y " << numAsientos - cont << " Economico";
 		ubicar(x, y += 1); cout << "Monto a pagar: " << calcularPrecioFinal();
 
-		ubicar(x, y += 1); cout << "Confirmar la reserva: y/n: "; cin >> opc; if (!confirmar(opc)) return;
+		ubicar(x, y += 1); cout << "Confirmar la reserva y/n: "; ingresarChar(opc); if (!confirmar(opc)) return;
 			
 		Reserva a(vAux, asientos, pAux, calcularPrecioFinal());
 

@@ -150,12 +150,6 @@ void limpiarDerecha() {
 	cout << BG_WHITE; pintar(30, 4, ANCHO - 30, ALTO - 6);
 	cout << RESET;
 }
-void limpiarDerecha2() {
-	cout << BG_WHITE; pintar(30, 4, ANCHO - 30, ALTO - 6);
-	cout << RESET;
-	cout << BG_JTAZUL; pintar(30, 1, ANCHO - 30, 4);
-	cout << RESET;
-}
 void menuPrincipal() {
 	default();
 
