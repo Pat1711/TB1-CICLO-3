@@ -332,7 +332,7 @@ public:
 
 
     void iterarPaginas(vector<Vuelo*>& vuelos) {
-        int totalPaginas = (vuelos.size() + 9) / 10;
+        int totalPaginas = static_cast<int>((vuelos.size() + 9) / 10);
         int paginaActual = 0;
         int tecla;
 

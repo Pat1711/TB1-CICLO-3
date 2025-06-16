@@ -2,7 +2,7 @@
 
 int main() {
     ajustarConsola();
-    srand(time(nullptr)); 
+    srand(static_cast<unsigned int>(time(nullptr))); 
     Console::CursorVisible = false;
     setlocale(LC_ALL,(""));
 

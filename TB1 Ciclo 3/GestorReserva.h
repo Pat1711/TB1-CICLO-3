@@ -9,6 +9,7 @@
 #include "GestorUsuarios.h"
 #include "GestorVuelo.h"
 #include <conio.h>
+
 using namespace std;
 
 auto confirmar = [](char c) -> bool {
@@ -55,7 +56,7 @@ public:
 
 		//Para que no continue si no hay usuarios registrados
 		if (gUsuarios.getLista().esVacio()) {
-			ubicar(x, y++); cout << "No hay usuarios registrados."; _getch();
+			ubicar(x, y++); cout << "No hay usuarios registrados."; (void)_getch();
 			return;
 		}
 
@@ -73,7 +74,7 @@ public:
 		ubicar(x, y+=2); cout << "Ingrese id del vuelo: "; ingresarDatos(aux);
 
 		Vuelo* vAux = this->gVuelos.getVueloPorCodigo(aux);
-		if (vAux == nullptr){ ubicar(x, y += 2); cout << "El vuelo especificado no existe";  _getch(); return; } //REGRESA SI EL VUELO NO EXISTE 
+		if (vAux == nullptr){ ubicar(x, y += 2); cout << "El vuelo especificado no existe"; (void)_getch(); return; } //REGRESA SI EL VUELO NO EXISTE 
 		vAux->mostrarVuelo2(75,5);
 		Asiento* aAux;
 
@@ -87,7 +88,7 @@ public:
 		{
 			if (vAux->getVectorAsientos()[i]->getEstado() == 0)aux2++;
 		};
-		if (numAsientos > aux2-1) { ubicar(x, y += 2); cout << "Cantidad de asientos libres insuficientes"; _getch(); return; } //REGRESA SI LA CANTIDAD DE ASIENTOS ES SUPERIOR
+		if (numAsientos > aux2-1) { ubicar(x, y += 2); cout << "Cantidad de asientos libres insuficientes"; (void)_getch(); return; } //REGRESA SI LA CANTIDAD DE ASIENTOS ES SUPERIOR
 		ubicar(x, y += 2); cout << "Nota: Por cada asiento VIP se adicionan 50 USD a la tarifa";
 
 		vAux->mostrarMAsientos(83, 17); cout << BG_WHITE;
@@ -137,20 +138,27 @@ public:
 
 		reservas.push(a);
 
-		ubicar(x, y += 2); cout << "La reserva se realizo con exito."; _getch();
+		ubicar(x, y += 2); cout << "La reserva se realizo con exito."; (void)_getch(); //creo que es mejor usar el cin.get :v solo estan pausando esta linea
 	}
 
 	void mostrarReservas() {
-		Pila<Reserva> aux;
+		if (!reservas.estaVacia()) {
+			Pila<Reserva> aux;
 
-		while (!reservas.estaVacia()) {
-			Reserva val = reservas.pop();
-			val.mostrarDatosCompletos();
-			aux.push(val);
+			while (!reservas.estaVacia()) {
+				Reserva val = reservas.pop();
+				val.mostrarDatosCompletos(31, 4);
+				aux.push(val);
+			}
+
+			while (!aux.estaVacia()) {
+				reservas.push(aux.pop());
+			}
 		}
 
-		while (!aux.estaVacia()) {
-			reservas.push(aux.pop());
+		else {
+			cout << BG_WHITE << BLACK;
+			ubicar(32, 4); cout << "No hay ninguna reserva";
 		}
 	}
 
