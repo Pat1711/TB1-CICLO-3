@@ -15,8 +15,8 @@ auto validarDiaMes = [](int dia, int mes) {
     };
 auto validarDestino = [](int origen, int destino) {
     return origen >= 1 && origen <= 10 && destino >= 1 && destino <= 10;
-    };
-auto menu = [](void menu(), int& opcion) {
+    }; 
+auto menu = [](void menu(), int&opcion) {
     system("cls");
     menu();
     cin >> opcion;
@@ -45,7 +45,7 @@ public:
     GestorSistema() : gReservas(gVuelos, gUsuario), gCheckIn(gUsuario) {
         gUsuario.leerUsuarios();
         gVuelos.generarVuelosAutomaticos();
-
+        
     }
 
     void ejecutar() {
@@ -54,7 +54,7 @@ public:
 
         do {
             menuSpawn("JetSMART");
-            seleccionarOpc(opcion, opcPrincipal, 5);
+            seleccionarOpc(opcion, opcPrincipal,5);
 
             switch (opcion) {
             case 0:
@@ -70,7 +70,7 @@ public:
             default:
                 mensajeError(); break;
             }
-        } while (opcion != 4);
+        } while (opcion != 3);
     }
 
     void menuGestionUsuarios() {
@@ -83,10 +83,12 @@ public:
             switch (auxUser) {
             case 0:
                 gUsuario.agregarUsuario();
+       system("pause"); break;
                 system("pause>0"); break;
             case 1:
                 gUsuario.mostrar(35,5);
                 system("pause>0"); break;
+
 
             case 2: break;
             default:
@@ -99,6 +101,8 @@ public:
         int auxVuelo = 0;
         menuSpawn("Buscar Vuelos");
         do {
+            menuSpawn("Buscar Vuelos");
+            seleccionarOpc(auxVuelo, opcVuelos, 6); 
             limpiarDerecha();
             seleccionarOpc(auxVuelo, opcVuelos, 6);
 
@@ -124,14 +128,26 @@ public:
             case 0:
                 barraSpawn("Ordenamiento por precio");
                 gVuelos.ordenarTodosLosVuelosPorPrecio();
-                seleccionarOpc(auxSubMenu, opcOrdenar, 4); break;
+                if (gVuelos.isQuiereReservar()) 
+                {
+                    gReservas.reservar(); gVuelos.setQuiereReservar(0); return;
+                }
+                seleccionarOpc(auxSubMenu, opcOrdenar, 4);break;
             case 1:
                 barraSpawn("Ordenamiento por origen");
                 gVuelos.ordenarTodosLosVuelosPorPais();
+                if (gVuelos.isQuiereReservar())
+                {
+                    gReservas.reservar(); gVuelos.setQuiereReservar(0); return;
+                }
                 seleccionarOpc(auxSubMenu, opcOrdenar, 4); break;
             case 2:
                 barraSpawn("Ordenamiento por id   ");
                 gVuelos.ordenarTodosLosVuelosPorId();
+                if (gVuelos.isQuiereReservar())
+                {
+                    gReservas.reservar(); gVuelos.setQuiereReservar(0); return;
+                }
                 seleccionarOpc(auxSubMenu, opcOrdenar, 4); break;
             case 3: break;
             default: mensajeError(); break;
@@ -141,33 +157,32 @@ public:
 
     void mostrarVuelosPorMes() {
         int auxValor;
-        menuSpawn("Buscar por Mes");
+        barraSpawn("Buscar por Mes");
         do {
-            mostrarSeccion(tituloVuelo);
             selecionMesVuelo();
-            cout << "Ingrese el mes: ";
-            cin >> auxValor;
+            ubicar(49, 9); ingresarDatos(auxValor); 
             cin.ignore();
             if (!enRango(auxValor, 1, 12)) mensajeError();
         } while (!enRango(auxValor, 1, 12));
 
-        mostrarSeccion(tituloVuelo);
-        barraSpawn("Vuelos de " + meses[auxValor - 1]);
+        limpiarDerecha(); 
+        barraSpawn("Vuelos de " + meses[auxValor - 1]); 
         gVuelos.mostrarVuelosPorMes(auxValor);
-        if (gVuelos.isVuelosEncontrados()) {
-            cout << "\n";
-            gReservas.reservar();
+        if (gVuelos.isQuiereReservar())
+        {
+            gReservas.reservar(); gVuelos.setQuiereReservar(0); return;
         }
-        system("pause");
     }
 
     void mostrarVuelosPorPaises() {
         int auxOrigen, auxDestino;
+        barraSpawn("Buscar por Pais");
+
         do {
-            mostrarSeccion(tituloVuelo);
             seleccionPais();
-            cout << "Origen: "; cin >> auxOrigen;
-            cout << "Destino: "; cin >> auxDestino;
+            ubicar(32, 9); cout << "Origen: "; ingresarDatos(auxOrigen);
+            ubicar(32, 10); cout << "Destino: "; ingresarDatos(auxDestino); 
+
             if (!validarDestino(auxOrigen, auxDestino)) {
                 mensajeError(); break;
             }
@@ -176,41 +191,44 @@ public:
         string origen = paises[auxOrigen - 1];
         string destino = paises[auxDestino - 1];
 
+        limpiarDerecha();
+        barraSpawn("Vuelos " + origen + "- " + destino); 
         gVuelos.mostrarVuelosPorPaises(origen, destino);
-        if (gVuelos.isVuelosEncontrados()) {
-            cout << "\n";
-            gReservas.reservar();
-        }
-        system("pause");
+        if (gVuelos.isQuiereReservar())
+        {
+            gReservas.reservar(); gVuelos.setQuiereReservar(0); return;
+        } 
     }
 
     void mostrarVuelosEnFecha() {
         int auxDia, auxMes;
-        cout << "=====|  Vuelos en Fecha  |=====\n";
+        barraSpawn("Buscar por Fecha");
         do {
-            cout << "\nDia de Ida: "; cin >> auxDia;
-            selecionMesVuelo();
-            cout << "\nMes de Ida: "; cin >> auxMes;
+            ubicar(32, 5); cout << BG_WHITE << BLACK << "Dia de Ida: "; ingresarDatos(auxDia);
+            selecionMesVuelo(32, 6);
+            ingresarDatos(auxMes);
             if (!validarDiaMes(auxDia, auxMes)) {
                 mensajeError(); break;
             }
         } while (!validarDiaMes(auxDia, auxMes));
 
+        limpiarDerecha();
+        barraSpawn("Vuelos para el " + to_string(auxDia) + "/" + to_string(auxMes));
         gVuelos.mostrarVuelosEnFecha(auxMes, auxDia);
-        if (gVuelos.isVuelosEncontrados()) {
-            cout << "\n";
-            gReservas.reservar();
+        if (gVuelos.isQuiereReservar())
+        {
+            gReservas.reservar(); gVuelos.setQuiereReservar(0); return;
         }
-        system("pause");
     }
 
     void mostrarVuelosEspecificos() {
         int auxOrigen, auxDestino, auxDiaIda, auxMesIda;
+        barraSpawn("Busqueda Especifica");
+
         do {
-            mostrarSeccion(tituloVuelo);
             seleccionPais();
-            cout << "Origen: "; cin >> auxOrigen;
-            cout << "Destino: "; cin >> auxDestino;
+            ubicar(32, 9); cout << "Origen: "; ingresarDatos(auxOrigen); 
+            ubicar(32, 10); cout << "Destino: "; ingresarDatos(auxDestino); 
             if (!validarDestino(auxOrigen, auxDestino)) {
                 mensajeError(); break;
             }
@@ -220,20 +238,20 @@ public:
         string destino = paises[auxDestino - 1];
 
         do {
-            cout << "\nDia de Ida: "; cin >> auxDiaIda;
-            selecionMesVuelo();
-            cout << "\nMes de Ida: "; cin >> auxMesIda;
-            if (!validarDiaMes(auxDiaIda, auxMesIda)) {
+            ubicar(32, 12); cout << BG_WHITE << BLACK << "Dia de Ida: "; ingresarDatos(auxDiaIda);
+            selecionMesVuelo(32, 13);
+            ingresarDatos(auxMesIda);
+            if (!validarDiaMes(auxDiaIda, auxMesIda)) { 
                 mensajeError(); break;
             }
         } while (!validarDiaMes(auxDiaIda, auxMesIda));
 
+        limpiarDerecha();
         gVuelos.mostrarVuelosDatosIda(origen, destino, auxMesIda, auxDiaIda);
-        if (gVuelos.isVuelosEncontrados()) {
-            cout << "\n";
-            gReservas.reservar();
+        if (gVuelos.isQuiereReservar())
+        {
+            gReservas.reservar(); gVuelos.setQuiereReservar(0); return;
         }
-        system("pause");
     }
 
     void menuGestionCheckin() {
@@ -247,17 +265,19 @@ public:
             {
             case 0: //tarjetas embarque
                 gCheckIn.mostrarCheckinsPorUsuario();
-                system("pause>0"); break;
+                system("pause"); break;
             case 1: //reservas
                 gReservas.mostrarReservas();
-                system("pause>0"); break;
+                system("pause"); break;
             case 2: //chekcin
                 gCheckIn.realizarCheckIn(gReservas);
-                system("pause>0"); break;
-            case 3: break;
+                system("pause"); break;
+            case 3:
+                break;
             default:
                 mensajeError(); break;
             }
         } while (opc != 3);
     }
 };
+

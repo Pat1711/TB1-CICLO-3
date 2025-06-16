@@ -20,6 +20,7 @@ private:
     //clave: int | valor: [clave: int, valor: vector de vuelos]
     map<int, map<int, vector<Vuelo*>>> vuelosPorMes;
     bool vuelosEncontrados;  
+    bool quiereReservar; 
 public:
     void agregarVuelo(Vuelo* vuelo) {
         int mesIda = vuelo->getMesIda();
@@ -81,14 +82,15 @@ public:
 
         vuelosEncontrados = false;
         if (vuelosPorMes.count(mes) && vuelosPorMes[mes].count(dia)) {
-            cout << "\n--- Vuelos para el " << dia << "/" << mes << " ---\n";
             for (Vuelo* v : vuelosPorMes[mes][dia]) {
                 vuelosAux.push_back(v);
                 vuelosEncontrados = true;
             }
         }
-        else {
-            cout << "No existen vuelos disponibles en esa fecha\n";
+
+        if (!vuelosEncontrados) {
+            ubicar(32, 6);
+            cout << BG_WHITE << BLACK << "No se encontraron vuelos disponibles";
         }
 
         iterarPaginas(vuelosAux);
@@ -110,8 +112,10 @@ public:
                 }
             }
         }
-        else {
-            cout << "No existen vuelos disponibles en esa fecha\n";
+
+        if (!vuelosEncontrados) {
+            ubicar(32, 6);
+            cout << BG_WHITE << BLACK << "No se encontraron vuelos disponibles";
         }
 
         iterarPaginas(vuelosAux); 
@@ -122,7 +126,6 @@ public:
         vector<Vuelo*> vuelosAux; 
         vuelosAux.clear();
 
-        cout << "\n=== Vuelos de " << origen << " a " << destino << " ==== \n";
         vuelosEncontrados = false;
 
         for (auto itMes = vuelosPorMes.begin(); itMes != vuelosPorMes.end(); ++itMes) {
@@ -142,11 +145,13 @@ public:
             }
         }
 
-        iterarPaginas(vuelosAux);
 
         if (!vuelosEncontrados) {
-            cout << "No se encontraron vuelos de " << origen << " a " << destino << endl;
+            ubicar(32, 6);
+            cout << BG_WHITE << BLACK << "No se encontraron vuelos disponibles"; 
         }
+
+        iterarPaginas(vuelosAux);
     }
 
     void mostrarVuelosDatosIda(string origen, string destino, int mesIda, int diaIda) {
@@ -154,7 +159,6 @@ public:
         vector<Vuelo*> vuelosAux;
         vuelosAux.clear();
 
-        cout << "\n=== Vuelos segun Origen - Destino - Fecha de Ida ===\n";
         vuelosEncontrados = false;
 
         if (vuelosPorMes.count(mesIda) && vuelosPorMes[mesIda].count(diaIda)) {
@@ -168,13 +172,13 @@ public:
             }
         }
 
+        if (!vuelosEncontrados) {
+            ubicar(32, 6);
+            cout << BG_WHITE << BLACK << "No se encontraron vuelos disponibles";
+        }
+
         iterarPaginas(vuelosAux);
 
-
-        if (!vuelosEncontrados) {
-            cout << "No se encontraron vuelos de " << origen << " a " << destino
-                << " para el " << diaIda << " de " << meses[mesIda - 1] << ".\n";
-        }
     }
 
     //Recursivas
@@ -326,7 +330,7 @@ public:
         cout << BG_JTAZUL << WHITE << "Pagina " << (pagina + 1) << " / " << ((vuelos.size() + 9) / 10);
         if (pagina < 10) cout << " ";
         ubicar(30, 2);
-        cout << "Usa Flechas izq y der para cambiar de pagina. ESC para salir.";
+        cout << "Usa Flechas izq y der para cambiar de pagina. ESC para salir. ENTER: reservar";
     }
 
 
@@ -335,6 +339,7 @@ public:
         int totalPaginas = static_cast<int>((vuelos.size() + 9) / 10);
         int paginaActual = 0;
         int tecla;
+        quiereReservar = false; 
 
         do {
             mostrarPagina(vuelos, paginaActual);
@@ -349,10 +354,20 @@ public:
                     paginaActual--;
                 }
             }
+            else if (tecla == 13) {
+                quiereReservar = true; tecla = 27; 
+            }
 
         } while (tecla != 27); // 27 = ESC
     }
 
+    bool isQuiereReservar() {
+        return quiereReservar; 
+    }
+
+    void setQuiereReservar(bool quiereReservar) {
+        this->quiereReservar = quiereReservar;
+    }
 };
 
 #endif // !__GESTOR_VUELOS__
