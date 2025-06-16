@@ -37,17 +37,18 @@ public:
 		cout << "Monto a pagar: " << precioFinal << endl << endl; 
 	}
 
-	void mostrarDatosCompletos() {
-		cout << "Pasajero: " << user->getNombres() << ", " << user->getApellidos() << "\n";
-		cout << "DNI: " << user->getDni() << "\n";
-		cout << endl;
-		vuelo->mostrarVuelo();
-		cout << "Asientos: \n";
-		for (int i = 0; i < asiento.size(); i++)
-		{
-			asiento[i]->mostrarAsiento();
+	void mostrarDatosCompletos(int x, int y) {
+		cout << BG_WHITE << BLACK;
+		ubicar(x, y); cout << "Pasajero: " << user->getNombres() << ", " << user->getApellidos();
+		ubicar(x, y += 1); cout << "DNI: " << user->getDni();
+
+		vuelo->mostrarVuelo2(x, y += 2);
+		
+		ubicar(x, y += 5); cout << "Asientos:";
+		for (int i = 0; i < asiento.size(); i++) {
+			ubicar(x, y += 1); asiento[i]->mostrarAsiento();
 		}
-		cout << "Monto a pagar: " << precioFinal << endl << endl;
+		ubicar(x, y += 1); cout << "Monto a pagar: " << precioFinal;
 	}
 
 	Pasajero* getPasajero() { return user; }

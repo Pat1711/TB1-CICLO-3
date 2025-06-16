@@ -37,12 +37,11 @@ void pintar(int x, int y, int ancho, int alto) {
 	ubicar(0, 0);
 }
 void portada() {
-	cout << BG_JTAZUL;
-	pintar(0,1, ANCHO, ALTO-2);
+	cout << BG_JTAZUL;pintar(0,1, ANCHO, ALTO-2);
 	cout << BG_WHITE; pintar(0, 14, ANCHO, 8);
+
 	cout << WHITE << BG_JTAZUL;
 	
-
 	ubicar(1, 5);
 	cout << " \t ____  _                           _     _                      _      _    _____                      _ " << endl;
 	cout << " \t|  _ \\(_)                         (_)   | |                    | |    | |  / ____|                    | | " << endl;
@@ -72,8 +71,21 @@ void default() {
 	cout << RESET;
 }
 
+
 void limpiarDerecha() {
 	cout << BG_WHITE; pintar(30, 4, ANCHO - 30, ALTO - 6);
+}
+
+void defaultPanelDerecho() {
+	cout << BG_WHITE; pintar(30, 4, 89, 25);
+}
+
+void imprimirDibujo(string dibujo[], size_t filas, int x, int y) {
+	cout << JTROJO << BG_WHITE;
+	for (int i = 0; i < filas; i++) {
+		ubicar(x, y + i);
+		cout << dibujo[i];
+	}
 	cout << RESET;
 }
 
@@ -82,7 +94,7 @@ string opcPrincipal[5] = {  "Buscar vuelos", "Menu de Usuario","Reservar un vuel
 string opcUsuario[3] = { "Registrar Usuario", "Registro de Usuarios", "Salir" };
 string opcVuelos[6] = {"Ver todos", "Buscar por mes", "Buscar por pais", "Buscar por fecha", "Buscar especifico", "Salir"};
 string opcCheckin[4] = { "Tarjetas de embarque", "Reservas", "Check in", "Salir"};
-string opcOrdenar[4] = {"Por precio", "Por país de origen", "Por código", "Salir"};
+string opcOrdenar[4] = {"Por precio", "Por paÃ­s de origen", "Por cÃ³digo", "Salir"};
 
 
 void seleccionarOpc(int&opcion, string opciones[], int n) {
