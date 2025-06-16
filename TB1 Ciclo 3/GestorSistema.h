@@ -82,7 +82,7 @@ public:
             switch (auxUser) {
             case 0:
                 gUsuario.agregarUsuario();
-                cout << "Operación concluida correctamente\n";
+                cout << "OperaciÃ³n concluida correctamente\n";
                 system("pause"); break;
             case 1:
                 gUsuario.mostrar(0,0);
