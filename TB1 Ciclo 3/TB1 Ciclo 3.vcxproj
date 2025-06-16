@@ -120,6 +120,7 @@
     <ClInclude Include="Color.h" />
     <ClInclude Include="GestorCheckin.h" />
     <ClInclude Include="GestorReserva.h" />
+    <ClInclude Include="GestorSistema.h" />
     <ClInclude Include="Gestortxt.h" />
     <ClInclude Include="GestorUsuarios.h" />
     <ClInclude Include="GestorVuelo.h" />
