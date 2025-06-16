@@ -71,6 +71,11 @@ void default() {
 	cout << RESET;
 }
 
+
+void limpiarDerecha() {
+	cout << BG_WHITE; pintar(30, 4, ANCHO - 30, ALTO - 6);
+}
+
 void defaultPanelDerecho() {
 	cout << BG_WHITE; pintar(30, 4, 89, 25);
 }
@@ -89,7 +94,7 @@ string opcPrincipal[5] = {  "Buscar vuelos", "Menu de Usuario","Reservar un vuel
 string opcUsuario[3] = { "Registrar Usuario", "Registro de Usuarios", "Salir" };
 string opcVuelos[6] = {"Ver todos    ", "Buscar por mes", "Buscar por pais", "Buscar por fecha", "Buscar especifico", "Salir"};
 string opcCheckin[4] = { "Tarjetas de embarque", "Reservas", "Check in", "Salir"};
-string opcOrdenar[4] = {"Por precio", "Por país de origen", "Por código", "Salir"};
+string opcOrdenar[4] = {"Por precio", "Por paÃ­s de origen", "Por cÃ³digo", "Salir"};
 
 
 void seleccionarOpc(int&opcion, string opciones[], int n) {
