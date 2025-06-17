@@ -66,11 +66,11 @@ public:
             case 3:
                 menuGestionCheckin(); break;
             case 4:
-                cout << "Gracias por usar el sistema\n"; system("pause"); break;
+                break;
             default:
                 mensajeError(); break;
             }
-        } while (opcion != 3);
+        } while (opcion != 4);
     }
 
     void menuGestionUsuarios() {
@@ -82,14 +82,10 @@ public:
 
             switch (auxUser) {
             case 0:
-                gUsuario.agregarUsuario();
-       system("pause"); break;
+                gUsuario.agregarUsuario();system("pause>0"); break;
                 system("pause>0"); break;
             case 1:
-                gUsuario.mostrar(35,5);
-                system("pause>0"); break;
-
-
+                gUsuario.mostrar(35,5);break;
             case 2: break;
             default:
                 mensajeError(); break;
@@ -101,10 +97,8 @@ public:
         int auxVuelo = 0;
         menuSpawn("Buscar Vuelos");
         do {
-            menuSpawn("Buscar Vuelos");
             seleccionarOpc(auxVuelo, opcVuelos, 6); 
             limpiarDerecha();
-            seleccionarOpc(auxVuelo, opcVuelos, 6);
 
             switch (auxVuelo) {
             case 0: submenuMostrarVuelos(); break;
@@ -160,7 +154,7 @@ public:
         barraSpawn("Buscar por Mes");
         do {
             selecionMesVuelo();
-            ubicar(49, 9); ingresarDatos(auxValor); 
+            ubicar(49, 9); ingresarDato(auxValor); 
             cin.ignore();
             if (!enRango(auxValor, 1, 12)) mensajeError();
         } while (!enRango(auxValor, 1, 12));
@@ -180,8 +174,8 @@ public:
 
         do {
             seleccionPais();
-            ubicar(32, 9); cout << "Origen: "; ingresarDatos(auxOrigen);
-            ubicar(32, 10); cout << "Destino: "; ingresarDatos(auxDestino); 
+            ubicar(32, 9); cout << "Origen: "; ingresarDato(auxOrigen);
+            ubicar(32, 10); cout << "Destino: "; ingresarDato(auxDestino); 
 
             if (!validarDestino(auxOrigen, auxDestino)) {
                 mensajeError(); break;
@@ -204,9 +198,9 @@ public:
         int auxDia, auxMes;
         barraSpawn("Buscar por Fecha");
         do {
-            ubicar(32, 5); cout << BG_WHITE << BLACK << "Dia de Ida: "; ingresarDatos(auxDia);
+            ubicar(32, 5); cout << BG_WHITE << BLACK << "Dia de Ida: "; ingresarDato(auxDia);
             selecionMesVuelo(32, 6);
-            ingresarDatos(auxMes);
+            ingresarDato(auxMes);
             if (!validarDiaMes(auxDia, auxMes)) {
                 mensajeError(); break;
             }
@@ -227,8 +221,8 @@ public:
 
         do {
             seleccionPais();
-            ubicar(32, 9); cout << "Origen: "; ingresarDatos(auxOrigen); 
-            ubicar(32, 10); cout << "Destino: "; ingresarDatos(auxDestino); 
+            ubicar(32, 9); cout << "Origen: "; ingresarDato(auxOrigen); 
+            ubicar(32, 10); cout << "Destino: "; ingresarDato(auxDestino); 
             if (!validarDestino(auxOrigen, auxDestino)) {
                 mensajeError(); break;
             }
@@ -238,9 +232,9 @@ public:
         string destino = paises[auxDestino - 1];
 
         do {
-            ubicar(32, 12); cout << BG_WHITE << BLACK << "Dia de Ida: "; ingresarDatos(auxDiaIda);
+            ubicar(32, 12); cout << BG_WHITE << BLACK << "Dia de Ida: "; ingresarDato(auxDiaIda);
             selecionMesVuelo(32, 13);
-            ingresarDatos(auxMesIda);
+            ingresarDato(auxMesIda);
             if (!validarDiaMes(auxDiaIda, auxMesIda)) { 
                 mensajeError(); break;
             }
@@ -256,22 +250,23 @@ public:
 
     void menuGestionCheckin() {
         int opc = 0;
+        menuSpawn("Check in");
         do
         {
-            menuSpawn("Check in");
+            limpiarDerecha();
             seleccionarOpc(opc, opcCheckin, 4);
 
             switch (opc)
             {
             case 0: //tarjetas embarque
                 gCheckIn.mostrarCheckinsPorUsuario();
-                system("pause"); break;
+                system("pause>0"); break;
             case 1: //reservas
                 gReservas.mostrarReservas();
-                system("pause"); break;
+                system("pause>0"); break;
             case 2: //chekcin
                 gCheckIn.realizarCheckIn(gReservas);
-                system("pause"); break;
+                system("pause>0"); break;
             case 3:
                 break;
             default:
