@@ -63,7 +63,7 @@ public:
         gUsuarios.getLista().mostrarPasajero(31,5);
 
         string dni;
-        ubicar(31, 10); cout << "Ingrese el DNI del pasajero: "; cin >> dni;
+        ubicar(31, 10); cout << "Ingrese el DNI del pasajero: "; ingresarDato(dni);
 
         if (!gUsuarios.getLista().validarDNI(dni)) {
             ubicar(31, 11); cout << "No se encontró un pasajero con ese DNI";
