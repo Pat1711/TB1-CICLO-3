@@ -65,15 +65,10 @@ void portada() {
 }
 
 void default() {
-	cout << BG_WHITE; pintar(0, 1, ANCHO, ALTO - 2);
+	cout << BG_WHITE; pintar(30, 4, 89, 25);
 	cout << BG_GRISCLARO; pintar(0, 4, 30, ALTO - 5);
 	cout << BG_JTAZUL; pintar(0, 1, ANCHO, 3);
 	cout << RESET;
-}
-
-
-void limpiarDerecha() {
-	cout << BG_WHITE; pintar(30, 4, ANCHO - 30, ALTO - 6);
 }
 
 void defaultPanelDerecho() {
@@ -129,18 +124,11 @@ void seleccionarOpc(int&opcion, string opciones[], int n) {
 
 	cout << RESET;
 }
-
-void ingresarDatos(int&a) {
-	Console::CursorVisible = true;
-	cin >> a;
-	Console::CursorVisible = false;
-}
-
-void ingresarChar(char& a) {
-	Console::CursorVisible = true;
-	cin >> a;
-	Console::CursorVisible = false;
-}
+auto ingresarDato = [](auto&a) {
+		Console::CursorVisible = true;
+		cin >> a;
+		Console::CursorVisible = false;
+	};
 
 void menuSpawn(string titulo) {
 	default();
@@ -177,30 +165,6 @@ void tituloUsuario() {
 	cout << "=====| Menu de Usuario |=====\n";
 }
 
-// --- Menu Vuelos --- ///
-
-void menuVuelos() {
-	cout << "=====|  Menu de Vuelos  |=====\n";
-	cout << "1. Ver todos los vuelos\n";
-	cout << "2. Buscar vuelos por mes\n";
-	cout << "3. Buscar vuelos por pais\n";
-	cout << "4. Buscar vuelos por Fecha Especifica\n";
-	cout << "5. Buscar vuelos por Origen, Destino y Fecha de Ida\n";
-	cout << "6. Salir\n";
-}
-
-void subMenuTodosLosVuelos() {
-	cout << "=====|  Como desea ordenar todos los vuelos  |=====\n";
-	cout << "1. Por precio\n";
-	cout << "2. Por pais de Origen\n";
-	cout << "3. Por codigo de vuelo\n";
-	cout << "4. Salir\n";
-}
-
-void tituloVuelo() {
-	cout << "=====|  Menu de Vuelos  |=====\n";
-}
-
 void selecionMesVuelo(int x = 32, int y = 4) {
 	ubicar(x, y); cout << BG_WHITE << BLACK << "Listado de Meses"; 
 	ubicar(x, y += 1); cout << "1. Enero\t 2. Febrero\t 3. Marzo";
@@ -216,16 +180,6 @@ void seleccionPais(int x = 32, int y = 4) {
 	ubicar(x, y += 1); cout << "4. Brasil\t 5. Colombia\t 6. Ecuador";
 	ubicar(x, y += 1); cout << "7. Mexico\t 8. EE.UU\t 9. Espania";
 	ubicar(x, y += 1); cout << "10. Italia";
-}
-
-// --- Menu Checkin --- ///
-
-void menuCheckin() {
-	cout << "=====| Menu de Check in |=====\n";
-	cout << "1. Ver tarjetas de embarque\n";
-	cout << "2. Ver reservas\n";
-	cout << "3. Check in\n";
-	cout << "4. Salir\n";
 }
 
 #endif // !__SISTEMA__

@@ -47,7 +47,7 @@ public:
 
 		x = 35; y = 5;
 
-		ubicar(x, y); cout << BG_WHITE << "Desea reservar un vuelo? y/n: ";  ingresarChar(opc); cin.ignore();
+		ubicar(x, y); cout << BG_WHITE << "Desea reservar un vuelo? y/n: ";  ingresarDato(opc); cin.ignore();
 
 		if (!confirmar(opc)) return;
 		
@@ -61,7 +61,7 @@ public:
 
 		gUsuarios.mostrar(80,5);
 		ubicar(x, y+=2); cout << "Número de usuario: ";
-		ingresarDatos(aux2);
+		ingresarDato(aux2);
 		pintar(80, 5, 30, 20);
 
 		Pasajero* pAux = gUsuarios.getLista().getDato(aux2 - 1); 
@@ -70,7 +70,7 @@ public:
 		ubicar(4, 7); cout << BG_GRISCLARO << JTAZUL << "2. Id del vuelo" << BG_WHITE << BLACK;
 
 
-		ubicar(x, y+=2); cout << "Ingrese id del vuelo: "; ingresarDatos(aux);
+		ubicar(x, y+=2); cout << "Ingrese id del vuelo: "; ingresarDato(aux);
 
 		Vuelo* vAux = this->gVuelos.getVueloPorCodigo(aux);
 		if (vAux == nullptr){ ubicar(x, y += 2); cout << "El vuelo especificado no existe"; (void)_getch(); return; } //REGRESA SI EL VUELO NO EXISTE 
@@ -80,7 +80,7 @@ public:
 		vector<Asiento*> asientos;
 		ubicar(4, 9); cout << BG_GRISCLARO << JTAZUL << "3. Seleccionar Asientos" << BG_WHITE << BLACK;
 
-		ubicar(x, y += 2); cout << "Cantidad de asientos: "; ingresarDatos(numAsientos);
+		ubicar(x, y += 2); cout << "Cantidad de asientos: "; ingresarDato(numAsientos);
 
 		//CALCULA LA CANTIDAD DE ASIENTOS LIBRES
 		for (int i = 0; i < vAux->getVectorAsientos().size(); i++)
@@ -99,7 +99,7 @@ public:
 
 			do
 			{
-				ubicar(x, y++); cout << "Ingrese el id: "; ingresarDatos(aux2);
+				ubicar(x, y++); cout << "Ingrese el id: "; ingresarDato(aux2);
 				aAux = vAux->getAsiento(aux2);
 				if (aAux == nullptr) { ubicar(x, y++); "Asiento no válido."; return; }
 				if (!asientoValido(aAux)) { ubicar(x, y++); cout << "Asiento ocupado"; }
