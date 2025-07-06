@@ -298,8 +298,8 @@ public:
             case 0: //tarjetas embarque
                 gCheckIn.mostrarCheckinsPorUsuario();
                 system("pause>0"); break;
-            case 1: //reservas
-                gReservas.mostrarReservas();
+            case 1: //reservas //YA ESTA
+                gReservas.mostrarTodasLasReservas();
                 system("pause>0"); break;
             case 2: //chekcin
                 gCheckIn.realizarCheckIn(gReservas);
