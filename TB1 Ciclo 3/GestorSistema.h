@@ -15,8 +15,8 @@ auto validarDiaMes = [](int dia, int mes) {
     };
 auto validarDestino = [](int origen, int destino) {
     return origen >= 1 && origen <= 10 && destino >= 1 && destino <= 10;
-    }; 
-auto menu = [](void menu(), int&opcion) {
+    };
+auto menu = [](void menu(), int& opcion) {
     system("cls");
     menu();
     cin >> opcion;
@@ -45,7 +45,7 @@ public:
     GestorSistema() : gReservas(gVuelos, gUsuario), gCheckIn(gUsuario) {
         gUsuario.leerUsuarios();
         gVuelos.generarVuelosAutomaticos();
-        
+
     }
 
     void ejecutar() {
@@ -56,7 +56,7 @@ public:
             if (debug) n = 6; else n = 5;
             menuSpawn("JetSMART");
 
-            if(sesion)seleccionarOpc(opcion, opcPrincipalAlt, n);
+            if (sesion)seleccionarOpc(opcion, opcPrincipalAlt, n);
             else seleccionarOpc(opcion, opcPrincipal, n);
 
             switch (opcion) {
@@ -65,7 +65,7 @@ public:
             case 1: //INICIAR SESION/CERRAR SESION
                 if (!sesion)sesionMenu();
                 else gUsuario.cerrarSesion();
-               break;
+                break;
             case 2:
                 gReservas.reservar(); break;
             case 3:
@@ -113,11 +113,11 @@ public:
 
             switch (auxUser) {
             case 0:
-                gUsuario.agregarUsuario();system("pause>0"); break;
+                gUsuario.agregarUsuario(); system("pause>0"); break;
                 system("pause>0"); break;
             case 1:
-                gUsuario.mostrar(35,5);break;
-            case 2: 
+                gUsuario.mostrar(35, 5); break;
+            case 2:
                 break;
             default:
                 mensajeError(); break;
@@ -131,7 +131,7 @@ public:
         menuSpawn("Buscar Vuelos");
         do {
             limpiarIzquierda();
-            seleccionarOpc(auxVuelo, opcVuelos, 6); 
+            seleccionarOpc(auxVuelo, opcVuelos, 6);
 
             switch (auxVuelo) {
             case 0: submenuMostrarVuelos(); break;
@@ -154,7 +154,7 @@ public:
             case 0:
                 barraSpawn("Ordenamiento por precio");
                 gVuelos.ordenarTodosLosVuelosPorPrecio();
-                if (gVuelos.isQuiereReservar()) 
+                if (gVuelos.isQuiereReservar())
                 {
                     gReservas.reservar(); gVuelos.setQuiereReservar(0); return;
                 }
@@ -186,13 +186,13 @@ public:
         barraSpawn("Buscar por Mes");
         do {
             selecionMesVuelo();
-            ubicar(49, 9); ingresarDato(auxValor); 
+            ubicar(49, 9); ingresarDato(auxValor);
             cin.ignore();
             if (!enRango(auxValor, 1, 12)) mensajeError();
         } while (!enRango(auxValor, 1, 12));
 
-        limpiarDerecha(); 
-        barraSpawn("Vuelos de " + meses[auxValor - 1]); 
+        limpiarDerecha();
+        barraSpawn("Vuelos de " + meses[auxValor - 1]);
         gVuelos.mostrarVuelosPorMes(auxValor);
         if (gVuelos.isQuiereReservar())
         {
@@ -207,7 +207,7 @@ public:
         do {
             seleccionPais();
             ubicar(32, 9); cout << "Origen: "; ingresarDato(auxOrigen);
-            ubicar(32, 10); cout << "Destino: "; ingresarDato(auxDestino); 
+            ubicar(32, 10); cout << "Destino: "; ingresarDato(auxDestino);
 
             if (!validarDestino(auxOrigen, auxDestino)) {
                 mensajeError(); break;
@@ -218,12 +218,12 @@ public:
         string destino = paises[auxDestino - 1];
 
         limpiarDerecha();
-        barraSpawn("Vuelos " + origen + "- " + destino); 
+        barraSpawn("Vuelos " + origen + "- " + destino);
         gVuelos.mostrarVuelosPorPaises(origen, destino);
         if (gVuelos.isQuiereReservar())
         {
             gReservas.reservar(); gVuelos.setQuiereReservar(0); return;
-        } 
+        }
     }
 
     void mostrarVuelosEnFecha() {
@@ -253,8 +253,8 @@ public:
 
         do {
             seleccionPais();
-            ubicar(32, 9); cout << "Origen: "; ingresarDato(auxOrigen); 
-            ubicar(32, 10); cout << "Destino: "; ingresarDato(auxDestino); 
+            ubicar(32, 9); cout << "Origen: "; ingresarDato(auxOrigen);
+            ubicar(32, 10); cout << "Destino: "; ingresarDato(auxDestino);
             if (!validarDestino(auxOrigen, auxDestino)) {
                 mensajeError(); break;
             }
@@ -267,7 +267,7 @@ public:
             ubicar(32, 12); cout << BG_WHITE << BLACK << "Dia de Ida: "; ingresarDato(auxDiaIda);
             selecionMesVuelo(32, 13);
             ingresarDato(auxMesIda);
-            if (!validarDiaMes(auxDiaIda, auxMesIda)) { 
+            if (!validarDiaMes(auxDiaIda, auxMesIda)) {
                 mensajeError(); break;
             }
         } while (!validarDiaMes(auxDiaIda, auxMesIda));
@@ -307,4 +307,3 @@ public:
         } while (opc != 3);
     }
 };
-
