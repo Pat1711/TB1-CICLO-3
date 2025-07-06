@@ -8,6 +8,7 @@
 #include "Gestortxt.h"
 #include "GestorUsuarios.h"
 #include "GestorVuelo.h"
+#include "Descuento.h"
 #include <conio.h>
 
 using namespace std;
@@ -26,12 +27,15 @@ private:
 	Pila<Reserva> reservas;
 	GestorVuelo& gVuelos;
 	GestorUsuarios& gUsuarios;
+	Descuento* descuento;  
 	//SE PASA POR REFERENCIA YA QUE ANTES COMO QUE SE CREABA UNA NUEVA LISTA DE USUARIOS 
-	
+
 public:
 	GestorReserva(GestorVuelo& gVuelos, GestorUsuarios& gUsuarios)
-		: gVuelos(gVuelos), gUsuarios(gUsuarios) {}
-	~GestorReserva(){}
+		: gVuelos(gVuelos), gUsuarios(gUsuarios) {
+		descuento = new Descuento; 
+	}
+	~GestorReserva() {}
 
 	void reservar() {
 		default();
@@ -41,10 +45,11 @@ public:
 		ubicar(x, y); cout << "1. Id del vuelo";
 		ubicar(x, y += 2); cout << "2. Seleccionar asientos";
 		ubicar(x, y += 2); cout << "3. Resumen";
-		
 
-		int aux = 0; int numAsientos; int aux2 = 0; int auxExcesoPorVip = 0; int cont = 0;
+
+		int aux = 0; int numAsientos; int aux2 = 0; int auxExcesoPorVip = 0; int cont = 0; float auxDescuento = 0.0f; 
 		char opc = ' ';
+		string texto; 
 
 		x = 35; y = 5;
 
@@ -61,11 +66,11 @@ public:
 		ubicar(4, 5); cout << BG_GRISCLARO << JTAZUL << "1. Id del vuelo" << BG_WHITE << BLACK;
 
 
-		ubicar(x, y+=2); cout << "Ingrese id del vuelo: "; ingresarDato(aux);
+		ubicar(x, y += 2); cout << "Ingrese id del vuelo: "; ingresarDato(aux);
 
 		Vuelo* vAux = this->gVuelos.getVueloPorCodigo(aux);
-		if (vAux == nullptr){ ubicar(x, y += 2); cout << "El vuelo especificado no existe"; (void)_getch(); limpiarDerecha(); return; } //REGRESA SI EL VUELO NO EXISTE 
-		vAux->mostrarVuelo2(75,5);
+		if (vAux == nullptr) { ubicar(x, y += 2); cout << "El vuelo especificado no existe"; (void)_getch(); limpiarDerecha(); return; } //REGRESA SI EL VUELO NO EXISTE 
+		vAux->mostrarVuelo2(75, 5);
 		Asiento* aAux;
 
 		vector<Asiento*> asientos;
@@ -78,14 +83,14 @@ public:
 		{
 			if (vAux->getVectorAsientos()[i]->getEstado() == 0)aux2++;
 		};
-		if (numAsientos > aux2-1) { ubicar(x, y += 2); cout << "Cantidad de asientos libres insuficientes"; (void)_getch(); limpiarDerecha(); return; } //REGRESA SI LA CANTIDAD DE ASIENTOS ES SUPERIOR
+		if (numAsientos > aux2 - 1) { ubicar(x, y += 2); cout << "Cantidad de asientos libres insuficientes"; (void)_getch(); limpiarDerecha(); return; } //REGRESA SI LA CANTIDAD DE ASIENTOS ES SUPERIOR
 		ubicar(x, y += 2); cout << "Nota: Por cada asiento VIP se adicionan 50 USD a la tarifa";
 
 		vAux->mostrarMAsientos(83, 17); cout << BG_WHITE;
-		y+=2;
+		y += 2;
 
 		for (int i = 0; i < numAsientos; i++)
-		{ 
+		{
 			ubicar(85, 15); cout << "Seleccione asiento " << i + 1;
 
 			do
@@ -102,7 +107,7 @@ public:
 
 			//Calculo del extra a pagar por elegir VIP
 			if (aAux->getClasificacion() == 'V') {
-				cont++; 
+				cont++;
 				auxExcesoPorVip += 50;
 			}
 
@@ -117,18 +122,35 @@ public:
 			return (vAux->getPrecio() * numAsientos) + auxExcesoPorVip;
 			};
 
+		int precio = calcularPrecioFinal();  
+
 		ubicar(4, 9); cout << BG_GRISCLARO << JTAZUL << "3. Resumen" << BG_WHITE << BLACK;
 
 		ubicar(x, y += 2); cout << "Escogio " << cont << " VIP y " << numAsientos - cont << " Economico";
-		ubicar(x, y += 1); cout << "Monto a pagar: " << calcularPrecioFinal();
+		ubicar(x, y += 1); cout << "Monto a pagar: " << precio; 
+		ubicar(x, y += 1); cout << "Tiene codigos de descuento y/n: "; cin >> opc; 
+		if (confirmar(opc)) {
+			ubicar(x, y += 1); cout << "Codigo: "; cin >> texto; 
+			int desc = descuento->verificarCodigo(texto, x, y);  
 
+			if (desc != -1)
+				auxDescuento = desc; 
+			else 
+				auxDescuento = 0;
+
+			precio = calcularPrecioFinal() - calcularPrecioFinal() * (auxDescuento / 100.0); 
+
+			ubicar(x, y += 2); cout << "Nuevo monto a pagar: " << precio; 
+		}
 		ubicar(x, y += 1); cout << "Confirmar la reserva: y/n: "; cin >> opc; if (!confirmar(opc)) { limpiarDerecha(); return; }
-			
-		Reserva a(vAux, asientos, pAux, calcularPrecioFinal());
+
+
+
+		Reserva a(vAux, asientos, pAux, precio); 
 
 		reservas.push(a);
-		
-		ubicar(x, y += 2); cout << "La reserva se realizo con exito."; (void)_getch(); limpiarDerecha(); //creo que es mejor usar el cin.get :v solo estan pausando esta linea
+
+		ubicar(x, y += 2); cout << "La reserva se realizo con exito."; (void)_getch(); limpiarDerecha(); 
 	}
 
 	void mostrarReservas() {
@@ -158,4 +180,3 @@ public:
 };
 
 #endif // !_RESERVAS_
-

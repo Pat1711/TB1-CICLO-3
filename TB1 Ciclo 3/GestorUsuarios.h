@@ -3,39 +3,47 @@
 #include "Gestortxt.h"
 #include "Pasajero.h"
 #include "ListaDoble.h"
-#include "HashTabla.h"
+#include "HashTableA.h"
 #include "functional"
 
 class GestorUsuarios
 {
 private:
-	Gestortxt<string> archivo;
-	Lista<Pasajero*> pLista;
+    Gestortxt<string> archivo;
+    Lista<Pasajero*> pLista;
     Pasajero* usuarioActual;
 
-    HashTabla<Pasajero*>* hash;
-    
+    HashTableA<Pasajero*>* hash;
+
 public:
-	GestorUsuarios() : archivo("Usuarios.txt") {
+    GestorUsuarios() : archivo("Usuarios.txt") {
         auto clave = [](Pasajero* pasajero)->int {
             return stoi(pasajero->getDni());
             };
 
-        hash = new HashTabla<Pasajero*>(clave);
+        auto funcionHasheo = [](Pasajero* pasajero)->int { //funcion de hasheo basada en nombre y dni
+            size_t aux = 0;
+            for (char c : pasajero->getNombres()) {
+                aux += c * 19;
+            }
+            return stoi(pasajero->getDni())* 19 + aux;
+            };
+
+        hash = new HashTableA<Pasajero*>(clave,funcionHasheo);
 
         leerUsuarios();
-	}
-	~GestorUsuarios(){}
+    }
+    ~GestorUsuarios() {}
 
     void leerUsuarios() {
-        pLista = Lista<Pasajero*>(); 
+        pLista = Lista<Pasajero*>();
         hash->vaciar();
 
         for (int i = 0; i < archivo.size(); i += 4)
         {
             if (archivo.size() >= i + 4) {
                 pLista.insertarFinal(new Pasajero(archivo.getLine(i), archivo.getLine(i + 1), archivo.getLine(i + 2), archivo.getLine(i + 3)));
-                hash->insertar(stoi(archivo.getLine(i + 3)), getLista().getDato(pLista.longitud()-1));
+                hash->insert(getLista().getDato(pLista.longitud() - 1));
             }
         }
 
@@ -49,25 +57,25 @@ public:
 
         do {
             ubicar(x, y++); cout << BG_WHITE << BLACK << "Nombres: "; getline(cin, nombres);
-            ubicar(x, y++); if (nombres.empty()) cout << JTROJO <<"Nombres no puede estar vacío." << BLACK;
+            ubicar(x, y++); if (nombres.empty()) cout << JTROJO <<"Nombres no puede estar vacÃ­o." << BLACK;
         } while (nombres.empty());
 
         do {
             ubicar(x, y++); cout << "Apellidos: "; getline(cin, apellidos);
-            ubicar(x, y++); if (apellidos.empty()) cout << JTROJO << "Apellidos no puede estar vacío." << BLACK;
+            ubicar(x, y++); if (apellidos.empty()) cout << JTROJO << "Apellidos no puede estar vacÃ­o." << BLACK;
         } while (apellidos.empty());
 
         do {
             ubicar(x, y++); cout << "Correo: "; getline(cin, correo);
             if (correo.find('@') == string::npos) {
-                ubicar(x, y++); cout << JTROJO<< "Correo inválido." << BLACK;
+                ubicar(x, y++); cout << JTROJO<< "Correo invÃ¡lido." << BLACK;
             }
         } while (correo.find('@') == string::npos);
 
         do {
             ubicar(x, y++); cout << "DNI: "; getline(cin, dniStr);
             if (dniStr.length() != 8 || dniStr.find_first_not_of("0123456789") != string::npos) {
-                ubicar(x, y++); cout << JTROJO << "DNI inválido." << BLACK;
+                ubicar(x, y++); cout << JTROJO << "DNI invÃ¡lido." << BLACK;
             }
         } while (dniStr.length() != 8 || dniStr.find_first_not_of("0123456789") != string::npos);
 
@@ -82,14 +90,14 @@ public:
 
         getLista().insertarFinal(nuevoPasajero);
 
-        hash->insertar(stoi(dniStr), nuevoPasajero);
+        hash->insert(nuevoPasajero);
 
         archivo.agregar(nombres);
         archivo.agregar(apellidos);
         archivo.agregar(correo);
         archivo.agregar(dniStr);
 
-        ubicar(x, y++); cout << "Operación concluida correctamente";
+        ubicar(x, y++); cout << "OperaciÃ³n concluida correctamente";
 
         return nuevoPasajero;
     }
@@ -98,11 +106,11 @@ public:
         limpiarDerecha();
         int x = 35; int y = 5;
         string correo, dni;
-        ubicar(x, y); cout << BG_WHITE << BLACK <<"Ingrese correo electronico: "; ingresarDato(correo);
-        ubicar(x, y+= 2); cout << "Ingrese dni: "; ingresarDato(dni);
+        ubicar(x, y); cout << BG_WHITE << BLACK << "Ingrese correo electronico: "; ingresarDato(correo);
+        ubicar(x, y += 2); cout << "Ingrese dni: "; ingresarDato(dni);
 
         int key = stoi(dni);
-        int pos = hash->buscar(key);
+        int pos = hash->obtenerPos(key); 
 
         if (pos == -1) {
             ubicar(x, y += 2); cout << JTROJO << "Usuario no encontrado." << BLACK; cin.ignore();
@@ -119,14 +127,14 @@ public:
             }
         }
 
-        ubicar(x, y++); cout << JTROJO << "Correo incorrecto o no coincide con el DNI." << BLACK; system("pause>0"); 
+        ubicar(x, y++); cout << JTROJO << "Correo incorrecto o no coincide con el DNI." << BLACK; system("pause>0");
     }
 
     void cerrarSesion() {
         usuarioActual = nullptr;
         sesion = false;
     }
-    void mostrar(int x, int y){
+    void mostrar(int x, int y) {
 
         cout << BG_WHITE << BLACK;
         pLista.mostrarPasajero(x, y);
