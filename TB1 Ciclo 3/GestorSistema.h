@@ -183,7 +183,9 @@ public:
 
     void mostrarVuelosPorMes() {
         int auxValor;
-        barraSpawn("Buscar por Mes");
+        barraSpawn("Buscar por Mes     ");
+        limpiarDerecha();
+
         do {
             selecionMesVuelo();
             ubicar(49, 9); ingresarDato(auxValor);
@@ -202,8 +204,8 @@ public:
 
     void mostrarVuelosPorPaises() {
         int auxOrigen, auxDestino;
-        barraSpawn("Buscar por Pais");
-
+        barraSpawn("Buscar por Pais     ");
+        limpiarDerecha();
         do {
             seleccionPais();
             ubicar(32, 9); cout << "Origen: "; ingresarDato(auxOrigen);
@@ -218,7 +220,7 @@ public:
         string destino = paises[auxDestino - 1];
 
         limpiarDerecha();
-        barraSpawn("Vuelos " + origen + "- " + destino);
+        barraSpawn("Vuelos " + origen + "- " + destino + "   ");
         gVuelos.mostrarVuelosPorPaises(origen, destino);
         if (gVuelos.isQuiereReservar())
         {
@@ -228,7 +230,9 @@ public:
 
     void mostrarVuelosEnFecha() {
         int auxDia, auxMes;
-        barraSpawn("Buscar por Fecha");
+        barraSpawn("Buscar por Fecha  ");
+        limpiarDerecha();
+
         do {
             ubicar(32, 5); cout << BG_WHITE << BLACK << "Dia de Ida: "; ingresarDato(auxDia);
             selecionMesVuelo(32, 6);
@@ -250,6 +254,7 @@ public:
     void mostrarVuelosEspecificos() {
         int auxOrigen, auxDestino, auxDiaIda, auxMesIda;
         barraSpawn("Busqueda Especifica");
+        limpiarDerecha();
 
         do {
             seleccionPais();
