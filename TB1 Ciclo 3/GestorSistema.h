@@ -49,28 +49,59 @@ public:
     }
 
     void ejecutar() {
-        int opcion = 0;
+        int opcion = 0, n = 5;
         string destino, origen;
 
         do {
+            if (debug) n = 6; else n = 5;
             menuSpawn("JetSMART");
-            seleccionarOpc(opcion, opcPrincipal,5);
+
+            if(sesion)seleccionarOpc(opcion, opcPrincipalAlt, n);
+            else seleccionarOpc(opcion, opcPrincipal, n);
 
             switch (opcion) {
             case 0:
                 menuGestionVuelos(); break;
-            case 1:
-                menuGestionUsuarios(); break;
+            case 1: //INICIAR SESION/CERRAR SESION
+                if (!sesion)sesionMenu();
+                else gUsuario.cerrarSesion();
+               break;
             case 2:
                 gReservas.reservar(); break;
             case 3:
                 menuGestionCheckin(); break;
-            case 4:
+            case 4://SALIR
+                break;
+            case 5:
+                menuGestionUsuarios(); break;
+            default:
+                opcion = 0; break;
+            }
+
+        } while (opcion != 4);
+    }
+
+    void sesionMenu() {
+        int auxUser2 = 0;
+        menuSpawn("INICIAR SESION");
+        do {
+            seleccionarOpc(auxUser2, opcSesion, 3);
+            limpiarDerecha();
+
+            switch (auxUser2) {
+            case 0:
+                gUsuario.iniciarSesion(); break;
+            case 1:
+                gUsuario.agregarUsuario(); system("pause>0"); break;
+            case 2:
                 break;
             default:
                 mensajeError(); break;
             }
-        } while (opcion != 4);
+
+            if (sesion) auxUser2 = 2;
+
+        } while (auxUser2 != 2);
     }
 
     void menuGestionUsuarios() {
@@ -86,10 +117,12 @@ public:
                 system("pause>0"); break;
             case 1:
                 gUsuario.mostrar(35,5);break;
-            case 2: break;
+            case 2: 
+                break;
             default:
                 mensajeError(); break;
             }
+
         } while (auxUser != 2);
     }
 
@@ -97,8 +130,8 @@ public:
         int auxVuelo = 0;
         menuSpawn("Buscar Vuelos");
         do {
+            limpiarIzquierda();
             seleccionarOpc(auxVuelo, opcVuelos, 6); 
-            limpiarDerecha();
 
             switch (auxVuelo) {
             case 0: submenuMostrarVuelos(); break;
@@ -117,7 +150,6 @@ public:
         menuSpawn("Ordenar resultados");
         seleccionarOpc(auxSubMenu, opcOrdenar, 4);
         do {
-
             switch (auxSubMenu) {
             case 0:
                 barraSpawn("Ordenamiento por precio");
