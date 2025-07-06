@@ -314,7 +314,7 @@ public:
         int inicio = pagina * vuelosPorPagina;
         int fin = min(inicio + vuelosPorPagina, (int)vuelos.size());
 
-        int x1 = 32, x2 = 78;
+        int x1 = 32, x2 = 75;
         int yInicio = 4;
         int espacioVertical = 5;
 

@@ -11,7 +11,7 @@ using namespace std;
 
 // --- Variables Universales ---
 
-string paises[10] = { "Perú     ", "Chile    ", "Argentina", "Brasil   ", "Colombia ", "Ecuador  ", "México   ", "EE.UU    ", "España   ", "Italia   " };
+string paises[10] = { "Peru", "Chile", "Argentina", "Brasil", "Colombia", "Ecuador", "Mexico", "EE.UU", "Espana", "Italia" };
 
 // --- Clase Vuelo --- 
 
@@ -52,7 +52,7 @@ public:
     //CON COORDENADAS
     void mostrarVuelo2(int x, int y) {
         cout << BG_WHITE << BLACK;
-        ubicar(x, y); cout << "Vuelo nro: " << codigoVuelo << " |  " << origen << " - " << destino;
+        ubicar(x, y); cout << "Vuelo nro: " << codigoVuelo << " |  " << origen << " - " << destino << "      ";
         ubicar(x, y += 1); cout << "Ida: " << diaIda << "/" << mesIda; 
         ubicar(x, y += 1); cout << "Vuelta: " << diaVuelta << " / " << mesVuelta; 
         ubicar(x, y +=1); cout << "Precio en USD:" << precio;
