@@ -118,14 +118,14 @@
     <ClInclude Include="Checkin.h" />
     <ClInclude Include="Cola.h" />
     <ClInclude Include="Color.h" />
+    <ClInclude Include="Descuento.h" />
     <ClInclude Include="GestorCheckin.h" />
     <ClInclude Include="GestorReserva.h" />
     <ClInclude Include="GestorSistema.h" />
     <ClInclude Include="Gestortxt.h" />
     <ClInclude Include="GestorUsuarios.h" />
     <ClInclude Include="GestorVuelo.h" />
-    <ClInclude Include="HashEntidad.h" />
-    <ClInclude Include="HashTabla.h" />
+    <ClInclude Include="HashTableA.h" />
     <ClInclude Include="ListaDoble.h" />
     <ClInclude Include="Nodo.h" />
     <ClInclude Include="Pasajero.h" />
