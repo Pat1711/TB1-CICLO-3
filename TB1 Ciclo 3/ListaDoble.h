@@ -22,6 +22,7 @@ public:
 	bool esVacio();
 	void mostrarPasajero(int x, int y);
 	T getDato(int index) const;
+	vector<T> getTodos();
 
 	bool test(string nombres, string apellidos, string correo, string dni);
 	bool validarDNI(string dni);
@@ -104,7 +105,6 @@ bool Lista<T>::esVacio() {
 template<class T>
 void Lista<T>::mostrarPasajero(int x, int y) {
 	Nodo<T>* nodo = inicio; //Nodo<tipo T> apunta (*) hacua 'nodo'
-	ubicar(x, y++); cout << "Lista de Pasajeros:";
 
 	int i = 1;
 	
@@ -119,6 +119,9 @@ void Lista<T>::mostrarPasajero(int x, int y) {
 	}
 	ubicar(x, y++);
 }
+
+// ---
+
 
 // ---
 template<class T>
@@ -160,6 +163,19 @@ T Lista<T>::getDato(int index) const{
 
 	cout << "Fuera de rango"; system("pause>0");
 	return nullptr;
+}
+
+template<class T>
+vector<T> Lista<T>::getTodos() {
+	vector<T> elementos;
+	Nodo<T>* actual = inicio;
+
+	while (actual != nullptr) {
+		elementos.push_back(actual->dato);
+		actual = actual->siguiente;
+	}
+
+	return elementos;
 }
 
 template<class T>

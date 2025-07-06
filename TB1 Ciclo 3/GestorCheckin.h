@@ -59,25 +59,29 @@ public:
             return;
         }
 
-        ubicar(31, 4); cout << "Seleccione un usuario (DNI):";
-        gUsuarios.getLista().mostrarPasajero(31,5);
+        limpiarDerecha2();
+        gUsuarios.mostrarTodosLosUsuarios();
+        limpiarDerecha2();
 
-        string dni;
-        ubicar(31, 10); cout << "Ingrese el DNI del pasajero: "; ingresarDato(dni);
+        string dni; // continuacion waza
+        cout << BG_WHITE << BLACK;
+        ubicar(54, 27); cout << "Ingrese el DNI del pasajero: "; ingresarDato(dni);
 
         if (!gUsuarios.getLista().validarDNI(dni)) {
             ubicar(31, 11); cout << "No se encontró un pasajero con ese DNI";
             return;
         }
 
-        Cola<Reserva> aux;
-        bool hayCoincidencias = false;
+        /*Cola<Reserva> aux;
+        bool hayCoincidencias = false;*/
 
-        defaultPanelDerecho();
+        limpiarDerecha();
+
+        //AQUI SE DEBE MOSTRAR LAS PAGINAS DE CHECKINS 
 
         cout << BG_WHITE << BLACK;
-        ubicar(31, 4); cout << "=== CHECK-INS DEL USUARIO CON DNI: " << dni << " ===";
-        while (!checkinsExitosos.esVacia()) {
+        /* ubicar(31, 4); cout << "=== CHECK-INS DEL USUARIO CON DNI: " << dni << " ===";*/
+        /*while (!checkinsExitosos.esVacia()) {
             Reserva reserva = checkinsExitosos.dequeue();
 
             if (reserva.getPasajero()->getDni() == dni) {
@@ -86,15 +90,86 @@ public:
             }
           
             aux.enqueue(reserva);
+        }*/
+        vector<Reserva> delUsuario = obtenerCheckinsDelPasajero(dni);
+
+        if (delUsuario.empty()) {
+            ubicar(31, 21); cout << "No se encontraron check-ins para el DNI proporcionado.";
+            return;
+        }
+
+        bool visualizo = iterarTarjetasEmbarque(delUsuario);
+
+        if (!visualizo) return;
+        // end
+
+        /*while (!aux.esVacia()) {
+            checkinsExitosos.enqueue(aux.dequeue());
+        }
+
+        if (!hayCoincidencias) {
+            ubicar(31, 21); cout << "No se encontraron check-ins para el DNI proporcionado.";
+        }*/
+    }
+
+    //parte final
+
+    vector<Reserva> obtenerCheckinsDelPasajero(const string& dni) {
+        vector<Reserva> resultado;
+        Cola<Reserva> aux;
+
+        while (!checkinsExitosos.esVacia()) {
+            Reserva reserva = checkinsExitosos.dequeue();
+
+            if (reserva.getPasajero()->getDni() == dni) {
+                resultado.push_back(reserva);
+            }
+
+            aux.enqueue(reserva); 
         }
 
         while (!aux.esVacia()) {
             checkinsExitosos.enqueue(aux.dequeue());
         }
 
-        if (!hayCoincidencias) {
-            ubicar(31, 21); cout << "No se encontraron check-ins para el DNI proporcionado.";
-        }
+        return resultado;
+    }
+
+    bool iterarTarjetasEmbarque(vector<Reserva>& reservas) {
+        if (reservas.empty()) return false;
+
+        int totalPaginas = static_cast<int>(reservas.size());
+        int paginaActual = 0;
+        int tecla;
+
+        do {
+            mostrarTarjeta(reservas[paginaActual], paginaActual, totalPaginas);
+            tecla = _getch();
+
+            if (tecla == 224) {
+                int flecha = _getch();
+                if (flecha == 77 && paginaActual < totalPaginas - 1) paginaActual++;     // derecha
+                else if (flecha == 75 && paginaActual > 0) paginaActual--;              // izquierda
+            }
+        } while (tecla != 27); // ESC
+
+        return true;
+    }
+
+    void mostrarTarjeta(Reserva& reserva, int pagina, int totalDePaginas) {
+        limpiarDerecha(); 
+        int x = 32, y = 4;
+
+        ubicar(x, y);
+        cout << BG_WHITE << BLACK << "=== TARJETA DE EMBARQUE ===";
+
+        reserva.mostrarDatosCompletos(x, y + 2); 
+
+        ubicar(30, 1);
+        cout << BG_JTAZUL << WHITE << "Pagina " << (pagina + 1) << " / " << totalDePaginas;
+        if (pagina < 10) cout << " ";
+        ubicar(30, 2);
+        cout << "Usa Flechas izq y der para cambiar de pagina. ESC para salir.";
     }
 };
 

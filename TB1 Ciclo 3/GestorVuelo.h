@@ -309,7 +309,6 @@ public:
         return vuelosEncontrados;
     }
     void mostrarPagina(vector<Vuelo*>& vuelos, int pagina) {
-
         int vuelosPorPagina = 10;
         int inicio = pagina * vuelosPorPagina;
         int fin = min(inicio + vuelosPorPagina, (int)vuelos.size());
@@ -354,7 +353,7 @@ public:
                     paginaActual--;
                 }
             }
-            else if (tecla == 13) {
+            else if (tecla == 13) { // 13 = ENTER
                 quiereReservar = true; tecla = 27; 
             }
 

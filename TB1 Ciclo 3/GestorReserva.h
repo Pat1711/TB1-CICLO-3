@@ -152,6 +152,88 @@ public:
 		}
 	}
 
+	void mostrarTodasLasReservas() {
+		if (reservas.estaVacia()) {
+			cout << BG_WHITE << BLACK;
+			ubicar(32, 4); cout << "No hay ninguna reserva";
+			return;
+		}
+
+		vector<Reserva*> todos = obtenerTodasLasReservas(reservas);
+		iterarPaginas(todos);
+
+		for (Reserva* r : todos) {
+			delete r;
+		}
+	}
+
+	vector<Reserva*> obtenerTodasLasReservas(Pila<Reserva>& reservas) {
+		vector<Reserva*> todas;
+		Pila<Reserva> aux;
+
+		while (!reservas.estaVacia()) {
+			Reserva r = reservas.pop();
+			Reserva* copia = new Reserva(r); 
+			todas.push_back(copia);
+			aux.push(r); // restauramos la pila
+		}
+
+		while (!aux.estaVacia()) {
+			reservas.push(aux.pop());
+		}
+
+		return todas;
+	}
+
+	void iterarPaginas(vector<Reserva*>& reservas) {
+		int totalPaginas = static_cast<int>((reservas.size() + 3) / 4);
+		int paginaActual = 0;
+		int tecla;
+
+		do {
+			mostrarPagina(reservas, paginaActual);
+			tecla = _getch();
+
+			if (tecla == 224) {
+				int flecha = _getch();
+				if (flecha == 77 && paginaActual < totalPaginas - 1) { //derecha
+					paginaActual++;
+				}
+				else if (flecha == 75 && paginaActual > 0) { //izquierda
+					paginaActual--;
+				}
+			}
+		} while (tecla != 27); // ESC
+	}
+
+	void mostrarPagina(vector<Reserva*>& reservas, int pagina) {
+		limpiarDerecha(); //limpia la pantalla de info
+		int reservasPorPaginas = 4;
+		int inicio = pagina * reservasPorPaginas;
+		int fin = min(inicio + reservasPorPaginas, (int)reservas.size());
+
+		int x1 = 32, x2 = 75;	
+		int yInicio = 4;
+		int espacioVertical = 13;
+
+		for (int i = inicio; i < fin; ++i) {
+			int localIndex = i - inicio; // de 0 a 3
+			int fila = localIndex / 2;   // 0 o 1
+			int columna = localIndex % 2; // 0 o 1
+
+			int x = (columna == 0) ? x1 : x2;
+			int y = yInicio + fila * espacioVertical;
+
+			reservas[i]->mostrarDatosCompletos(x, y);
+		}
+
+		ubicar(30, 1);
+		cout << BG_JTAZUL << WHITE << "Pagina " << (pagina + 1) << " / " << ((reservas.size() + 3) / 4);
+		if (pagina < 10) cout << " ";
+		ubicar(30, 2);
+		cout << "Usa Flechas izq y der para cambiar de pagina. ESC para salir.";
+	}
+
 	Pila<Reserva> getReservas() {
 		return reservas;
 	}

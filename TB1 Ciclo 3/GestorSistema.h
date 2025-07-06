@@ -158,7 +158,7 @@ public:
                 {
                     gReservas.reservar(); gVuelos.setQuiereReservar(0); return;
                 }
-                seleccionarOpc(auxSubMenu, opcOrdenar, 4);break;
+                seleccionarOpc(auxSubMenu, opcOrdenar, 4); break;
             case 1:
                 barraSpawn("Ordenamiento por origen");
                 gVuelos.ordenarTodosLosVuelosPorPais();
@@ -293,8 +293,8 @@ public:
             case 0: //tarjetas embarque
                 gCheckIn.mostrarCheckinsPorUsuario();
                 system("pause>0"); break;
-            case 1: //reservas
-                gReservas.mostrarReservas();
+            case 1: //reservas //YA ESTA
+                gReservas.mostrarTodasLasReservas();
                 system("pause>0"); break;
             case 2: //chekcin
                 gCheckIn.realizarCheckIn(gReservas);
