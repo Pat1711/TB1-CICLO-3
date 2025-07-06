@@ -21,10 +21,33 @@ public:
 	void insertarFinal(T v);
 	bool esVacio();
 	void mostrarPasajero(int x, int y);
-	T getDato(int index);
+	T getDato(int index) const;
 
 	bool test(string nombres, string apellidos, string correo, string dni);
 	bool validarDNI(string dni);
+
+	void vaciar() {
+		for (int i = 0; i < TABLE_SIZE; ++i) {
+			while (!tabla[i].esVacia()) {
+				tabla[i].eliminaInicio();  // O eliminaFinal, según lo que tengas
+			}
+		}
+		numElementos = 0;
+	}
+
+	int longitud() {
+		Nodo<T>* nodo = inicio;
+		int count = 0;
+		while (nodo != nullptr) {
+			count++;
+			nodo = nodo->siguiente;
+		}
+		return count;
+	}
+
+	Nodo<T>* getInicio() const {
+		return inicio;
+	}
 };
 
 // ---
@@ -123,7 +146,7 @@ bool Lista<T>::test(string nombres, string apellidos, string correo, string dni)
 }
 
 template<class T>
-T Lista<T>::getDato(int index) {
+T Lista<T>::getDato(int index) const{
 	Nodo<T>* nodo = inicio;
 	int contador = 0;
 

@@ -10,10 +10,10 @@
 
 #define ANCHO 120
 #define ALTO 30
-using namespace std;
 using namespace System;
-
-bool debug = true; //idea para mostrar/ocultar opciones -> mas fidelidad a como se veria si fueras usuario
+using namespace std;
+bool debug = false; //idea para mostrar/ocultar opciones -> mas fidelidad a como se veria si fueras usuario
+bool sesion = false; // INICIO SESION??
 
 // --- Menu Principal --- ///
 void ajustarConsola() {
@@ -84,9 +84,34 @@ void imprimirDibujo(string dibujo[], size_t filas, int x, int y) {
 	cout << RESET;
 }
 
+void menuSpawn(string titulo) {
+	default();
+	ubicar(4, 2); cout << BG_JTAZUL << titulo;
+	cout << RESET;
+}
+void barraSpawn(string titulo) {
+	ubicar(4, 2); cout << BG_JTAZUL << titulo;
+	cout << RESET;
+}
+void limpiarDerecha() {
+	cout << BG_WHITE; pintar(30, 4, ANCHO - 30, ALTO - 6);
+	cout << RESET;
+}
+void limpiarIzquierda() {
+	cout << BG_GRISCLARO; pintar(0, 4, 30, ALTO - 5);
+}
+void limpiarDerecha2() {
+	cout << BG_WHITE; pintar(30, 4, ANCHO - 30, ALTO - 6);
+	cout << RESET;
+	cout << BG_JTAZUL; pintar(30, 1, ANCHO - 30, 4);
+	cout << RESET;
+}
+
 //TODAS LAS OPCIONES BRO
-string opcPrincipal[5] = {  "Buscar vuelos", "Menu de Usuario","Reservar un vuelo","Check-In", "Salir" };
+string opcPrincipal[6] = {  "Buscar vuelos", "Iniciar Sesion","Reservar un vuelo","Check-In", "Salir", "Menu Usuarios"};
+string opcPrincipalAlt[6] = { "Buscar vuelos", "Cerrar Sesion","Reservar un vuelo","Check-In", "Salir", "Menu Usuarios" };
 string opcUsuario[3] = { "Registrar Usuario", "Registro de Usuarios", "Salir" };
+string opcSesion[3] = { "Iniciar Sesion", "Registrarse", "Salir" };
 string opcVuelos[6] = {"Ver todos    ", "Buscar por mes", "Buscar por pais", "Buscar por fecha", "Buscar especifico", "Salir"};
 string opcCheckin[4] = { "Tarjetas de embarque", "Reservas", "Check in", "Salir"};
 string opcOrdenar[4] = {"Por precio", "Por país de origen", "Por código", "Salir"};
@@ -119,6 +144,11 @@ void seleccionarOpc(int&opcion, string opciones[], int n) {
 			opcion++;
 			if (opcion > n-1) opcion = n-1;
 		}
+		else if (tecla == 'd') {
+			debug = !debug;
+			opcion = 8;
+			break;
+		}
 
 	} while (tecla != 13); //tecla enter
 
@@ -130,40 +160,6 @@ auto ingresarDato = [](auto&a) {
 		Console::CursorVisible = false;
 	};
 
-void menuSpawn(string titulo) {
-	default();
-	ubicar(4, 2); cout << BG_JTAZUL << titulo;
-	cout << RESET;
-}
-void barraSpawn(string titulo) {
-	ubicar(4, 2); cout << BG_JTAZUL << titulo;
-	cout << RESET;
-}
-void limpiarDerecha() {
-	cout << BG_WHITE; pintar(30, 4, ANCHO - 30, ALTO - 6);
-	cout << RESET;
-}
-void menuPrincipal() {
-	default();
-
-	ubicar(4, 2); cout << BG_JTAZUL << "JetSMART";
-
-	cout << RESET;
-}
-
-//Dejo esto porsiaca
-// --- Menu Usuario --- ///
-
-void menuUsuario() {
-	cout << "=====| Menu de Usuario |=====\n";
-	cout << "1. Registrar nuevo usuario\n";
-	if (debug) cout << "2. Registro de usuarios\n";
-	cout << "3. Salir\n";
-}
-
-void tituloUsuario() {
-	cout << "=====| Menu de Usuario |=====\n";
-}
 
 void selecionMesVuelo(int x = 32, int y = 4) {
 	ubicar(x, y); cout << BG_WHITE << BLACK << "Listado de Meses"; 
