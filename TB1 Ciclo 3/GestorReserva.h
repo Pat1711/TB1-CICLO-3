@@ -122,7 +122,7 @@ public:
 			return (vAux->getPrecio() * numAsientos) + auxExcesoPorVip;
 			};
 
-		int precio = calcularPrecioFinal();  
+		double precio = calcularPrecioFinal();  
 
 		ubicar(4, 9); cout << BG_GRISCLARO << JTAZUL << "3. Resumen" << BG_WHITE << BLACK;
 
@@ -134,7 +134,7 @@ public:
 			int desc = descuento->verificarCodigo(texto, x, y);  
 
 			if (desc != -1)
-				auxDescuento = desc; 
+				auxDescuento = static_cast<float>(desc);
 			else 
 				auxDescuento = 0;
 
@@ -146,7 +146,7 @@ public:
 
 
 
-		Reserva a(vAux, asientos, pAux, precio); 
+		Reserva a(vAux, asientos, pAux, static_cast<int>(precio)); 
 
 		reservas.push(a);
 
