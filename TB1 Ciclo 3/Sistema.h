@@ -112,7 +112,7 @@ string opcPrincipal[6] = {  "Buscar vuelos", "Iniciar Sesion","Reservar un vuelo
 string opcPrincipalAlt[6] = { "Buscar vuelos", "Cerrar Sesion","Reservar un vuelo","Check-In", "Salir", "Menu Usuarios" };
 string opcUsuario[3] = { "Registrar Usuario", "Registro de Usuarios", "Salir" };
 string opcSesion[3] = { "Iniciar Sesion", "Registrarse", "Salir" };
-string opcVuelos[6] = {"Ver todos    ", "Buscar por mes", "Buscar por pais", "Buscar por fecha", "Buscar especifico", "Salir"};
+string opcVuelos[7] = {"Ver todos    ", "Buscar por mes", "Buscar por pais", "Buscar por fecha", "Buscar especifico", "Buscar rango precios","Salir"};
 string opcCheckin[4] = { "Tarjetas de embarque", "Reservas", "Check in", "Salir"};
 string opcOrdenar[4] = {"Por precio", "Por país de origen", "Por código", "Salir"};
 
