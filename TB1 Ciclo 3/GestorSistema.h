@@ -13,6 +13,9 @@ using namespace std;
 auto validarDiaMes = [](int dia, int mes) {
     return dia >= 1 && dia <= 31 && mes >= 1 && mes <= 12;
     };
+auto validarPrecio = [](int p1, int p2) {
+    return p1 >= 200 && p1 <= 10000 && p2 >= 200 && p2 <= 10000;
+    };
 auto validarDestino = [](int origen, int destino) {
     return origen >= 1 && origen <= 10 && destino >= 1 && destino <= 10;
     };
@@ -45,7 +48,7 @@ public:
     GestorSistema() : gReservas(gVuelos, gUsuario), gCheckIn(gUsuario) {
         gUsuario.leerUsuarios();
         gVuelos.generarVuelosAutomaticos();
-
+        gVuelos.indexarVuelosArbol(); 
     }
 
     void ejecutar() {
@@ -131,7 +134,7 @@ public:
         menuSpawn("Buscar Vuelos");
         do {
             limpiarIzquierda();
-            seleccionarOpc(auxVuelo, opcVuelos, 6);
+            seleccionarOpc(auxVuelo, opcVuelos, 7);
 
             switch (auxVuelo) {
             case 0: submenuMostrarVuelos(); break;
@@ -139,10 +142,11 @@ public:
             case 2: mostrarVuelosPorPaises(); break;
             case 3: mostrarVuelosEnFecha(); break;
             case 4: mostrarVuelosEspecificos(); break;
-            case 5: break;
+            case 5: mostrarVuelosRangoPrecios(); break;
+            case 6: break;
             default: mensajeError(); break;
             }
-        } while (auxVuelo != 5);
+        } while (auxVuelo != 6);
     }
 
     void submenuMostrarVuelos() {
@@ -279,6 +283,29 @@ public:
 
         limpiarDerecha();
         gVuelos.mostrarVuelosDatosIda(origen, destino, auxMesIda, auxDiaIda);
+        if (gVuelos.isQuiereReservar())
+        {
+            gReservas.reservar(); gVuelos.setQuiereReservar(0); return;
+        }
+    }
+
+    void mostrarVuelosRangoPrecios() {
+        int auxPrecio1, auxPrecio2;
+        barraSpawn("Buscar rango Precios   ");
+        limpiarDerecha();
+
+        do {
+            ubicar(32, 5); cout << BG_WHITE << BLACK << "Ingresar el rango de precios:"; 
+            ubicar(32, 7); cout << BG_WHITE << BLACK << "Precio Base: "; ingresarDato(auxPrecio1);
+            ubicar(32, 8); cout << BG_WHITE << BLACK << "Precio Tope: "; ingresarDato(auxPrecio2); 
+            if (!validarPrecio(auxPrecio1, auxPrecio2)) {
+                mensajeError(); break;
+            }
+        } while (!validarPrecio(auxPrecio1, auxPrecio2)); 
+
+        limpiarDerecha();
+        barraSpawn("Vuelos de " + to_string(auxPrecio1) + " - " + to_string(auxPrecio2) + " $  ");
+        gVuelos.buscarEnRangoPrecios(auxPrecio1, auxPrecio2);
         if (gVuelos.isQuiereReservar())
         {
             gReservas.reservar(); gVuelos.setQuiereReservar(0); return;
