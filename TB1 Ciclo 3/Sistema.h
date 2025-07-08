@@ -108,9 +108,9 @@ void limpiarDerecha2() {
 }
 
 //TODAS LAS OPCIONES BRO
-string opcPrincipal[6] = {  "Buscar vuelos", "Iniciar Sesion","Reservar un vuelo","Check-In", "Salir", "Menu Usuarios"};
-string opcPrincipalAlt[6] = { "Buscar vuelos", "Cerrar Sesion","Reservar un vuelo","Check-In", "Salir", "Menu Usuarios" };
-string opcUsuario[3] = { "Registrar Usuario", "Registro de Usuarios", "Salir" };
+string opcPrincipal[6] = {  "Buscar vuelos", "Iniciar Sesion","Reservar un vuelo","Check-In", "Salir", "Menu Admin"};
+string opcPrincipalAlt[6] = { "Buscar vuelos", "Cerrar Sesion","Reservar un vuelo","Check-In", "Salir", "Menu Admin" };
+string opcUsuario[4] = { "Registrar Usuario", "Registro de Usuarios", "Agregar Vuelo","Salir" };
 string opcSesion[3] = { "Iniciar Sesion", "Registrarse", "Salir" };
 string opcVuelos[7] = {"Ver todos    ", "Buscar por mes", "Buscar por pais", "Buscar por fecha", "Buscar especifico", "Buscar rango precios","Salir"};
 string opcCheckin[4] = { "Tarjetas de embarque", "Reservas", "Check in", "Salir"};

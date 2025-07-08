@@ -77,7 +77,7 @@ public:
             case 4://SALIR
                 break;
             case 5:
-                menuGestionUsuarios(); break;
+                menuGestionAdmin(); break;
             default:
                 opcion = 0; break;
             }
@@ -108,11 +108,11 @@ public:
         } while (auxUser2 != 2);
     }
 
-    void menuGestionUsuarios() {
+    void menuGestionAdmin() {
         int auxUser = 0;
-        menuSpawn("Menu Usuarios");
+        menuSpawn("Menu Admin");
         do {
-            seleccionarOpc(auxUser, opcUsuario, 3);
+            seleccionarOpc(auxUser, opcUsuario, 4);
             limpiarDerecha();
 
             switch (auxUser) {
@@ -122,7 +122,10 @@ public:
             case 1:
                 gUsuario.mostrar(35, 5); break;
             case 2:
+                seleccionPais(); selecionMesVuelo(32, 10);
+                gVuelos.agregarVueloManual();
                 break;
+            case 3: break;
             default:
                 mensajeError(); break;
             }
@@ -229,7 +232,7 @@ public:
         gVuelos.mostrarVuelosPorPaises(origen, destino);
         if (gVuelos.isQuiereReservar())
         {
-            gReservas.reservar(); gVuelos.setQuiereReservar(0); return;
+            gReservas.reservar(gVuelos.getRutasValidas()); gVuelos.getRutasValidas().clear();  gVuelos.setQuiereReservar(0); return;
         }
     }
 

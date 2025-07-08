@@ -37,120 +37,137 @@ public:
 	}
 	~GestorReserva() {}
 
-	void reservar() {
+	void reservar(vector<vector<Vuelo*>> rutasValidas = vector<vector<Vuelo*>>()) {
 		default();
 		menuSpawn("REALIZAR UNA RESERVA");
-		int x = 4, y = 5;
-		cout << BG_GRISCLARO << BLACK;
-		ubicar(x, y); cout << "1. Id del vuelo";
-		ubicar(x, y += 2); cout << "2. Seleccionar asientos";
-		ubicar(x, y += 2); cout << "3. Resumen";
 
-
-		int aux = 0; int numAsientos; int aux2 = 0; int auxExcesoPorVip = 0; int cont = 0; float auxDescuento = 0.0f; 
+		int aux = 0, n = 0, aux3; int numAsientos; int aux2 = 0; int auxExcesoPorVip = 0; int cont = 0; float auxDescuento = 0.0f;
 		char opc = ' ';
-		string texto; 
+		string texto;
 
-		x = 35; y = 5;
-
-		//Para que no continue si no inicio sesion
-		if (sesion == false) {
-			ubicar(x, y++); cout << BG_WHITE << JTROJO << "Debe iniciar sesion para reservar un vuelo"; (void)_getch(); limpiarDerecha();
-			return;
+		if(!rutasValidas.empty()){
+			ubicar(35, 4); cout << BG_WHITE << BLACK << "Ruta a reservar: "; ingresarDato(n);
+			aux3 = static_cast<int>(rutasValidas[n].size());
 		}
-
-		ubicar(x, y++); cout << "INGRESE LOS DATOS SOLICITADOS";
-
-		Pasajero* pAux = gUsuarios.getusuario();
-
-		ubicar(4, 5); cout << BG_GRISCLARO << JTAZUL << "1. Id del vuelo" << BG_WHITE << BLACK;
-
-
-		ubicar(x, y += 2); cout << "Ingrese id del vuelo: "; ingresarDato(aux);
-
-		Vuelo* vAux = this->gVuelos.getVueloPorCodigo(aux);
-		if (vAux == nullptr) { ubicar(x, y += 2); cout << "El vuelo especificado no existe"; (void)_getch(); limpiarDerecha(); return; } //REGRESA SI EL VUELO NO EXISTE 
-		vAux->mostrarVuelo2(75, 5);
-		Asiento* aAux;
-
-		vector<Asiento*> asientos;
-		ubicar(4, 7); cout << BG_GRISCLARO << JTAZUL << "2. Seleccionar Asientos" << BG_WHITE << BLACK;
-
-		ubicar(x, y += 2); cout << "Cantidad de asientos: "; ingresarDato(numAsientos);
-
-		//CALCULA LA CANTIDAD DE ASIENTOS LIBRES
-		for (int i = 0; i < vAux->getVectorAsientos().size(); i++)
+		else {
+			aux3 = 1;
+		}
+		
+		for (int i = 0; i < aux3; i++)
 		{
-			if (vAux->getVectorAsientos()[i]->getEstado() == 0)aux2++;
-		};
-		if (numAsientos > aux2 - 1) { ubicar(x, y += 2); cout << "Cantidad de asientos libres insuficientes"; (void)_getch(); limpiarDerecha(); return; } //REGRESA SI LA CANTIDAD DE ASIENTOS ES SUPERIOR
-		ubicar(x, y += 2); cout << "Nota: Por cada asiento VIP se adicionan 50 USD a la tarifa";
+			aux = 0; numAsientos = 0; aux2 = 0; auxExcesoPorVip = 0; cont = 0; auxDescuento = 0.0f;
+			opc = ' ';
 
-		vAux->mostrarMAsientos(83, 17); cout << BG_WHITE;
-		y += 2;
+			int x = 4, y = 5;
+			cout << BG_GRISCLARO << BLACK;
+			ubicar(x, y); cout << "1. Id del vuelo";
+			ubicar(x, y += 2); cout << "2. Seleccionar asientos";
+			ubicar(x, y += 2); cout << "3. Resumen";
 
-		for (int i = 0; i < numAsientos; i++)
-		{
-			ubicar(85, 15); cout << "Seleccione asiento " << i + 1;
+			x = 35; y = 5;
 
-			do
-			{
-				ubicar(x, y++); cout << "Ingrese el id: "; ingresarDato(aux2);
-				aAux = vAux->getAsiento(aux2);
-				if (aAux == nullptr) { ubicar(x, y++); "Asiento no válido."; limpiarDerecha(); return; }
-				if (!asientoValido(aAux)) { ubicar(x, y++); cout << "Asiento ocupado"; }
-				if (y > 21) { y -= 7; x += 20; }
-
-			} while (!asientoValido(aAux));
-
-			aAux->setEstado(1);
-
-			//Calculo del extra a pagar por elegir VIP
-			if (aAux->getClasificacion() == 'V') {
-				cont++;
-				auxExcesoPorVip += 50;
+			//Para que no continue si no inicio sesion
+			if (sesion == false) {
+				ubicar(x, y++); cout << BG_WHITE << JTROJO << "Debe iniciar sesion para reservar un vuelo"; (void)_getch(); limpiarDerecha();
+				return;
 			}
 
-			asientos.push_back(aAux);
-			vAux->mostrarMAsientos(83, 17); cout << BG_WHITE;
-		}
-		if (x > 35) {
-			x = 35; y = 21;
-		}
-		//Lambda para calcular del precio final de la compra
-		auto calcularPrecioFinal = [&]() -> int {
-			return (vAux->getPrecio() * numAsientos) + auxExcesoPorVip;
+			ubicar(x, y++); cout << "INGRESE LOS DATOS SOLICITADOS";
+			Pasajero* pAux = gUsuarios.getusuario();
+
+
+			ubicar(4, 5); cout << BG_GRISCLARO << JTAZUL << "1. Id del vuelo" << BG_WHITE << BLACK;
+
+			if (rutasValidas.empty()) {
+				ubicar(x, y += 2); cout << "Ingrese id del vuelo: "; ingresarDato(aux);
+			}
+			else {
+				aux = rutasValidas[n][i]->getCodigoVuelo();
+			}
+			Vuelo* vAux = this->gVuelos.getVueloPorCodigo(aux);
+			if (vAux == nullptr) { ubicar(x, y += 2); cout << "El vuelo especificado no existe"; (void)_getch(); limpiarDerecha(); return; } //REGRESA SI EL VUELO NO EXISTE 
+			vAux->mostrarVuelo2(75, 5);
+			Asiento* aAux;
+
+			vector<Asiento*> asientos;
+			ubicar(4, 7); cout << BG_GRISCLARO << JTAZUL << "2. Seleccionar Asientos" << BG_WHITE << BLACK;
+
+			ubicar(x, y += 2); cout << "Cantidad de asientos: "; ingresarDato(numAsientos);
+
+			//CALCULA LA CANTIDAD DE ASIENTOS LIBRES
+			for (int i = 0; i < vAux->getVectorAsientos().size(); i++)
+			{
+				if (vAux->getVectorAsientos()[i]->getEstado() == 0)aux2++;
 			};
+			if (numAsientos > aux2 - 1) { ubicar(x, y += 2); cout << "Cantidad de asientos libres insuficientes"; (void)_getch(); limpiarDerecha(); return; } //REGRESA SI LA CANTIDAD DE ASIENTOS ES SUPERIOR
+			ubicar(x, y += 2); cout << "Nota: Por cada asiento VIP se adicionan 50 USD a la tarifa";
 
-		double precio = calcularPrecioFinal();  
+			vAux->mostrarMAsientos(83, 17); cout << BG_WHITE;
+			y += 2;
 
-		ubicar(4, 9); cout << BG_GRISCLARO << JTAZUL << "3. Resumen" << BG_WHITE << BLACK;
+			for (int i = 0; i < numAsientos; i++)
+			{
+				ubicar(85, 15); cout << "Seleccione asiento " << i + 1;
 
-		ubicar(x, y += 2); cout << "Escogio " << cont << " VIP y " << numAsientos - cont << " Economico";
-		ubicar(x, y += 1); cout << "Monto a pagar: " << precio; 
-		ubicar(x, y += 1); cout << "Tiene codigos de descuento y/n: "; cin >> opc; 
-		if (confirmar(opc)) {
-			ubicar(x, y += 1); cout << "Codigo: "; cin >> texto; 
-			int desc = descuento->verificarCodigo(texto, x, y);  
+				do
+				{
+					ubicar(x, y++); cout << "Ingrese el id: "; ingresarDato(aux2);
+					aAux = vAux->getAsiento(aux2);
+					if (aAux == nullptr) { ubicar(x, y++); "Asiento no válido."; limpiarDerecha(); return; }
+					if (!asientoValido(aAux)) { ubicar(x, y++); cout << "Asiento ocupado"; }
+					if (y > 21) { y -= 7; x += 20; }
 
-			if (desc != -1)
-				auxDescuento = static_cast<float>(desc);
-			else 
-				auxDescuento = 0;
+				} while (!asientoValido(aAux));
 
-			precio = calcularPrecioFinal() - calcularPrecioFinal() * (auxDescuento / 100.0); 
+				aAux->setEstado(1);
 
-			ubicar(x, y += 2); cout << "Nuevo monto a pagar: " << precio; 
+				//Calculo del extra a pagar por elegir VIP
+				if (aAux->getClasificacion() == 'V') {
+					cont++;
+					auxExcesoPorVip += 50;
+				}
+
+				asientos.push_back(aAux);
+				vAux->mostrarMAsientos(83, 17); cout << BG_WHITE;
+			}
+			if (x > 35) {
+				x = 35; y = 21;
+			}
+			//Lambda para calcular del precio final de la compra
+			auto calcularPrecioFinal = [&]() -> int {
+				return (vAux->getPrecio() * numAsientos) + auxExcesoPorVip;
+				};
+
+			int precio = calcularPrecioFinal();
+
+			ubicar(4, 9); cout << BG_GRISCLARO << JTAZUL << "3. Resumen" << BG_WHITE << BLACK;
+
+			ubicar(x, y += 2); cout << "Escogio " << cont << " VIP y " << numAsientos - cont << " Economico";
+			ubicar(x, y += 1); cout << "Monto a pagar: " << precio;
+			ubicar(x, y += 1); cout << "Tiene codigos de descuento y/n: "; cin >> opc;
+			if (confirmar(opc)) {
+				ubicar(x, y += 1); cout << "Codigo: "; cin >> texto;
+				int desc = descuento->verificarCodigo(texto, x, y);
+
+				if (desc != -1)
+					auxDescuento = static_cast<float>(desc);
+				else
+					auxDescuento = 0;
+
+				precio = static_cast<int>(calcularPrecioFinal() - calcularPrecioFinal() * (auxDescuento / 100.0));
+
+				ubicar(x, y += 2); cout << "Nuevo monto a pagar: " << precio;
+			}
+			ubicar(x, y += 1); cout << "Confirmar la reserva: y/n: "; cin >> opc; if (!confirmar(opc)) { limpiarDerecha(); return; }
+
+
+
+			Reserva a(vAux, asientos, pAux, precio);
+
+			reservas.push(a);
+
+			ubicar(x, y += 2); cout << "La reserva se realizo con exito."; (void)_getch(); limpiarDerecha();
 		}
-		ubicar(x, y += 1); cout << "Confirmar la reserva: y/n: "; cin >> opc; if (!confirmar(opc)) { limpiarDerecha(); return; }
-
-
-
-		Reserva a(vAux, asientos, pAux, static_cast<int>(precio)); 
-
-		reservas.push(a);
-
-		ubicar(x, y += 2); cout << "La reserva se realizo con exito."; (void)_getch(); limpiarDerecha(); 
 	}
 
 	void mostrarReservas() {
