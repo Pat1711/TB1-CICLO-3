@@ -130,7 +130,7 @@ public:
                 mensajeError(); break;
             }
 
-        } while (auxUser != 2);
+        } while (auxUser != 3);
     }
 
     void menuGestionVuelos() {
@@ -232,7 +232,7 @@ public:
         gVuelos.mostrarVuelosPorPaises(origen, destino);
         if (gVuelos.isQuiereReservar())
         {
-            gReservas.reservar(gVuelos.getRutasValidas()); gVuelos.getRutasValidas().clear();  gVuelos.setQuiereReservar(0); return;
+            gReservas.reservar(gVuelos.getRutasValidas());  gVuelos.setQuiereReservar(0); return;
         }
     }
 

@@ -219,6 +219,7 @@ public:
         //Para poder mostrar
         vector<Vuelo*> vuelosAux; 
         vuelosAux.clear();
+        rutasValidas.clear();
 
         vuelosEncontrados = false;
 
@@ -245,7 +246,12 @@ public:
             cout << BG_WHITE << BLACK << "No se encontraron vuelos directos disponibles."; 
 
             buscarRutasConEscalas(origen, destino);
-            reservaRuta();
+            if (!rutasValidas.empty()) {
+                reservaRuta();
+            }
+            else {
+                system("pause>0");
+            }
         }
         else {
             iterarPaginas(vuelosAux);
@@ -496,8 +502,8 @@ public:
 
     void reservaRuta() {
         quiereReservar = false;
-        ubicar(30, 1);
-        cout << BG_JTAZUL << WHITE << "ESC para salir. ENTER: reservar una ruta";
+        ubicar(30, 2);
+        cout << BG_JTAZUL << WHITE << "ESC para salir. ENTER: reservar una ruta.                                 ";
         int tecla;
         /*int n;*/
         do {
@@ -551,6 +557,11 @@ public:
             Vuelo* actual = grafo.obtenerVertice(idx);
             caminoActual.push_back(actual);
 
+            if(caminoActual.size() > 3) {
+                caminoActual.pop_back();
+                return;
+            }
+
             if (actual->getDestino() == destino) {
                 rutasValidas.push_back(caminoActual);
             }
@@ -565,8 +576,8 @@ public:
                     }
                 }
             }
-
-            caminoActual.pop_back();
+                caminoActual.pop_back();
+            
             };
 
         // Buscar vuelos que parten del origen
