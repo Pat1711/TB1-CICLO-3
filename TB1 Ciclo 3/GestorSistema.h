@@ -112,7 +112,7 @@ public:
         int auxUser = 0;
         menuSpawn("Menu Admin");
         do {
-            seleccionarOpc(auxUser, opcUsuario, 4);
+            seleccionarOpc(auxUser, opcUsuario, 5);
             limpiarDerecha();
 
             switch (auxUser) {
@@ -125,12 +125,15 @@ public:
                 seleccionPais(); selecionMesVuelo(32, 10);
                 gVuelos.agregarVueloManual();
                 break;
-            case 3: break;
+            case 3: 
+                gReservas.mostrarHashDescuentos(); 
+                break;
+            case 4: break;
             default:
                 mensajeError(); break;
             }
 
-        } while (auxUser != 2);
+        } while (auxUser != 4);
     }
 
     void menuGestionVuelos() {
@@ -264,7 +267,7 @@ public:
 
     void mostrarVuelosEspecificos() {
         int auxOrigen, auxDestino, auxDiaIda, auxMesIda;
-        barraSpawn("Busqueda Especifica");
+        barraSpawn("Busqueda Especifica   ");
         limpiarDerecha();
 
         do {
@@ -289,11 +292,6 @@ public:
         } while (!validarDiaMes(auxDiaIda, auxMesIda));
 
         limpiarDerecha();
-        /*gVuelos.mostrarVuelosDatosIda(origen, destino, auxMesIda, auxDiaIda);
-        if (gVuelos.isQuiereReservar())
-        {
-            gReservas.reservar(); gVuelos.setQuiereReservar(0); return;
-        }*/
         gVuelos.buscarPorDatosEspecificos(origen, destino, auxMesIda, auxDiaIda);
         if (gVuelos.isQuiereReservar()) {
             gReservas.reservar(); gVuelos.setQuiereReservar(0); return;

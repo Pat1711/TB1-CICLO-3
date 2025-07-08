@@ -63,14 +63,16 @@ public:
         return nullptr; 
     }
 
-    void mostrarTodo() {
+    void mostrarTodo(int x, int y) {
         int pos = 0;
         for (auto& lista : theLists) {
-            cout << "Pos[" << pos << "]: ";
+            // Mueve el cursor a la posición x, y
+            ubicar(x, y++);
+            cout << BG_WHITE <<BLACK << "Cod[" << pos << "]: ";
+
             for (auto& elem : lista) {
                 cout << getKey(elem) << " ";
             }
-            cout << endl;
             pos++;
         }
     }
