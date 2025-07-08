@@ -22,6 +22,10 @@ public:
         if (reservaConfirmada != nullptr) {
             checkinsExitosos.enqueue(*reservaConfirmada);
         }
+
+        else {
+            return;
+        }
     }
 
     // --- Muestra todos los CheckIns Realizados --- //

@@ -114,7 +114,9 @@
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ArbolBB.h" />
     <ClInclude Include="Asiento.h" />
+    <ClInclude Include="AVL.h" />
     <ClInclude Include="Checkin.h" />
     <ClInclude Include="Cola.h" />
     <ClInclude Include="Color.h" />

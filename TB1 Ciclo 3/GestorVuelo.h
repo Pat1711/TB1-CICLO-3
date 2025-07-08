@@ -4,6 +4,8 @@
 #include <map>
 #include <vector>
 #include "Vuelo.h" 
+#include "ArbolBB.h"
+#include "AVL.h"
 #include <set>
 
 using namespace std;
@@ -15,13 +17,43 @@ string meses[] = {
         "Noviembre", "Diciembre"
 };
 
+// funciones adicionales para el arbol BB
+void imprimirVuelo(Vuelo* v) {
+    v->mostrarVuelo(); 
+}
+
+int compararVueloPorPrecio(Vuelo* a, Vuelo* b) {
+    return a->getPrecio() - b->getPrecio(); 
+}
+
+// funciones adicionales para el AVL
+int compararVuelosEspecificos(Vuelo* a, Vuelo* b) {
+    if (a->getOrigen() != b->getOrigen())
+        return a->getOrigen() < b->getOrigen() ? -1 : 1;
+    if (a->getDestino() != b->getDestino())
+        return a->getDestino() < b->getDestino() ? -1 : 1;
+    if (a->getMesIda() != b->getMesIda())
+        return a->getMesIda() < b->getMesIda() ? -1 : 1;
+    if (a->getDiaIda() != b->getDiaIda())
+        return a->getDiaIda() < b->getDiaIda() ? -1 : 1;
+    // no pregunten :v
+    return 0;
+}
+
 class GestorVuelo {
 private:
     //clave: int | valor: [clave: int, valor: vector de vuelos]
     map<int, map<int, vector<Vuelo*>>> vuelosPorMes;
     bool vuelosEncontrados;  
     bool quiereReservar; 
+    ArbolBB<Vuelo*>* arbol; 
+    ArbolAVL<Vuelo*>* avl;
+
 public:
+    GestorVuelo() {
+        arbol = new ArbolBB<Vuelo*>(imprimirVuelo,compararVueloPorPrecio);
+        avl = new ArbolAVL<Vuelo*>(imprimirVuelo, compararVuelosEspecificos);
+    }
     void agregarVuelo(Vuelo* vuelo) {
         int mesIda = vuelo->getMesIda();
         int diaIda = vuelo->getDiaIda();
@@ -305,11 +337,75 @@ public:
         return nullptr;
     }
 
+    // PARTE ABB
+    void indexarVuelosArbol() {
+        vector<Vuelo*> todos = obtenerTodosLosVuelos();
+        for (auto v : todos) {
+            arbol->insertar(v); 
+        }
+    }
+
+    // Busqueda de vuelos por rango de precios
+    void buscarEnRangoPrecios(int p1, int p2) {
+        vector<Vuelo*> encontrados;
+        //buscarVuelosEnRango(arbol->getRaiz(), p1, p2, encontrados); // llama a la recursiva que identifica en rango de precios
+        arbol->buscarRangoPrecios(p1, p2, encontrados);
+
+        iterarPaginas(encontrados); 
+    }
+
+    //// recursiva para recorrer el arbol e ir buscando los vuelos en el rango de precios dado
+    //void buscarVuelosEnRango(NodoAr<Vuelo*>* nodo, int minPrecio, int maxPrecio, vector<Vuelo*>& resultado) {
+    //    if (nodo == nullptr) return;
+
+    //    int precio = nodo->elemento->getPrecio();
+
+    //    // visitar izquierda 
+    //    if (precio >= minPrecio)
+    //        buscarVuelosEnRango(nodo->izq, minPrecio, maxPrecio, resultado);
+
+    //    // agrega al vector si esta en el rango d precio
+    //    if (precio >= minPrecio && precio <= maxPrecio)
+    //        resultado.push_back(nodo->elemento);
+
+    //    // visitar derecha 
+    //    if (precio <= maxPrecio)
+    //        buscarVuelosEnRango(nodo->der, minPrecio, maxPrecio, resultado);
+    //}
+
+    // PARTE DEL AVL
+    void indexarVuelosAVL() {
+        vector<Vuelo*> todos = obtenerTodosLosVuelos();
+        for (Vuelo* v : todos) {
+            avl->Insertar(v);
+        }
+    }
+
+    void buscarPorDatosEspecificos(string origen, string destino, int mes, int dia) {
+        vector<Vuelo*> encontrados;
+        Vuelo* clave = new Vuelo(origen, destino, dia, mes, 0, 0, 0);
+
+        avl->buscarEspecifico(clave, encontrados);
+
+        if (encontrados.empty()) {
+            ubicar(32, 6);
+            cout << BG_WHITE << BLACK << "No se encontraron vuelos disponibles";
+        }
+
+        iterarPaginas(encontrados);
+    }
+
     bool isVuelosEncontrados() {
         return vuelosEncontrados;
     }
     void mostrarPagina(vector<Vuelo*>& vuelos, int pagina) {
         int vuelosPorPagina = 10;
+        int totalPaginas = (vuelos.size() + 9) / 10;
+
+        if (pagina == totalPaginas - 1) { //limpiar pantalla en ultima pagina
+            limpiarDerecha(); 
+        }
+
         int inicio = pagina * vuelosPorPagina;
         int fin = min(inicio + vuelosPorPagina, (int)vuelos.size());
 
