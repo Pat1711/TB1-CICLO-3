@@ -112,7 +112,7 @@ public:
         int auxUser = 0;
         menuSpawn("Menu Admin");
         do {
-            seleccionarOpc(auxUser, opcUsuario, 4);
+            seleccionarOpc(auxUser, opcUsuario, 5);
             limpiarDerecha();
 
             switch (auxUser) {
@@ -125,12 +125,15 @@ public:
                 seleccionPais(); selecionMesVuelo(32, 10);
                 gVuelos.agregarVueloManual();
                 break;
-            case 3: break;
+            case 3: 
+                gReservas.mostrarTodasLasReservas();
+                break;
+            case 4: break;
             default:
                 mensajeError(); break;
             }
 
-        } while (auxUser != 3);
+        } while (auxUser != 4);
     }
 
     void menuGestionVuelos() {
@@ -331,13 +334,13 @@ public:
             switch (opc)
             {
             case 0: //tarjetas embarque
-                gCheckIn.mostrarCheckinsPorUsuario();
+                gCheckIn.mostrarCheckinsPorUsuario(gUsuario.getusuario());
                 system("pause>0"); break;
             case 1: //reservas //YA ESTA
-                gReservas.mostrarTodasLasReservas();
+                gReservas.mostrarMisReservas(gUsuario.getusuario());
                 system("pause>0"); break;
             case 2: //chekcin
-                gCheckIn.realizarCheckIn(gReservas);
+                gCheckIn.realizarCheckIn(gReservas, gUsuario.getusuario());
                 system("pause>0"); break;
             case 3:
                 break;

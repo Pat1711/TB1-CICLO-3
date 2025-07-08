@@ -30,12 +30,18 @@ public:
 
 	// --- Valida datos y procesa un Checkin y lo usamos en el GestorCheckIn --- //
 
-	Reserva* procesarCheckIn(GestorReserva& gestorReserva) {
+	Reserva* procesarCheckIn(GestorReserva& gestorReserva, Pasajero*pasajero) {
 		string dni;
 		int codigoVuelo, x = 31, y = 4;
 
+		if (!sesion) {
+			cout << BG_WHITE << RED;
+			ubicar(32, 4); cout << "Debe iniciar sesion para realizar un check in";
+			system("pause>0"); return nullptr;
+		}
 		cout << BG_WHITE << BLACK;
-		ubicar(x, y); cout << "Ingrese el DNI del pasajero: "; cin >> dni;
+
+		dni = pasajero->getDni();
         ubicar(x, y += 1); cout << "Ingrese Codigo del vuelo: "; cin >> codigoVuelo;
 
 		Pila<Reserva> reservasAux = gestorReserva.getReservas(); //no referencia sino copia
@@ -52,7 +58,7 @@ public:
 			}
 		}
 
-		ubicar(x, y += 1); cout << "No se encontro una reserva con el DNI y el codigo de vuelo proporcionados";
+		ubicar(x, y += 1); cout << "No se encontraron reservas con el codigo de vuelo proporcionados";
 		return nullptr;
 	}
 };
