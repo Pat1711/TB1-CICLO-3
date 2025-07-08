@@ -116,6 +116,7 @@
   <ItemGroup>
     <ClInclude Include="ArbolBB.h" />
     <ClInclude Include="Asiento.h" />
+    <ClInclude Include="AVL.h" />
     <ClInclude Include="Checkin.h" />
     <ClInclude Include="Cola.h" />
     <ClInclude Include="Color.h" />
@@ -126,6 +127,7 @@
     <ClInclude Include="Gestortxt.h" />
     <ClInclude Include="GestorUsuarios.h" />
     <ClInclude Include="GestorVuelo.h" />
+    <ClInclude Include="Grafo.h" />
     <ClInclude Include="HashTableA.h" />
     <ClInclude Include="ListaDoble.h" />
     <ClInclude Include="Nodo.h" />

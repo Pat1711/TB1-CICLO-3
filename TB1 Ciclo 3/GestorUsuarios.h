@@ -26,7 +26,7 @@ public:
             for (char c : pasajero->getNombres()) {
                 aux += c * 19;
             }
-            return stoi(pasajero->getDni())* 19 + aux;
+            return static_cast<int>(stoi(pasajero->getDni())* 19 + aux);
             };
 
         hash = new HashTableA<Pasajero*>(clave,funcionHasheo);

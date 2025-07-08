@@ -125,6 +125,22 @@ private:
 		}
 	}
 
+	//funciones adicionales
+	void _buscarRango(NodoAr<T>* nodo, int minPrecio, int maxPrecio, vector<T>& resultado) {
+		if (nodo == nullptr) return;
+
+		int precio = nodo->elemento->getPrecio();
+
+		if (precio >= minPrecio)
+			_buscarRango(nodo->izq, minPrecio, maxPrecio, resultado);
+
+		if (precio >= minPrecio && precio <= maxPrecio)
+			resultado.push_back(nodo->elemento);
+
+		if (precio <= maxPrecio)
+			_buscarRango(nodo->der, minPrecio, maxPrecio, resultado);
+	}
+
 public:
 	ArbolBB(void(*procesar)(T), Comp comparar) {
 		this->procesar = procesar;
@@ -144,6 +160,10 @@ public:
 	bool Eliminar(T e) { return _eliminar(raiz, e); }
 	NodoAr<T>* getRaiz() {
 		return raiz;
+	}
+
+	void buscarRangoPrecios(int minPrecio, int maxPrecio, vector<T>& encontrados) {
+		_buscarRango(raiz, minPrecio, maxPrecio, encontrados);
 	}
 };
 
