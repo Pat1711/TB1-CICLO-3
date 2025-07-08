@@ -26,7 +26,7 @@ auto menu = [](void menu(), int& opcion) {
     cin.ignore();
     };
 auto mensajeError = []() {
-    cout << "Opcion no valida\n"; system("pause");
+    ubicar(32, 15); cout << "Opcion no valida"; _getch();
     };
 auto mostrarSeccion = [](void titulo()) {
     system("cls");
@@ -112,7 +112,7 @@ public:
         int auxUser = 0;
         menuSpawn("Menu Admin");
         do {
-            seleccionarOpc(auxUser, opcUsuario, 4);
+            seleccionarOpc(auxUser, opcUsuario, 5);
             limpiarDerecha();
 
             switch (auxUser) {
@@ -125,12 +125,15 @@ public:
                 seleccionPais(); selecionMesVuelo(32, 10);
                 gVuelos.agregarVueloManual();
                 break;
-            case 3: break;
+            case 3: 
+                gReservas.mostrarHashDescuentos(); 
+                break;
+            case 4: break;
             default:
                 mensajeError(); break;
             }
 
-        } while (auxUser != 2);
+        } while (auxUser != 4);
     }
 
     void menuGestionVuelos() {
@@ -198,7 +201,10 @@ public:
             selecionMesVuelo();
             ubicar(49, 9); ingresarDato(auxValor);
             cin.ignore();
-            if (!enRango(auxValor, 1, 12)) mensajeError();
+            if (!enRango(auxValor, 1, 12))
+            {
+                mensajeError(); limpiarDerecha(); return;
+            }
         } while (!enRango(auxValor, 1, 12));
 
         limpiarDerecha();
@@ -220,7 +226,7 @@ public:
             ubicar(32, 10); cout << "Destino: "; ingresarDato(auxDestino);
 
             if (!validarDestino(auxOrigen, auxDestino)) {
-                mensajeError(); break;
+                mensajeError(); limpiarDerecha(); return;
             }
         } while (!validarDestino(auxOrigen, auxDestino));
 
@@ -246,7 +252,7 @@ public:
             selecionMesVuelo(32, 6);
             ingresarDato(auxMes);
             if (!validarDiaMes(auxDia, auxMes)) {
-                mensajeError(); break;
+                mensajeError(); limpiarDerecha(); return;
             }
         } while (!validarDiaMes(auxDia, auxMes));
 
@@ -261,7 +267,7 @@ public:
 
     void mostrarVuelosEspecificos() {
         int auxOrigen, auxDestino, auxDiaIda, auxMesIda;
-        barraSpawn("Busqueda Especifica");
+        barraSpawn("Busqueda Especifica   ");
         limpiarDerecha();
 
         do {
@@ -269,7 +275,7 @@ public:
             ubicar(32, 9); cout << "Origen: "; ingresarDato(auxOrigen);
             ubicar(32, 10); cout << "Destino: "; ingresarDato(auxDestino);
             if (!validarDestino(auxOrigen, auxDestino)) {
-                mensajeError(); break;
+                mensajeError(); limpiarDerecha(); return;
             }
         } while (!validarDestino(auxOrigen, auxDestino));
 
@@ -281,16 +287,11 @@ public:
             selecionMesVuelo(32, 13);
             ingresarDato(auxMesIda);
             if (!validarDiaMes(auxDiaIda, auxMesIda)) {
-                mensajeError(); break;
+                mensajeError(); limpiarDerecha(); return;
             }
         } while (!validarDiaMes(auxDiaIda, auxMesIda));
 
         limpiarDerecha();
-        /*gVuelos.mostrarVuelosDatosIda(origen, destino, auxMesIda, auxDiaIda);
-        if (gVuelos.isQuiereReservar())
-        {
-            gReservas.reservar(); gVuelos.setQuiereReservar(0); return;
-        }*/
         gVuelos.buscarPorDatosEspecificos(origen, destino, auxMesIda, auxDiaIda);
         if (gVuelos.isQuiereReservar()) {
             gReservas.reservar(); gVuelos.setQuiereReservar(0); return;
@@ -307,7 +308,7 @@ public:
             ubicar(32, 7); cout << BG_WHITE << BLACK << "Precio Base: "; ingresarDato(auxPrecio1);
             ubicar(32, 8); cout << BG_WHITE << BLACK << "Precio Tope: "; ingresarDato(auxPrecio2); 
             if (!validarPrecio(auxPrecio1, auxPrecio2)) {
-                mensajeError(); break;
+                mensajeError(); limpiarDerecha(); return;
             }
         } while (!validarPrecio(auxPrecio1, auxPrecio2)); 
 

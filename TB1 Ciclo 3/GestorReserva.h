@@ -276,6 +276,10 @@ public:
 	Pila<Reserva> getReservas() {
 		return reservas;
 	}
+
+	void mostrarHashDescuentos() {
+		descuento->mostrarTablaDebug(); 
+	}
 };
 
 #endif // !_RESERVAS_
