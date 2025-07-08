@@ -59,8 +59,8 @@ public:
 	~Descuento() {}
     
     void mostrarTablaDebug() {
-        ubicar(20, 5);
-        tablaCodigos->mostrarTodo(); 
+        int x = 35, y = 5; 
+        tablaCodigos->mostrarTodo(x, y);
     }
 
     int verificarCodigo(string& codigo, int x, int y) {
