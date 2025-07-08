@@ -126,6 +126,7 @@
     <ClInclude Include="Gestortxt.h" />
     <ClInclude Include="GestorUsuarios.h" />
     <ClInclude Include="GestorVuelo.h" />
+    <ClInclude Include="Grafo.h" />
     <ClInclude Include="HashTableA.h" />
     <ClInclude Include="ListaDoble.h" />
     <ClInclude Include="Nodo.h" />
