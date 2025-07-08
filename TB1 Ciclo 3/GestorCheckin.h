@@ -15,9 +15,9 @@ public:
 
     // --- Realiza un CheckIn --- //
 
-    void realizarCheckIn(GestorReserva& gestorReserva) {
+    void realizarCheckIn(GestorReserva& gestorReserva, Pasajero* pasajero) {
         CheckIn checkin;
-        Reserva* reservaConfirmada = checkin.procesarCheckIn(gestorReserva);
+        Reserva* reservaConfirmada = checkin.procesarCheckIn(gestorReserva, pasajero);
 
         if (reservaConfirmada != nullptr) {
             checkinsExitosos.enqueue(*reservaConfirmada);
@@ -51,54 +51,25 @@ public:
 
     // --- Muestra todos los CheckIns de un Pasajero --- //
 
-    void mostrarCheckinsPorUsuario() {
-        cout << BG_WHITE << BLACK;
-        if (checkinsExitosos.esVacia()) {
-            ubicar(31, 4); cout << "No hay check-ins registrados";
-            return;
-        }
-
-        if (gUsuarios.getLista().esVacio()) {
-            ubicar(31, 4); cout << "No hay usuarios registrados";
-            return;
-        }
-
+    void mostrarCheckinsPorUsuario(Pasajero* pasajero) {
+        
         limpiarDerecha2();
-        gUsuarios.mostrarTodosLosUsuarios();
-        limpiarDerecha2();
-
-        string dni; // continuacion waza
-        cout << BG_WHITE << BLACK;
-        ubicar(54, 27); cout << "Ingrese el DNI del pasajero: "; ingresarDato(dni);
-
-        if (!gUsuarios.getLista().validarDNI(dni)) {
-            ubicar(31, 11); cout << "No se encontró un pasajero con ese DNI";
-            return;
+        if (!sesion) {
+            cout << BG_WHITE << RED;
+            ubicar(32, 4); cout << "Debe iniciar sesion para visualizar sus Tarjetas de embarque.";
+            system("pause>0"); return;
         }
-
-        /*Cola<Reserva> aux;
-        bool hayCoincidencias = false;*/
+        string dni = pasajero->getDni();
 
         limpiarDerecha();
 
         //AQUI SE DEBE MOSTRAR LAS PAGINAS DE CHECKINS 
-
         cout << BG_WHITE << BLACK;
-        /* ubicar(31, 4); cout << "=== CHECK-INS DEL USUARIO CON DNI: " << dni << " ===";*/
-        /*while (!checkinsExitosos.esVacia()) {
-            Reserva reserva = checkinsExitosos.dequeue();
 
-            if (reserva.getPasajero()->getDni() == dni) {
-                reserva.mostrarDatosCompletos(31, 5);
-                hayCoincidencias = true;
-            }
-          
-            aux.enqueue(reserva);
-        }*/
         vector<Reserva> delUsuario = obtenerCheckinsDelPasajero(dni);
 
         if (delUsuario.empty()) {
-            ubicar(31, 21); cout << "No se encontraron check-ins para el DNI proporcionado.";
+            ubicar(31, 4); cout << "No se encontraron check-ins.";
             return;
         }
 

@@ -51,6 +51,17 @@ public:
 		ubicar(x, y += 1); cout << "Monto a pagar: " << precioFinal;
 	}
 
+	void mostrarinCompletos(int x, int y) {
+		cout << BG_WHITE << BLACK;
+		vuelo->mostrarVuelo2(x, y);
+
+		ubicar(x, y += 5); cout << "Asientos:";
+		for (int i = 0; i < asiento.size(); i++) {
+			ubicar(x, y += 1); asiento[i]->mostrarAsiento();
+		}
+		ubicar(x, y += 1); cout << "Monto a pagar: " << precioFinal;
+	}
+
 	Pasajero* getPasajero() { return user; }
 	Vuelo* getVuelo() {	return vuelo; }
 	int getPrecioFinal() { return precioFinal; }

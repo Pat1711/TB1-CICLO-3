@@ -238,7 +238,7 @@ public:
         gVuelos.mostrarVuelosPorPaises(origen, destino);
         if (gVuelos.isQuiereReservar())
         {
-            gReservas.reservar(gVuelos.getRutasValidas()); gVuelos.getRutasValidas().clear();  gVuelos.setQuiereReservar(0); return;
+            gReservas.reservar(gVuelos.getRutasValidas());  gVuelos.setQuiereReservar(0); return;
         }
     }
 
@@ -332,13 +332,13 @@ public:
             switch (opc)
             {
             case 0: //tarjetas embarque
-                gCheckIn.mostrarCheckinsPorUsuario();
+                gCheckIn.mostrarCheckinsPorUsuario(gUsuario.getusuario());
                 system("pause>0"); break;
             case 1: //reservas //YA ESTA
-                gReservas.mostrarTodasLasReservas();
+                gReservas.mostrarMisReservas(gUsuario.getusuario());
                 system("pause>0"); break;
             case 2: //chekcin
-                gCheckIn.realizarCheckIn(gReservas);
+                gCheckIn.realizarCheckIn(gReservas, gUsuario.getusuario());
                 system("pause>0"); break;
             case 3:
                 break;

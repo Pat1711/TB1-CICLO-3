@@ -191,6 +191,37 @@ public:
 		}
 	}
 
+	void mostrarMisReservas(Pasajero* pasajero) {
+
+		if (!sesion) {
+			cout << BG_WHITE << RED;
+			ubicar(32, 4); cout << "Debe iniciar sesion para visualizar sus reservas.";
+			system("pause>0"); return;
+		}
+
+		ubicar(32, 4); cout << BG_WHITE << BLACK << "Reservas de " << pasajero->getNombres();
+		if (!reservas.estaVacia()) {
+			Pila<Reserva> aux;
+
+			while (!reservas.estaVacia()) {
+				Reserva val = reservas.pop();
+
+				if (val.getPasajero() == pasajero) {
+					val.mostrarinCompletos(32, 5);
+				}
+				aux.push(val);
+			}
+
+			while (!aux.estaVacia()) {
+				reservas.push(aux.pop());
+			}
+		}
+		else {
+			cout << BG_WHITE << BLACK;
+			ubicar(32, 4); cout << "No hay ninguna reserva";
+		}
+	}
+
 	void mostrarTodasLasReservas() {
 		if (reservas.estaVacia()) {
 			cout << BG_WHITE << BLACK;
