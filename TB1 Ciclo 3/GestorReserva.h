@@ -160,8 +160,6 @@ public:
 			}
 			ubicar(x, y += 1); cout << "Confirmar la reserva: y/n: "; cin >> opc; if (!confirmar(opc)) { limpiarDerecha(); return; }
 
-
-
 			Reserva a(vAux, asientos, pAux, precio);
 
 			reservas.push(a);
@@ -200,25 +198,17 @@ public:
 		}
 
 		ubicar(32, 4); cout << BG_WHITE << BLACK << "Reservas de " << pasajero->getNombres();
-		if (!reservas.estaVacia()) {
-			Pila<Reserva> aux;
-
-			while (!reservas.estaVacia()) {
-				Reserva val = reservas.pop();
-
-				if (val.getPasajero() == pasajero) {
-					val.mostrarinCompletos(32, 5);
-				}
-				aux.push(val);
-			}
-
-			while (!aux.estaVacia()) {
-				reservas.push(aux.pop());
-			}
-		}
-		else {
+		if (reservas.estaVacia()) {
 			cout << BG_WHITE << BLACK;
 			ubicar(32, 4); cout << "No hay ninguna reserva";
+			return;
+		}
+
+		vector<Reserva*> todos = obtenerMisReservas(reservas, pasajero);
+		iterarPaginas(todos, true);
+
+		for (Reserva* r : todos) {
+			delete r;
 		}
 	}
 
@@ -255,13 +245,31 @@ public:
 		return todas;
 	}
 
-	void iterarPaginas(vector<Reserva*>& reservas) {
+	vector<Reserva*> obtenerMisReservas(Pila<Reserva>& reservas, Pasajero*pasajero) {
+		vector<Reserva*> todas;
+		Pila<Reserva> aux;
+
+		while (!reservas.estaVacia()) {
+			Reserva r = reservas.pop();
+			Reserva* copia = new Reserva(r);
+			if(copia->getPasajero() == pasajero)todas.push_back(copia);
+			aux.push(r); // restauramos la pila
+		}
+
+		while (!aux.estaVacia()) {
+			reservas.push(aux.pop());
+		}
+
+		return todas;
+	}
+
+	void iterarPaginas(vector<Reserva*>& reservas, bool rutas = false) {
 		int totalPaginas = static_cast<int>((reservas.size() + 3) / 4);
 		int paginaActual = 0;
 		int tecla;
 
 		do {
-			mostrarPagina(reservas, paginaActual);
+			mostrarPagina(reservas, paginaActual, rutas);
 			tecla = _getch();
 
 			if (tecla == 224) {
@@ -276,7 +284,7 @@ public:
 		} while (tecla != 27); // ESC
 	}
 
-	void mostrarPagina(vector<Reserva*>& reservas, int pagina) {
+	void mostrarPagina(vector<Reserva*>& reservas, int pagina, bool rutas) {
 		limpiarDerecha(); //limpia la pantalla de info
 		int reservasPorPaginas = 4;
 		int inicio = pagina * reservasPorPaginas;
@@ -294,6 +302,10 @@ public:
 			int x = (columna == 0) ? x1 : x2;
 			int y = yInicio + fila * espacioVertical;
 
+			if(rutas){
+				reservas[i]->mostrarinCompletos(x, y);
+			}
+			else
 			reservas[i]->mostrarDatosCompletos(x, y);
 		}
 
