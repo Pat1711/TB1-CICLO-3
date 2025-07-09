@@ -290,7 +290,7 @@ public:
 		int inicio = pagina * reservasPorPaginas;
 		int fin = min(inicio + reservasPorPaginas, (int)reservas.size());
 
-		int x1 = 32, x2 = 75;	
+		int x1 = 32, x2 = 70;	
 		int yInicio = 4;
 		int espacioVertical = 13;
 
