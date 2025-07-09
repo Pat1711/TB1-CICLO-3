@@ -28,26 +28,6 @@ public:
         }
     }
 
-    // --- Muestra todos los CheckIns Realizados --- //
-
-    void mostrarCheckinsRealizados() {
-        if (checkinsExitosos.esVacia()) {
-            cout << "\nNo hay check-ins registrados.\n";
-            return;
-        }
-
-        Cola<Reserva> aux;
-        cout << "\n=== HISTORIAL DE CHECK-INS ===\n";
-        while (!checkinsExitosos.esVacia()) {
-            Reserva reserva = checkinsExitosos.dequeue();
-            reserva.mostrarDatosCompletos(0, 0);
-            aux.enqueue(reserva);
-        }
-
-        while (!aux.esVacia()) {
-            checkinsExitosos.enqueue(aux.dequeue());
-        }
-    }
 
     // --- Muestra todos los CheckIns de un Pasajero --- //
 
@@ -76,15 +56,6 @@ public:
         bool visualizo = iterarTarjetasEmbarque(delUsuario);
 
         if (!visualizo) return;
-        // end
-
-        /*while (!aux.esVacia()) {
-            checkinsExitosos.enqueue(aux.dequeue());
-        }
-
-        if (!hayCoincidencias) {
-            ubicar(31, 21); cout << "No se encontraron check-ins para el DNI proporcionado.";
-        }*/
     }
 
     //parte final

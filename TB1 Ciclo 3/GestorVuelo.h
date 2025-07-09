@@ -258,59 +258,6 @@ public:
         }
     }
 
-    void mostrarVuelosDatosIda(string origen, string destino, int mesIda, int diaIda) {
-        //Para poder mostrar
-        vector<Vuelo*> vuelosAux;
-        vuelosAux.clear();
-
-        vuelosEncontrados = false;
-
-        if (vuelosPorMes.count(mesIda) && vuelosPorMes[mesIda].count(diaIda)) {
-            vector<Vuelo*>& listaVuelos = vuelosPorMes[mesIda][diaIda];
-
-            for (Vuelo* vuelo : listaVuelos) {
-                if (vuelo->getOrigen() == origen && vuelo->getDestino() == destino) {          
-                    vuelosAux.push_back(vuelo);
-                    vuelosEncontrados = true;
-                }
-            }
-        }
-
-        if (!vuelosEncontrados) {
-            ubicar(32, 6);
-            cout << BG_WHITE << BLACK << "No se encontraron vuelos disponibles";
-        }
-
-        iterarPaginas(vuelosAux);
-
-    }
-
-    //Recursivas
-    void mostrarVuelosDelDia(vector<Vuelo*>& vuelos, size_t i = 0) {
-        if (i >= vuelos.size()) return;
-        vuelos[i]->mostrarVuelo();
-        mostrarVuelosDelDia(vuelos, i + 1);
-    }
-
-    void mostrarVuelosDelMes(map<int, vector<Vuelo*>>& dias, map<int, vector<Vuelo*>>::iterator itDia) {
-        if (itDia == dias.end()) return;
-        mostrarVuelosDelDia(itDia->second);
-        mostrarVuelosDelMes(dias, next(itDia));
-    }
-
-    // iterador es lo mismo que auto, pero como lo estamos definiedo en los argumentos no puede ir auto debe ir iterador
-
-    void mostrarTodosLosVuelosRec(map<int, map<int, vector<Vuelo*>>>& vuelosPorMes, map<int, map<int, vector<Vuelo*>>>::iterator itMes) {
-        if (itMes == vuelosPorMes.end()) return;
-        mostrarVuelosDelMes(itMes->second, itMes->second.begin());
-        mostrarTodosLosVuelosRec(vuelosPorMes, next(itMes));
-    }
-
-    void mostrarTodosLosVuelos() {
-        cout << "\n=== Todos los vuelos registrados ===\n";
-        mostrarTodosLosVuelosRec(vuelosPorMes, vuelosPorMes.begin());
-    }
-
     //Extraemos el vector de vuelos de map, sin importar la fecha
     vector<Vuelo*> obtenerTodosLosVuelos() {
         vector<Vuelo*> todos;

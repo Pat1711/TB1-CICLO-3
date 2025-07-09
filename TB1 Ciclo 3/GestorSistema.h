@@ -14,7 +14,7 @@ auto validarDiaMes = [](int dia, int mes) {
     return dia >= 1 && dia <= 31 && mes >= 1 && mes <= 12;
     };
 auto validarPrecio = [](int p1, int p2) {
-    return p1 >= 200 && p1 <= 10000 && p2 >= 200 && p2 <= 10000;
+    return p1 >= 100 && p1 <= 10000 && p2 >= 100 && p2 <= 10000;
     };
 auto validarDestino = [](int origen, int destino) {
     return origen >= 1 && origen <= 10 && destino >= 1 && destino <= 10;
@@ -42,7 +42,6 @@ private:
     GestorVuelo gVuelos;
     GestorReserva gReservas;
     GestorCheckin gCheckIn;
-    CheckIn checkIn;
 
 public:
     GestorSistema() : gReservas(gVuelos, gUsuario), gCheckIn(gUsuario) {

@@ -7,26 +7,10 @@ class CheckIn {
 private:
 	Reserva* reserva;
 	Pasajero* psj;
-	int puerta, hora; 
 public:
-	CheckIn() {
-		puerta = 100 + rand() % (299 + 1 - 100); 
-		hora = 0 + rand() % 24;
-	}
+	CheckIn() {}
 	~CheckIn() {}
 
-	// --- Función algo demás --- //
-
-	void mostrarTarjeta(Reserva* reserva) {
-		if (reserva == nullptr) return;
-		int x = 31, y = 4;
-		cout << BG_WHITE << BLACK;
-		ubicar(x, y); cout << "|=============== TARJETA DE EMBARQUE ===============|";
-		reserva->mostrarDatosCompletos(x, y += 1);
-		ubicar(x, y += 11); cout << "Puerta: " << puerta;
-		ubicar(x, y += 1); cout << "Hora de Embarque: " << hora;
-		ubicar(x, y += 1); cout << "|===================================================|";
-	}
 
 	// --- Valida datos y procesa un Checkin y lo usamos en el GestorCheckIn --- //
 

@@ -10,11 +10,6 @@ private:
 public: 
     CodigoDescuento(string c, int p) : codigo(c), porcentaje(p) {}
 
-    // Mostrar
-    void mostrar() {
-        cout << codigo << " - " << porcentaje << "%" << endl;
-    }
-
     string getCodigo() { return codigo; }
     int getPorcentaje() { return porcentaje; }
 

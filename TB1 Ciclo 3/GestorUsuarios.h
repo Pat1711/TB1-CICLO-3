@@ -4,7 +4,7 @@
 #include "Pasajero.h"
 #include "ListaDoble.h"
 #include "HashTableA.h"
-#include "functional"
+#include <functional>
 
 class GestorUsuarios
 {
@@ -129,74 +129,6 @@ public:
 
         ubicar(x, y++); cout << JTROJO << "Correo incorrecto o no coincide con el DNI." << BLACK; system("pause>0");
     }
-
-    //
-    void mostrarTodosLosUsuarios() {
-        if (pLista.esVacio()) {
-            cout << BG_WHITE << BLACK;
-            ubicar(32, 4); cout << "No hay ninguna reserva";
-            return;
-        }
-
-        vector<Pasajero*> todos = obtenerTodosLosPasajeros();
-        iterarPaginas(todos);
-    }
-
-    vector<Pasajero*> obtenerTodosLosPasajeros() {
-        return pLista.getTodos();
-    }
-
-    void iterarPaginas(vector<Pasajero*>& pasajeros) {
-        int totalPaginas = static_cast<int>((pasajeros.size() + 7) / 8);
-        int paginaActual = 0;
-        int tecla;
-
-        do {
-            mostrarPagina(pasajeros, paginaActual);
-            tecla = _getch();
-
-            if (tecla == 224) {
-                int flecha = _getch();
-                if (flecha == 77 && paginaActual < totalPaginas - 1) { //derecha
-                    paginaActual++;
-                }
-                else if (flecha == 75 && paginaActual > 0) { //izquierda
-                    paginaActual--;
-                }
-            }
-        } while (tecla != 27); // ESC
-    }
-
-    void mostrarPagina(vector<Pasajero*>& pasajeros, int pagina) {
-        limpiarDerecha(); //limpia la pantalla de info
-        int pasajerosPorPagina = 8;
-        int inicio = pagina * pasajerosPorPagina;
-        int fin = min(inicio + pasajerosPorPagina, (int)pasajeros.size());
-
-        int x1 = 32, x2 = 75;        
-        int yInicio = 4;
-        int espacioVertical = 2;    
-
-        for (int i = inicio; i < fin; ++i) {
-            int localIndex = i - inicio; // 0 a 7
-            int fila = localIndex / 2;   // 0 a 3
-            int columna = localIndex % 2; // 0 o 1
-
-            int x = (columna == 0) ? x1 : x2;
-            int y = yInicio + fila * espacioVertical;
-
-            cout << BG_WHITE << BLACK;
-            pasajeros[i]->mostrar(x, y);
-        }
-
-        ubicar(30, 1);
-        cout << BG_JTAZUL << WHITE << "Pagina " << (pagina + 1) << " / " << ((pasajeros.size() + 3) / 4);
-        if (pagina < 10) cout << " ";
-        ubicar(30, 2);
-        cout << "Usa Flechas izq y der para cambiar de pagina. ESC para salir.";
-    }
-
-    //
 
     void cerrarSesion() {
         usuarioActual = nullptr;

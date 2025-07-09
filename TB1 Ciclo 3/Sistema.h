@@ -65,24 +65,12 @@ void portada() {
 }
 
 void default() {
-	cout << BG_WHITE; pintar(30, 4, 89, 25);
+	cout << BG_WHITE; pintar(30, 4, 90, 25);
 	cout << BG_GRISCLARO; pintar(0, 4, 30, ALTO - 5);
 	cout << BG_JTAZUL; pintar(0, 1, ANCHO, 3);
 	cout << RESET;
 }
 
-void defaultPanelDerecho() {
-	cout << BG_WHITE; pintar(30, 4, 89, 25);
-}
-
-void imprimirDibujo(string dibujo[], size_t filas, int x, int y) {
-	cout << JTROJO << BG_WHITE;
-	for (int i = 0; i < filas; i++) {
-		ubicar(x, y + i);
-		cout << dibujo[i];
-	}
-	cout << RESET;
-}
 
 void menuSpawn(string titulo) {
 	default();
@@ -94,7 +82,7 @@ void barraSpawn(string titulo) {
 	cout << RESET;
 }
 void limpiarDerecha() {
-	cout << BG_WHITE; pintar(30, 4, ANCHO - 30, ALTO - 6);
+	cout << BG_WHITE; pintar(30, 4, ANCHO - 30, ALTO - 5);
 	cout << RESET;
 }
 void limpiarIzquierda() {
@@ -103,7 +91,7 @@ void limpiarIzquierda() {
 void limpiarDerecha2() {
 	cout << BG_JTAZUL; pintar(30, 1, ANCHO - 30, 3);
 	cout << RESET;
-	cout << BG_WHITE; pintar(30, 4, ANCHO - 30, ALTO - 6);
+	cout << BG_WHITE; pintar(30, 4, ANCHO - 30, ALTO - 5);
 	cout << RESET;
 }
 

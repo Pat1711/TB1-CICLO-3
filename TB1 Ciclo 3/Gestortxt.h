@@ -38,10 +38,6 @@ public:
 	}
 	~Gestortxt(){}
 
-    vector<T> getLines() {
-        return lines;
-    }
-
     size_t size() {
         return lines.size();
     }
@@ -58,21 +54,6 @@ public:
         return T(); //habia un error aca
     }
 
-    void editarLinea(int i, T elem) {
-        if (i >= 0 && i < lines.size())
-            lines[i] = elem;
-        guardar();
-    }
-
-    void eliminarLinea(int i) {
-        if (i >= 0 && i < lines.size())
-            lines.erase(lines.begin() + i);
-        guardar();
-    }
-
-    void recargar() {
-        cargar();
-    }
 
 };
 

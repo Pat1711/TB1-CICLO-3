@@ -33,16 +33,8 @@ public:
 		return estado;
 	}
 
-	void mostrarAsientoDisponible() {
-		if (estado == false)mostrarAsiento();
-	}
-
 	char getClasificacion() {
 		return clasificacion;
-	}
-
-	bool isEstado() {
-		return estado;
 	}
 
 	int getIdAsiento() {

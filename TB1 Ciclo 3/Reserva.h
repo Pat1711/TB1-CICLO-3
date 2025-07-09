@@ -26,17 +26,6 @@ public:
 	}
 	~Reserva(){}
 
-	void mostrarDatosVuelo() {
-		cout << "Vuelo: \n";
-		vuelo->mostrarVuelo();
-		cout << "Asientos: \n";
-		for (int i = 0; i < asiento.size(); i++)
-		{
-			asiento[i]->mostrarAsiento();
-		}
-		cout << "Monto a pagar: " << precioFinal << endl << endl; 
-	}
-
 	void mostrarDatosCompletos(int x, int y) {
 		cout << BG_WHITE << BLACK;
 		ubicar(x, y); cout << "Pasajero: " << user->getNombres() << ", " << user->getApellidos();
@@ -64,7 +53,6 @@ public:
 
 	Pasajero* getPasajero() { return user; }
 	Vuelo* getVuelo() {	return vuelo; }
-	int getPrecioFinal() { return precioFinal; }
 };
 
 #endif // _RESERVA_

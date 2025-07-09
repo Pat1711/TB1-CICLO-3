@@ -17,24 +17,12 @@ private:
 public:
 	Lista() { inicio = nullptr; }
 	~Lista();
-	void insertarInicio(T v);
 	void insertarFinal(T v);
 	bool esVacio();
 	void mostrarPasajero(int x, int y);
 	T getDato(int index) const;
-	vector<T> getTodos();
 
 	bool test(string nombres, string apellidos, string correo, string dni);
-	bool validarDNI(string dni);
-
-	void vaciar() {
-		for (int i = 0; i < TABLE_SIZE; ++i) {
-			while (!tabla[i].esVacia()) {
-				tabla[i].eliminaInicio();  // O eliminaFinal, según lo que tengas
-			}
-		}
-		numElementos = 0;
-	}
 
 	int longitud() {
 		Nodo<T>* nodo = inicio;
@@ -46,9 +34,6 @@ public:
 		return count;
 	}
 
-	Nodo<T>* getInicio() const {
-		return inicio;
-	}
 };
 
 // ---
@@ -62,19 +47,6 @@ Lista<T>::~Lista() {
 		temp = nullptr;
 	}
 	inicio = nullptr;
-}
-
-// ---
-template<class T>
-void Lista<T>::insertarInicio(T v) {
-	Nodo<T>* nodo = new Nodo<T>(v, nullptr, nullptr);
-
-	if (esVacio()) inicio = nodo;
-	else {
-		inicio->anterior = nodo;
-		nodo->siguiente = inicio;
-	}
-	inicio = nodo;
 }
 
 // ---
@@ -165,33 +137,5 @@ T Lista<T>::getDato(int index) const{
 	return nullptr;
 }
 
-template<class T>
-vector<T> Lista<T>::getTodos() {
-	vector<T> elementos;
-	Nodo<T>* actual = inicio;
-
-	while (actual != nullptr) {
-		elementos.push_back(actual->dato);
-		actual = actual->siguiente;
-	}
-
-	return elementos;
-}
-
-template<class T>
-bool Lista<T>::validarDNI(string dni) {
-	Nodo<T>* nodo = inicio;
-
-	while (nodo != nullptr) {
-		Pasajero* psj = static_cast<Pasajero*>(nodo->dato);
-
-		if (psj->getDni() == dni) {
-			return true;
-		}
-
-		nodo = nodo->siguiente;
-	}
-	return false;
-}
 
 #endif // !__LISTA_DOBLE__

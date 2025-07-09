@@ -27,15 +27,6 @@ public:
     string getCorreo() { return correo; }
     string getDni() { return dni; }
 
-    string toString() {
-        ostringstream ss;
-        ss << "Nombres: " << nombres << endl;
-        ss << "Apellidos: " << apellidos << endl;
-        ss << "Correo: " << correo << endl;
-        ss << "DNI: " << dni << endl;
-        return (ss.str());
-    }
-
     void mostrar(int x, int y) {
         ubicar(x, y++); cout << "Nombres: " << nombres;
         ubicar(x, y++); cout << "Apellidos: " << apellidos;

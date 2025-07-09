@@ -91,20 +91,6 @@ private:
 		return true;
 	}
 
-	void _inOrden(NodoAv<T>* nodo) {
-		if (nodo == nullptr) return;
-		_inOrden(nodo->izq);
-		procesar(nodo->elemento);
-		_inOrden(nodo->der);
-	}
-
-	void _inOrdenH(NodoAv<T>* nodo) {
-		if (nodo == nullptr) return;
-		_inOrdenH(nodo->izq);
-		procesar(nodo->altura);
-		_inOrdenH(nodo->der);
-	}
-
 	//funciones adicionales
 	void _buscarEspecifico(NodoAv<T>* nodo, T clave, vector<T>& encontrados) {
 		if (nodo == nullptr) return;
@@ -131,16 +117,6 @@ public:
 
 	bool Insertar(T e) {
 		return _insertar(raiz, e);
-	}
-	void inOrden() {
-		_inOrden(raiz);
-	}
-	void inOrdenH() {
-		_inOrdenH(raiz);
-	}
-
-	NodoAv<T>* getRaiz() {
-		return raiz;
 	}
 
 	void buscarEspecifico(T clave, vector<T>& encontrados) {

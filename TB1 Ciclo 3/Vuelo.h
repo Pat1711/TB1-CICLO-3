@@ -88,13 +88,6 @@ public:
         return nullptr;
     }
 
-    void mostrarAsientos() {
-        for (int i = 0; i < asientos.size(); i++)
-        {
-            asientos[i]->mostrarAsiento();
-
-        }
-    }
 
     void mostrarMAsientos(int x, int y) {
         for (int i = 0; i < 20; i+=4)
@@ -110,13 +103,6 @@ public:
         }
     }
 
-    void mostrarAsientosDisponibles() {
-        for (int i = 0; i < asientos.size(); i++)
-        {
-            asientos[i]->mostrarAsientoDisponible();
-
-        }
-    }
 };
 
 #endif // !__VUELO__
