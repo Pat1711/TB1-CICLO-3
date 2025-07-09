@@ -420,30 +420,11 @@ public:
     // Busqueda de vuelos por rango de precios
     void buscarEnRangoPrecios(int p1, int p2) {
         vector<Vuelo*> encontrados;
-        //buscarVuelosEnRango(arbol->getRaiz(), p1, p2, encontrados); // llama a la recursiva que identifica en rango de precios
-        arbol->buscarRangoPrecios(p1, p2, encontrados);
+
+        arbol->buscarRangoPrecios(p1, p2, encontrados); // llama a la recursiva que identifica en rango de precios
 
         iterarPaginas(encontrados); 
     }
-
-    //// recursiva para recorrer el arbol e ir buscando los vuelos en el rango de precios dado
-    //void buscarVuelosEnRango(NodoAr<Vuelo*>* nodo, int minPrecio, int maxPrecio, vector<Vuelo*>& resultado) {
-    //    if (nodo == nullptr) return;
-
-    //    int precio = nodo->elemento->getPrecio();
-
-    //    // visitar izquierda 
-    //    if (precio >= minPrecio)
-    //        buscarVuelosEnRango(nodo->izq, minPrecio, maxPrecio, resultado);
-
-    //    // agrega al vector si esta en el rango d precio
-    //    if (precio >= minPrecio && precio <= maxPrecio)
-    //        resultado.push_back(nodo->elemento);
-
-    //    // visitar derecha 
-    //    if (precio <= maxPrecio)
-    //        buscarVuelosEnRango(nodo->der, minPrecio, maxPrecio, resultado);
-    //}
 
     // PARTE DEL AVL
     void indexarVuelosAVL() {
